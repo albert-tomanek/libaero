@@ -1,0 +1,42 @@
+.taskbar {
+	border-top-width: 2px;
+	border-top-color: red;
+	/*border-top: 2px linear-gradient(to bottom, #50566a, #9FABC4);*/
+	background:red;
+}
+
+#startmenu {
+	background: radial-gradient(7.68% 76.94% at 0% 50%, rgba(199, 199, 199, 0.26) 99.99%, rgba(255, 255, 255, 0) 100%), #000000;
+	box-shadow: 0px 0px 0px 1px #000000;
+	border-radius: 6px 6px 0px 0px;
+	border: 1px solid #6B6B6B;
+}
+
+#startmenu iconview {
+	border-radius: 4px;
+	background: #FCFCFC;
+	box-shadow: inset 0px 1px 2px #848484;
+}
+/*
+background: radial-gradient(ellipse at top, #e66465, transparent),
+            radial-gradient(ellipse at bottom, #4d9f0c, transparent), black;
+box-shadow: 0px 0px 0px 1px #000000;
+border-radius: 6px 6px 0px 0px;
+
+border: 35px solid;
+border-image-source: linear-gradient(to bottom, red, blue);;
+border-color: #6B6B6B;
+*/
+
+/*
+Functional:
+
+background: radial-gradient(7.68% 76.94% at 0% 50%, rgba(199, 199, 199, 0.26) 99.99%, rgba(255, 255, 255, 0) 100%), #000000;
+box-shadow: 0px 0px 0px 1px #000000;
+border-radius: 6px 6px 0px 0px;
+
+border: 1px solid;
+border-style: solid;
+border-image: radial-gradient(39.06% 39.06% at 50% 0%, rgba(255, 255, 255, 1) 0%, rgba(107, 107, 107, 1) 100%);
+border-image-slice: 1;
+ */
