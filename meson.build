@@ -11,6 +11,7 @@ executable('win',
 	resources,
 	sources: [
 		'main.vala',
+		'aero.vala',
 	],
 	dependencies: [
 		dependency('glib-2.0'),

@@ -6,8 +6,16 @@ public class KeepApp : Gtk.Application {
 	}
 
 	protected override void activate () {
-		var window = new Keep (this);
-		window.show ();
+		//  var window = new Keep (this);
+		//  window.show ();
+
+		var win = new Aero.Window();
+		var but = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 1);
+		but.set_size_request(300, 200);
+		win.set_child(but);
+
+		this.add_window(win);
+		win.show();
 	}
 
 	public static int main(string[] args)
@@ -29,7 +37,7 @@ class Keep : Gtk.ApplicationWindow
 	public Keep(Gtk.Application app)
 	{
 		this.application = app;
-		this.load_style();
+		//  this.load_style();
 	}
 
 	//  construct {
@@ -52,10 +60,10 @@ class Keep : Gtk.ApplicationWindow
 	//  	icons_right.pixbuf_column = 0;
 	//  }
 
-	private void load_style()
-	{
-		var css_provider = new Gtk.CssProvider();
-		css_provider.load_from_resource("/com/github/albert-tomanek/gkeep/style.css");
-		Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-	}
+	//  private void load_style()
+	//  {
+	//  	var css_provider = new Gtk.CssProvider();
+	//  	css_provider.load_from_resource("/com/github/albert-tomanek/gkeep/style.css");
+	//  	Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+	//  }
 }
