@@ -9,5 +9,6 @@
     <file compressed="true" preprocess="xml-stripblanks">templates/windowcontrols.ui</file>
     <file>images/orb_bg.png</file>
     <file>images/orb_arrow_right.svg</file>
+    <file>images/orb_arrow_left.svg</file>
   </gresource>
 </gresources>

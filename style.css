@@ -146,7 +146,7 @@ window.aero.maximized {
 	/* filter: brightness(80%) contrast(180%) saturate(180%) drop-shadow(-1px 1px 2px rgba(0, 0, 0, 0.4)) drop-shadow(0px 0px 14px #49AFE2); */
 
 	background: radial-gradient(80.21% 57.89% at 50% 100%, #3AC2F9 28.94%, #015EC3 100%);
-	box-shadow: inset 0px 0px 0px 2px rgba(182, 243, 255, 0.7);
+	box-shadow: 0px 0px 8px #08A8EE, inset 0px 0px 0px 2px rgba(182, 243, 255, 0.7);
 	border: 1px solid;
 	border-image-source: linear-gradient(180deg, #00249D 0%, #424242 100%);
 }
@@ -157,7 +157,12 @@ window.aero.maximized {
 	border: 1px solid;
 	border-image-source: linear-gradient(180deg, #00249D 0%, #424242 100%);
 }
-	
+
+.aero orb:active reflection {
+	background: radial-gradient(87.27% 124.91% at 50% 101.96%, rgba(112, 203, 255, 0.38) 18.18%, #FFFFFF 91.85%);
+	box-shadow: inset 0px 0px 4px #000000;
+}
+
 .orb-box {
 	padding: 6px;
 	background: radial-gradient(214.81% 97.06% at 62.5% 13.24%, rgba(170, 170, 170, 0) 0%, rgba(255, 255, 255, 0.83) 78.94%);

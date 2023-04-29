@@ -19,35 +19,38 @@ namespace Aero
         public Orb(string icon_res)
         {
             var overlay = new Gtk.Overlay();
-            overlay.child = new Gtk.Image.from_file("/home/albert/Projects/Mockups/libaero/images/orb_arrow_right.svg")/*from_resource(icon_res)*/ {
+            var refl_dummy = new DummyWidget() { visible = false };     // We steal the CSS style ctx from this one. Haven;t found a way to make a dummy css node.
+            overlay.add_overlay(refl_dummy);
+            overlay.add_overlay(new Reflection(refl_dummy.get_style_context()));
+            overlay.add_overlay(new Gtk.Image.from_resource(icon_res) {
                 //  halign = Gtk.Align.CENTER,
                 //  valign = Gtk.Align.CENTER
-            };
-            overlay.add_overlay(new Reflection());
+            });
 
             Object(child: overlay);
         }
 
         construct {
-            this.set_size_request(37, 37);
-            //  this.set_size_request(25, 25);
+            //  this.set_size_request(37, 37);
+            this.set_size_request(25, 25);
         }
 
         static construct {
             set_css_name("orb");
         }
 
-        class Reflection : Gtk.DrawingArea
+        class DummyWidget : Gtk.Widget
         {
             static construct {
                 set_css_name("reflection");
-            }
+            }    
+        }
 
-            construct {
+        class Reflection : Gtk.DrawingArea
+        {
+            public Reflection(Gtk.StyleContext ctx)
+            {
                 set_draw_func((da, cr, w, h) => {
-                    this.get_style_context().render_background(cr, 0, 0, w, h);
-                    //  this.get_style_context().render_frame(cr, 0, 0, w, h);
-
                     cr.set_source_rgb(1, 0, 0);
                     push_path(cr, 0.9576, 0.5126, {
                         0.9656, 0.5140, 0.9729, 0.5080, 0.9729, 0.5,
@@ -61,6 +64,9 @@ namespace Aero
                         0.9576, 0.5126, 0.9576, 0.5126, 0.9576, 0.5126
                     }, w, h);
                     cr.clip();
+
+                    ctx.render_background(cr, 0, 0, w, h);
+                    ctx.render_frame(cr, 0, 0, w, h);
                 });
             }
 
