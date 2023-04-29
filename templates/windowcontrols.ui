@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.10.3 -->
+<interface>
+  <!-- interface-name windowcontrols.ui -->
+  <requires lib="gtk" version="4.6"/>
+  <template class="AeroHeaderBar" parent="GtkBox">
+    <property name="hexpand">True</property>
+    <child>
+      <object class="GtkWindowHandle">
+        <property name="child">
+          <object class="GtkBox" id="content_box">
+            <property name="hexpand">True</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">5</property>
+            <child>
+              <object class="GtkBox">
+                <property name="css-name">window-controls</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="css-name">title-box</property>
+                    <property name="spacing">5</property>
+                    <child>
+                      <object class="GtkImage" id="icon">
+                        <property name="icon-name">application-x-executable</property>
+                        <property name="pixel-size">16</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="title">
+                        <property name="halign">start</property>
+                        <property name="hexpand">True</property>
+                        <property name="label">Window Title</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkButton" id="minimize">
+                        <property name="css-classes">maximize</property>
+                        <property name="height-request">17</property>
+                        <property name="icon-name">window-minimize-symbolic</property>
+                        <property name="valign">start</property>
+                        <property name="width-request">24</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="maximize">
+                        <property name="css-classes">maximize</property>
+                        <property name="height-request">17</property>
+                        <property name="icon-name">window-maximize-symbolic</property>
+                        <property name="valign">start</property>
+                        <property name="width-request">24</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="close">
+                        <property name="css-classes">close</property>
+                        <property name="height-request">17</property>
+                        <property name="icon-name">window-close-symbolic</property>
+                        <property name="valign">start</property>
+                        <property name="width-request">45</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+        <property name="hexpand">True</property>
+      </object>
+    </child>
+  </template>
+</interface>

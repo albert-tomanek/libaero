@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
+<cambalache-project version="0.10.3" target_tk="gtk-4.0">
+  <ui>
+	(1,16,"windowcontrols.ui","windowcontrols.ui",None,None,None,None,None,None)
+  </ui>
+  <object>
+	(1,16,"GtkBox","AeroHeaderBar",None,None,None,None,None),
+	(1,17,"GtkWindowHandle",None,16,None,None,None,None),
+	(1,18,"GtkBox","content_box",17,None,None,None,None),
+	(1,25,"GtkBox",None,18,None,None,None,None),
+	(1,26,"GtkBox",None,25,None,None,None,None),
+	(1,27,"GtkImage","icon",26,None,None,None,None),
+	(1,28,"GtkLabel","title",26,None,None,None,None),
+	(1,29,"GtkBox",None,25,None,None,None,None),
+	(1,30,"GtkButton","minimize",29,None,None,None,None),
+	(1,31,"GtkButton","maximize",29,None,None,None,None),
+	(1,32,"GtkButton","close",29,None,None,None,None)
+  </object>
+  <object_property>
+	(1,16,"GtkWidget","hexpand","True",None,None,None,None,None),
+	(1,17,"GtkWidget","hexpand","True",None,None,None,None,None),
+	(1,17,"GtkWindowHandle","child",None,None,None,None,None,18),
+	(1,18,"GtkBox","spacing","5",None,None,None,None,None),
+	(1,18,"GtkOrientable","orientation","vertical",None,None,None,None,None),
+	(1,18,"GtkWidget","hexpand","True",None,None,None,None,None),
+	(1,25,"GtkWidget","css-name","window-controls",None,None,None,None,None),
+	(1,26,"GtkBox","spacing","5",None,None,None,None,None),
+	(1,26,"GtkWidget","css-name","title-box",None,None,None,None,None),
+	(1,27,"GtkImage","icon-name","application-x-executable",None,None,None,None,None),
+	(1,27,"GtkImage","pixel-size","16",None,None,None,None,None),
+	(1,28,"GtkLabel","label","Window Title",None,None,None,None,None),
+	(1,28,"GtkWidget","halign","start",None,None,None,None,None),
+	(1,28,"GtkWidget","hexpand","True",None,None,None,None,None),
+	(1,30,"GtkButton","icon-name","window-minimize-symbolic",None,None,None,None,None),
+	(1,30,"GtkWidget","css-classes","maximize",None,None,None,None,None),
+	(1,30,"GtkWidget","height-request","17",None,None,None,None,None),
+	(1,30,"GtkWidget","valign","start",None,None,None,None,None),
+	(1,30,"GtkWidget","width-request","24",None,None,None,None,None),
+	(1,31,"GtkButton","icon-name","window-maximize-symbolic",None,None,None,None,None),
+	(1,31,"GtkWidget","css-classes","maximize",None,None,None,None,None),
+	(1,31,"GtkWidget","height-request","17",None,None,None,None,None),
+	(1,31,"GtkWidget","valign","start",None,None,None,None,None),
+	(1,31,"GtkWidget","width-request","24",None,None,None,None,None),
+	(1,32,"GtkButton","icon-name","window-close-symbolic",None,None,None,None,None),
+	(1,32,"GtkWidget","css-classes","close",None,None,None,None,None),
+	(1,32,"GtkWidget","height-request","17",None,None,None,None,None),
+	(1,32,"GtkWidget","valign","start",None,None,None,None,None),
+	(1,32,"GtkWidget","width-request","45",None,None,None,None,None)
+  </object_property>
+</cambalache-project>
