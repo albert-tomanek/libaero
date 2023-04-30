@@ -7,6 +7,8 @@ Along with its newly integrated scene graph and hardware accelleration, Gtk4 is 
 ### Prototyping
 ...goes on in [this Figma document](https://www.figma.com/file/5WXM0xTlbQpyPGAOIj2LNF/Longhorn-Mockups?node-id=1201%3A171&t=ITjE0K9TWASt15T5-1). Figma can export CSS which can then be almost flawlessly applied to Gtk widgets.
 
+The Windows 7 HIG guidelines can be found [here](https://learn.microsoft.com/en-us/windows/win32/uxguide/visual-index).
+
 ### Window blur
 
 Yes, this is finally possible under GNOME! Download the 'Blur My Shell' extension and enable window blur.

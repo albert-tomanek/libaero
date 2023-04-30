@@ -108,6 +108,11 @@ namespace Aero
                 win.notify["maximized"].connect(() => {
                     maximize.icon_name = win.maximized ? "window-restore-symbolic" : "window-maximize-symbolic";
                 });
+
+                icon.state_flags_changed.connect((old) => {
+                    if (((old & Gtk.StateFlags.ACTIVE) != 0) && ((icon.get_state_flags() & Gtk.StateFlags.ACTIVE) == 0))
+                        (win.get_native().get_surface() as Gdk.Toplevel).titlebar_gesture(Gdk.TitlebarGesture.RIGHT_CLICK);
+                });
             }); 
         }
 
