@@ -10,15 +10,29 @@ resources = gnome.compile_resources(
 	export: true,
 )
 
-executable('win',
+lib = shared_library('aero',
 	[css_dep, resources],
+	version: '0.0.1',
 	sources: [
-		'main.vala',
-		'aero.vala',
+		'aero.vala'
 	],
 	dependencies: [
 		dependency('glib-2.0'),
 		dependency('gobject-2.0'),
 		dependency('gtk4'),
 	],
+	install: false,
+)
+
+executable('win',
+	[resources],
+	sources: [
+		'main.vala',
+	],
+	dependencies: [
+		dependency('glib-2.0'),
+		dependency('gobject-2.0'),
+		dependency('gtk4'),
+	],
+	link_with: lib
 )

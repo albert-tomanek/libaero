@@ -15,7 +15,9 @@
 		font-family: "Segoe UI";
 		font-size: 12px;
 
-		transition: all 50ms linear;
+		caret-color: black;
+
+		transition: all 100ms linear;
 	}
 
 	#startmenu {
@@ -171,14 +173,14 @@
 		border-radius: 33px;
 	}
 
-	.aero:not(.content) entry {
+	&:not(.content) entry {
 		background: rgba(255, 255, 255, 0.65);
 		box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 0.33), inset 0px 0px 0px 2px rgba(255, 255, 255, 0.78);
 		border: 1px solid rgba(35, 35, 35, 0.7);
 		border-radius: 4px;
 	}
 
-	.aero:not(.content) entry:focus-within {
+	&:not(.content) entry:focus-within {
 		background: white;
 	}
 
@@ -215,6 +217,10 @@
 		vexpand: true;
 		halign: 
 		*/
+
+		scrolledwindow {
+			border: 1px solid #b0b0b0;
+		}
 	}
 
 	.dialog-footer {
@@ -232,30 +238,30 @@
 		> revealer > box {
 			padding: 4px 10px;
 		}
+	}
 
-		button {
-			border-radius: 2px;
-			border: 1px solid transparent;
-			background: transparent;
-			box-shadow: none;
+	actionbar button, .flat {
+		border-radius: 2px;
+		border: 1px solid transparent;
+		background: transparent;
+		box-shadow: none;
 
-			&:not(.image-button) {
-				padding-left: 10px;
-				padding-right: 10px;
-			}
+		&:not(.image-button) {
+			padding-left: 10px;
+			padding-right: 10px;
+		}
 
-			&:hover {
-				background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 49.41%, rgba(0, 0, 0, 0.05) 50.33%, rgba(0, 0, 0, 0.04) 100%);
-				border: 1px solid rgba(255, 255, 255, 0.44);
-				box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.24);
-			}
+		&:hover {
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 49.41%, rgba(0, 0, 0, 0.05) 50.33%, rgba(0, 0, 0, 0.04) 100%);
+			border: 1px solid rgba(255, 255, 255, 0.44);
+			box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.24);
+		}
 
-			&:active {
-				background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 49.41%, rgba(0, 0, 0, 0.05) 50.33%, rgba(0, 0, 0, 0.04) 100%);
-				background-blend-mode: luminosity;
-				border: 1px solid rgba(255, 255, 255, 0.44);
-				box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.24), inset 0px 1px 4px rgba(0, 0, 0, 0.25);
-			}
+		&:active {
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 49.41%, rgba(0, 0, 0, 0.05) 50.33%, rgba(0, 0, 0, 0.04) 100%);
+			background-blend-mode: luminosity;
+			border: 1px solid rgba(255, 255, 255, 0.44);
+			box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.24), inset 0px 1px 4px rgba(0, 0, 0, 0.25);
 		}
 	}
 
@@ -311,7 +317,82 @@
 		}
 	}
 
+	.link {
+		color: #0066CC;
+	}
+
 	entry {
 		min-height: 20px;
+	}
+
+	checkbutton {
+		color: black;
+
+		check {
+			// width: 20px;
+			// height: 20px;
+
+			background: #E8E8E8;
+			border: 1px solid #8E8F8F;
+			border-radius: 0;
+			box-shadow: inset 0px 0px 0px 2px #F4F4F4, inset 0px 0px 0px 3px rgba(0, 0, 0, 0.08), inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
+
+			&:hover, &:focus-visible {
+				background: #C4EAFD;
+				border: 1px solid #5586A3;
+				box-shadow: inset 0px 0px 0px 2px #DEF9FA, inset 0px 0px 0px 3px #89D1F9, inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
+			}
+
+			&:active {
+				background: #B0DBF2;
+				border: 1px solid #5586A3;
+				box-shadow: inset 0px 0px 0px 2px #DEF9FA, inset 0px 0px 0px 3px #56A6D6, inset 5px 9px 8px rgba(82, 162, 214, 0.55);
+			}
+
+			&:disabled {
+				background: #FBFBFB;
+				border: 1px solid #ADB2B5;
+				box-shadow: inset 0px 0px 0px 2px #FFFFFF, inset 0px 0px 0px 3px rgba(0, 0, 0, 0.03), inset 4px 4px 4px rgba(0, 0, 0, 0.1);
+			}
+		}
+
+		check.checked {
+			background: url("resource:///com/github/albert-tomanek/aero/images/check.svg");
+		}
+	}
+
+	scrollbar {
+		> range.vertical {
+			> trough {
+				background: #F0F0F0;
+				border: 1px solid rgba(0, 0, 0, 0.03);
+				box-shadow: -1px 0px 0px #F8F8F8, inset 5px 0px 8px -3px rgba(0, 0, 0, 0.1);
+
+				> slider {
+					min-width: 15px;
+
+					background: linear-gradient(90deg, #F5F5F5 0%, #E9E9EB 49.21%, #D9DADC 49.75%, #C0C0C4 100%);
+					border: 1px solid #979797;
+					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.6);
+					border-radius: 2px;
+
+					&:hover {
+						background: linear-gradient(90deg, #F5F5F5 0%, #D6EEFB 49.21%, #A9DBF6 49.75%, #A9DBF6 100%);
+						border: 1px solid #356F9B;
+						box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.8), inset 2px 2px 3px rgba(255, 255, 255, 0.25), inset -2px -2px 3px -1px rgba(0, 0, 0, 0.25);
+					}
+
+					&:active {
+						background: linear-gradient(90deg, #B5E4F7 0%, #B5E4F7 49.21%, #6FCAF0 49.75%, #6FCAF0 100%);
+						border: 1px solid #18598A;
+						box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.5), inset 2px 2px 3px rgba(255, 255, 255, 0.25), inset -2px -2px 3px -1px rgba(0, 0, 0, 0.25);
+					}
+				}
+			}
+		}
+
+		> range.horizontal > trough > slider {
+			min-height: 15px;
+		}
 	}
 }

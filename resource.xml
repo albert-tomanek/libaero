@@ -6,9 +6,11 @@
   <gresource prefix="/com/github/albert-tomanek/aero">
     <file compressed="true" preprocess="xml-stripblanks">demos/demo1.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/windowcontrols.ui</file>
+    <file compressed="true">aero.css</file>
     <file>images/orb_bg.png</file>
     <file>images/orb_arrow_right.svg</file>
     <file>images/orb_arrow_left.svg</file>
-    <file>aero.css</file>
+    <file>images/check.svg</file>
+    <file>images/check_disabled.svg</file>
   </gresource>
 </gresources>

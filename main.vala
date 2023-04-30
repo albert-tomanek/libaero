@@ -67,13 +67,18 @@ public class KeepApp : Gtk.Application {
 [GtkTemplate (ui = "/com/github/albert-tomanek/aero/demos/demo1.ui")]
 class Demo1 : Gtk.Window
 {
-	[GtkChild]
-	Gtk.Box titlebar_content;
+	[GtkChild] Gtk.Box titlebar_content;
+	[GtkChild] Gtk.CheckButton wrap_check;
+	[GtkChild] Gtk.TextView text_view;
 
 	construct {
 		var orb = new Aero.Orb("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg");
 		orb.valign = Gtk.Align.CENTER;
 		titlebar_content.prepend(orb);
 		this.titlebar = new Aero.HeaderBar.with_contents(titlebar_content);
+
+		wrap_check.notify["active"].connect(() => {
+			text_view.wrap_mode = wrap_check.active ? Gtk.WrapMode.WORD : Gtk.WrapMode.NONE;
+		});
 	}
 }

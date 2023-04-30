@@ -83,7 +83,7 @@ namespace Aero
     }
 
     [GtkTemplate (ui = "/com/github/albert-tomanek/aero/templates/windowcontrols.ui")]
-    private class HeaderBar : Gtk.Box
+    public class HeaderBar : Gtk.Box
     {
         // Since this is a Gtk.Box, additional headerbar items to come before the main window content can be added using the usual Box.add()
 

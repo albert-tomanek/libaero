@@ -13,17 +13,20 @@
 	(1,12,"GtkLabel",None,10,None,None,None,None),
 	(1,13,"GtkLabel",None,10,None,None,None,None),
 	(1,14,"GtkBox",None,5,None,None,None,2),
-	(1,15,"GtkBox",None,14,None,None,None,None),
+	(1,15,"GtkBox",None,14,None,None,None,1),
 	(1,16,"GtkButton",None,15,None,None,None,None),
 	(1,17,"GtkButton",None,15,None,None,None,None),
 	(1,18,"GtkActionBar",None,5,None,None,None,None),
 	(1,19,"GtkButton",None,18,None,None,None,None),
-	(1,20,"GtkButton",None,18,None,None,None,None)
+	(1,20,"GtkButton",None,18,None,None,None,None),
+	(1,22,"GtkLinkButton",None,14,None,None,None,None),
+	(1,23,"GtkScrolledWindow",None,10,None,None,None,None),
+	(1,24,"GtkTextView","text_view",23,None,None,None,None),
+	(1,25,"GtkCheckButton","wrap_check",10,None,None,None,None)
   </object>
   <object_property>
 	(1,1,"GtkWidget","css-classes","aero",None,None,None,None,None),
 	(1,2,"GtkBox","spacing","6",None,None,None,None,None),
-	(1,5,"GtkBox","spacing","19",None,None,None,None,None),
 	(1,5,"GtkOrientable","orientation","vertical",None,None,None,None,None),
 	(1,5,"GtkWidget","css-classes","contents",None,None,None,None,None),
 	(1,5,"GtkWidget","height-request","0",None,None,None,None,None),
@@ -55,6 +58,17 @@
 	(1,17,"GtkButton","label","OK",None,None,None,None,None),
 	(1,17,"GtkButton","use-underline","True",None,None,None,None,None),
 	(1,19,"GtkButton","label","Manage disks",None,None,None,None,None),
-	(1,20,"GtkButton","icon-name","media-floppy",None,None,None,None,None)
+	(1,20,"GtkButton","icon-name","media-floppy",None,None,None,None,None),
+	(1,22,"GtkButton","label","More info...",None,None,None,None,None),
+	(1,22,"GtkButton","use-underline","True",None,None,None,None,None),
+	(1,23,"GtkScrolledWindow","hscrollbar-policy","never",None,None,None,None,None),
+	(1,23,"GtkScrolledWindow","overlay-scrolling","False",None,None,None,None,None),
+	(1,23,"GtkScrolledWindow","vscrollbar-policy","always",None,None,None,None,None),
+	(1,23,"GtkWidget","height-request","200",None,None,None,None,None),
+	(1,23,"GtkWidget","hexpand","True",None,None,None,None,None),
+	(1,24,"GtkTextView","accepts-tab","False",None,None,None,None,None),
+	(1,25,"GtkCheckButton","label","_Wrap text",None,None,None,None,None),
+	(1,25,"GtkCheckButton","use-underline","True",None,None,None,None,None),
+	(1,25,"GtkWidget","halign","end",None,None,None,None,None)
   </object_property>
 </cambalache-project>

@@ -10,7 +10,6 @@
         <property name="css-classes">contents</property>
         <property name="height-request">0</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">19</property>
         <property name="width-request">0</property>
         <child>
           <object class="GtkActionBar">
@@ -51,11 +50,38 @@
                 <property name="wrap">True</property>
               </object>
             </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="height-request">200</property>
+                <property name="hexpand">True</property>
+                <property name="hscrollbar-policy">never</property>
+                <property name="overlay-scrolling">False</property>
+                <property name="vscrollbar-policy">always</property>
+                <child>
+                  <object class="GtkTextView" id="text_view">
+                    <property name="accepts-tab">False</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="wrap_check">
+                <property name="halign">end</property>
+                <property name="label">_Wrap text</property>
+                <property name="use-underline">True</property>
+              </object>
+            </child>
           </object>
         </child>
         <child>
           <object class="GtkBox">
             <property name="css-classes">dialog-footer</property>
+            <child>
+              <object class="GtkLinkButton">
+                <property name="label">More info...</property>
+                <property name="use-underline">True</property>
+              </object>
+            </child>
             <child>
               <object class="GtkBox">
                 <property name="halign">end</property>
