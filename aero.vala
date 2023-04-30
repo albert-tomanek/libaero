@@ -120,7 +120,7 @@ namespace Aero
             // Import the aero stylesheet into Gtk when the Aero classes are loaded.
 
             var css_provider = new Gtk.CssProvider();
-            css_provider.load_from_resource("/com/github/albert-tomanek/gkeep/style.css");
+            css_provider.load_from_resource("/com/github/albert-tomanek/aero/aero.css");
             Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);    
         }
     }

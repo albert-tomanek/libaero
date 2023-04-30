@@ -9,12 +9,16 @@
 	(1,2,"GtkBox","titlebar_content",None,None,None,None,None),
 	(1,5,"GtkBox",None,1,None,None,None,None),
 	(1,7,"GtkSearchEntry",None,2,None,None,None,None),
-	(1,10,"GtkBox",None,5,None,None,None,None),
+	(1,10,"GtkBox",None,5,None,None,None,1),
 	(1,12,"GtkLabel",None,10,None,None,None,None),
 	(1,13,"GtkLabel",None,10,None,None,None,None),
-	(1,14,"GtkActionBar",None,5,None,None,None,None),
-	(1,15,"GtkButton",None,14,None,None,None,None),
-	(1,16,"GtkButton",None,14,None,None,None,None)
+	(1,14,"GtkBox",None,5,None,None,None,2),
+	(1,15,"GtkBox",None,14,None,None,None,None),
+	(1,16,"GtkButton",None,15,None,None,None,None),
+	(1,17,"GtkButton",None,15,None,None,None,None),
+	(1,18,"GtkActionBar",None,5,None,None,None,None),
+	(1,19,"GtkButton",None,18,None,None,None,None),
+	(1,20,"GtkButton",None,18,None,None,None,None)
   </object>
   <object_property>
 	(1,1,"GtkWidget","css-classes","aero",None,None,None,None,None),
@@ -42,8 +46,15 @@
 	(1,13,"GtkLabel","wrap","True",None,None,None,None,None),
 	(1,13,"GtkWidget","css-classes","body",None,None,None,None,None),
 	(1,13,"GtkWidget","halign","start",None,None,None,None,None),
-	(1,15,"GtkButton","label","Cancel",None,None,None,None,None),
-	(1,16,"GtkButton","label","OK",None,None,None,None,None),
-	(1,16,"GtkWidget","css-classes","default",None,None,None,None,None)
+	(1,14,"GtkWidget","css-classes","dialog-footer",None,None,None,None,None),
+	(1,15,"GtkBox","spacing","10",None,None,None,None,None),
+	(1,15,"GtkWidget","halign","end",None,None,None,None,None),
+	(1,15,"GtkWidget","hexpand","True",None,None,None,None,None),
+	(1,16,"GtkButton","label","Cancel",None,None,None,None,None),
+	(1,16,"GtkButton","use-underline","True",None,None,None,None,None),
+	(1,17,"GtkButton","label","OK",None,None,None,None,None),
+	(1,17,"GtkButton","use-underline","True",None,None,None,None,None),
+	(1,19,"GtkButton","label","Manage disks",None,None,None,None,None),
+	(1,20,"GtkButton","icon-name","media-floppy",None,None,None,None,None)
   </object_property>
 </cambalache-project>

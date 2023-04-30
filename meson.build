@@ -1,14 +1,17 @@
 project('gkeep', ['vala', 'c'])
 gnome = import('gnome')
 
+subdir('stylesheet')
+
 resources = gnome.compile_resources(
    'keep_res', 'resource.xml',
     source_dir: '.',
+	dependencies: css_dep,
 	export: true,
 )
 
 executable('win',
-	resources,
+	[css_dep, resources],
 	sources: [
 		'main.vala',
 		'aero.vala',
