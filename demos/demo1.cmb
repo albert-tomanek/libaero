@@ -57,7 +57,7 @@
 	(1,16,"GtkButton","use-underline","True",None,None,None,None,None),
 	(1,17,"GtkButton","label","OK",None,None,None,None,None),
 	(1,17,"GtkButton","use-underline","True",None,None,None,None,None),
-	(1,19,"GtkButton","label","Manage disks",None,None,None,None,None),
+	(1,19,"GtkButton","label","Manage disks...",None,None,None,None,None),
 	(1,20,"GtkButton","icon-name","media-floppy",None,None,None,None,None),
 	(1,22,"GtkButton","label","More info...",None,None,None,None,None),
 	(1,22,"GtkButton","use-underline","True",None,None,None,None,None),
@@ -71,4 +71,7 @@
 	(1,25,"GtkCheckButton","use-underline","True",None,None,None,None,None),
 	(1,25,"GtkWidget","halign","end",None,None,None,None,None)
   </object_property>
+  <object_signal>
+	(1,1,19,"GtkButton","clicked","cb_open_wizard",None,None,None,None,None)
+  </object_signal>
 </cambalache-project>

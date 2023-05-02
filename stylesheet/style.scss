@@ -1,3 +1,5 @@
+// FIXME: Gtk can't render borders where the `border-image-source` is a gradient
+
 .aero {
 	/* The window itself */
 
@@ -128,6 +130,27 @@
 
 	/* Titlebar widget styling */
 
+	.titlebar
+	{
+		label {
+			color: black;
+			text-shadow: 0px 0px 6px #FFFFFF;
+			font-size: 12px;
+			font-weight: 400;
+		}
+
+		entry {
+			background: rgba(255, 255, 255, 0.65);
+			box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 0.33), inset 0px 0px 0px 2px rgba(255, 255, 255, 0.78);
+			border: 1px solid rgba(35, 35, 35, 0.7);
+			border-radius: 4px;
+
+			&:focus-within {
+				background: white;
+			}
+		}
+	}
+
 	orb {
 		/* background: url("resource:///com/github/albert-tomanek/aero/images/orb_bg.png");
 		filter: brightness(80%) contrast(180%) saturate(70%)
@@ -138,8 +161,8 @@
 
 		background: radial-gradient(80.21% 57.89% at 50% 100%, #3AC2F9 12.62%, #01155B 100%);
 		box-shadow: inset 0px 0px 0px 2px rgba(182, 243, 255, 0.7);
-		border: 1px solid;
-		border-image-source: linear-gradient(180deg, #00249D 0%, #424242 100%);
+		border: 0.5px solid #00249D;
+		// border-image-source: linear-gradient(180deg, #00249D 0%, #424242 100%);
 
 		reflection {
 			background: radial-gradient(87.27% 124.91% at 50% 101.96%, rgba(112, 203, 255, 0.38) 18.18%, #FFFFFF 91.85%);
@@ -164,24 +187,26 @@
 				background: radial-gradient(87.27% 124.91% at 50% 101.96%, rgba(112, 203, 255, 0.38) 18.18%, #FFFFFF 91.85%);
 				box-shadow: inset 0px 0px 4px #000000;
 			}
-		}	
+		}
+
+		&:disabled {
+			background: transparent;
+			box-shadow: none;
+			border: 1px solid;
+			border-image-source: linear-gradient(180deg, #4F4F4F 0%, #424242 100%);
+			
+			
+			reflection {
+				background: radial-gradient(87.27% 124.91% at 50% 101.96%, rgba(183, 183, 183, 0.38) 18.18%, #FFFFFF 91.85%);			
+				border: 1px solid #4F4F4F;
+			}
+		}
 	}
 
 	.orb-box {
 		padding: 6px;
 		background: radial-gradient(214.81% 97.06% at 62.5% 13.24%, rgba(170, 170, 170, 0) 0%, rgba(255, 255, 255, 0.83) 78.94%);
 		border-radius: 33px;
-	}
-
-	&:not(.content) entry {
-		background: rgba(255, 255, 255, 0.65);
-		box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 0.33), inset 0px 0px 0px 2px rgba(255, 255, 255, 0.78);
-		border: 1px solid rgba(35, 35, 35, 0.7);
-		border-radius: 4px;
-	}
-
-	&:not(.content) entry:focus-within {
-		background: white;
 	}
 
 	/* Text markup */
@@ -333,26 +358,27 @@
 			// height: 20px;
 
 			background: #E8E8E8;
-			border: 1px solid #8E8F8F;
+			border: 1px solid #F4F4F4;
 			border-radius: 0;
-			box-shadow: inset 0px 0px 0px 2px #F4F4F4, inset 0px 0px 0px 3px rgba(0, 0, 0, 0.08), inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
+			box-shadow: 0px 0px 0px 1px #8E8F8F, inset 0px 0px 0px 2px rgba(0, 0, 0, 0.08), inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
 
 			&:hover, &:focus-visible {
 				background: #C4EAFD;
-				border: 1px solid #5586A3;
-				box-shadow: inset 0px 0px 0px 2px #DEF9FA, inset 0px 0px 0px 3px #89D1F9, inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
+				border: 1px solid #C4EAFD;
+				box-shadow: 0px 0px 0px 1px #5586A3, inset 0px 0px 0px 2px #89D1F9, inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
+
 			}
 
 			&:active {
 				background: #B0DBF2;
-				border: 1px solid #5586A3;
-				box-shadow: inset 0px 0px 0px 2px #DEF9FA, inset 0px 0px 0px 3px #56A6D6, inset 5px 9px 8px rgba(82, 162, 214, 0.55);
+				border: 1px solid #DEF9FA;
+				box-shadow: 0px 0px 0px 1px #5586A3, inset 0px 0px 0px 2px #56A6D6, inset 5px 9px 8px rgba(82, 162, 214, 0.55);
 			}
 
 			&:disabled {
 				background: #FBFBFB;
-				border: 1px solid #ADB2B5;
-				box-shadow: inset 0px 0px 0px 2px #FFFFFF, inset 0px 0px 0px 3px rgba(0, 0, 0, 0.03), inset 4px 4px 4px rgba(0, 0, 0, 0.1);
+				border: 1px solid #FFFFFF;
+				box-shadow: inset 0px 0px 0px 1px #ADB2B5, inset 0px 0px 0px 2px rgba(0, 0, 0, 0.03), inset 4px 4px 4px rgba(0, 0, 0, 0.1);
 			}
 		}
 
@@ -394,5 +420,10 @@
 		> range.horizontal > trough > slider {
 			min-height: 15px;
 		}
+	}
+
+	/* Unset stuff set by the adwaitha Default.css */
+	window > box {
+		min-height: 0;
 	}
 }

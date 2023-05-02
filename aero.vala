@@ -1,19 +1,5 @@
 namespace Aero
 {
-    class Window : Gtk.Window
-    {
-        construct {
-            this.get_style_context().add_class("aero");
-
-            this.titlebar = new Aero.HeaderBar();
-
-            // We style the window child
-            this.notify["child"].connect(() => {
-                this.child.get_style_context().add_class("aero-window-contents");
-            });
-        }
-    }
-
     public class Orb : Gtk.Button
     {
         public Orb(string icon_res)
@@ -92,27 +78,36 @@ namespace Aero
         [GtkChild] Gtk.Button close;
 
         [GtkChild] public Gtk.Label title;
-        [GtkChild] Gtk.Image icon;
+        [GtkChild] public Gtk.Image icon;
         [GtkChild] Gtk.Box   content_box;
+        [GtkChild] Gtk.Box   info_box;
+
+        public bool show_info { get; set; default = true; }
 
         construct {
             this.realize.connect(() => {
                 var win = this.get_ancestor(typeof(Gtk.Window)) as Gtk.Window;
                 
+                /* Window controls callbacks */
                 close.clicked.connect(() => { win.close(); });
-                maximize.clicked.connect(() => {
-                    win.maximized = !win.maximized;
-                });
+                maximize.clicked.connect(() => { win.maximized = !win.maximized; });
                 minimize.clicked.connect(() => { win.minimize(); });
 
                 win.notify["maximized"].connect(() => {
                     maximize.icon_name = win.maximized ? "window-restore-symbolic" : "window-maximize-symbolic";
                 });
 
+                /* Window icon */
                 icon.state_flags_changed.connect((old) => {
                     if (((old & Gtk.StateFlags.ACTIVE) != 0) && ((icon.get_state_flags() & Gtk.StateFlags.ACTIVE) == 0))
                         (win.get_native().get_surface() as Gdk.Toplevel).titlebar_gesture(Gdk.TitlebarGesture.RIGHT_CLICK);
                 });
+                
+                /* Bind to window properties */
+                win.bind_property("modal", minimize, "visible", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+                win.bind_property("resizable", maximize, "visible", BindingFlags.SYNC_CREATE);
+
+                this.bind_property("show_info", info_box, "visible", BindingFlags.SYNC_CREATE);
             }); 
         }
 
@@ -127,6 +122,39 @@ namespace Aero
             var css_provider = new Gtk.CssProvider();
             css_provider.load_from_resource("/com/github/albert-tomanek/aero/aero.css");
             Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);    
+        }
+    }
+
+    [GtkTemplate (ui = "/com/github/albert-tomanek/aero/templates/wizard.ui")]
+    public class Wizard : Gtk.Window
+    {
+        [GtkChild] Gtk.Box header;
+
+        [GtkChild] private Gtk.Label title;
+        [GtkChild] private Gtk.Image icon;
+        Gtk.Button back;
+
+        [GtkChild] public Gtk.Box footer;
+
+        public Wizard(Gtk.Window? parent)
+        {
+            Object(transient_for: parent);
+        }
+        
+        construct {
+            ((Gtk.Widget) this).realize.connect(() => {    // Gtk.Dialog installs its own headerbar in its constructor so we have to run after that.
+                var titlebar = new Aero.HeaderBar.with_contents(header);
+                titlebar.title.bind_property("label", this.title, "label", BindingFlags.SYNC_CREATE);
+                titlebar.icon.bind_property("paintable", this.icon, "paintable", BindingFlags.SYNC_CREATE);
+                titlebar.show_info = false;
+
+                back = new Orb("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg");
+                back.sensitive = false;
+                header.prepend(back);
+
+                this.titlebar = titlebar;
+            });
+
         }
     }
 }

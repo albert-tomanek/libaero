@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
+<cambalache-project version="0.10.3" target_tk="gtk-4.0">
+  <ui>
+	(1,1,"wizard.ui","wizard.ui",None,None,None,None,None,None)
+  </ui>
+  <object>
+	(1,1,"GtkWindow","AeroWizard",None,None,None,None,None),
+	(1,2,"GtkBox","header",None,None,None,None,None),
+	(1,3,"GtkImage","icon",2,None,None,None,None),
+	(1,4,"GtkLabel","title",2,None,None,None,None),
+	(1,5,"GtkBox",None,1,None,None,None,None),
+	(1,6,"GtkBox",None,5,None,None,None,1),
+	(1,7,"GtkStackSwitcher",None,5,None,None,None,None),
+	(1,8,"GtkBox",None,6,None,None,None,1),
+	(1,9,"GtkButton",None,8,None,None,None,None),
+	(1,10,"GtkButton",None,8,None,None,None,None),
+	(1,11,"GtkBox","footer",6,None,None,None,None)
+  </object>
+  <object_property>
+	(1,1,"GtkWidget","css-classes","aero",None,None,None,None,None),
+	(1,1,"GtkWindow","modal","True",None,None,None,None,None),
+	(1,5,"GtkOrientable","orientation","vertical",None,None,None,None,None),
+	(1,5,"GtkWidget","css-classes","contents",None,None,None,None,None),
+	(1,6,"GtkWidget","css-classes","dialog-footer",None,None,None,None,None),
+	(1,6,"GtkWidget","hexpand","True",None,None,None,None,None),
+	(1,7,"GtkWidget","css-classes","markup",None,None,None,None,None),
+	(1,7,"GtkWidget","height-request","319",None,None,None,None,None),
+	(1,7,"GtkWidget","hexpand","True",None,None,None,None,None),
+	(1,7,"GtkWidget","vexpand","True",None,None,None,None,None),
+	(1,7,"GtkWidget","width-request","542",None,None,None,None,None),
+	(1,8,"GtkBox","spacing","10",None,None,None,None,None),
+	(1,8,"GtkWidget","halign","end",None,None,None,None,None),
+	(1,8,"GtkWidget","hexpand","True",None,None,None,None,None),
+	(1,9,"GtkButton","label","Cancel",None,None,None,None,None),
+	(1,10,"GtkButton","label","Next",None,None,None,None,None),
+	(1,11,"GtkBox","spacing","10",None,None,None,None,None)
+  </object_property>
+</cambalache-project>

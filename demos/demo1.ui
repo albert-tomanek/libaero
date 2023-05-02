@@ -15,7 +15,8 @@
           <object class="GtkActionBar">
             <child>
               <object class="GtkButton">
-                <property name="label">Manage disks</property>
+                <property name="label">Manage disks...</property>
+                <signal name="clicked" handler="cb_open_wizard"/>
               </object>
             </child>
             <child>

@@ -81,4 +81,11 @@ class Demo1 : Gtk.Window
 			text_view.wrap_mode = wrap_check.active ? Gtk.WrapMode.WORD : Gtk.WrapMode.NONE;
 		});
 	}
+
+	[GtkCallback]
+	void cb_open_wizard()
+	{
+		var wiz = new Aero.Wizard(this);
+		wiz.show();
+	}
 }

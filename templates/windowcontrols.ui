@@ -15,9 +15,12 @@
             <child>
               <object class="GtkBox">
                 <property name="css-name">window-controls</property>
+                <property name="hexpand">True</property>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkBox" id="info_box">
                     <property name="css-name">title-box</property>
+                    <property name="halign">start</property>
+                    <property name="hexpand">True</property>
                     <property name="spacing">5</property>
                     <child>
                       <object class="GtkImage" id="icon">
@@ -36,6 +39,8 @@
                 </child>
                 <child>
                   <object class="GtkBox">
+                    <property name="halign">end</property>
+                    <property name="hexpand">True</property>
                     <child>
                       <object class="GtkButton" id="minimize">
                         <property name="css-classes">maximize</property>
