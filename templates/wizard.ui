@@ -11,12 +11,13 @@
         <property name="css-classes">contents</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkStackSwitcher">
+          <object class="GtkStack" id="stack">
             <property name="css-classes">markup</property>
-            <property name="height-request">319</property>
-            <property name="hexpand">True</property>
+            <property name="height-request">320</property>
+            <property name="transition-duration">300</property>
+            <property name="transition-type">slide-left-right</property>
             <property name="vexpand">True</property>
-            <property name="width-request">542</property>
+            <property name="width-request">543</property>
           </object>
         </child>
         <child>
@@ -34,13 +35,16 @@
                 <property name="hexpand">True</property>
                 <property name="spacing">10</property>
                 <child>
-                  <object class="GtkButton">
-                    <property name="label">Cancel</property>
+                  <object class="GtkButton" id="cancel">
+                    <property name="label">_Cancel</property>
+                    <property name="use-underline">True</property>
+                    <signal name="clicked" handler="gtk_window_close"/>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkButton">
-                    <property name="label">Next</property>
+                  <object class="GtkButton" id="next">
+                    <property name="label">_Next</property>
+                    <property name="use-underline">True</property>
                   </object>
                 </child>
               </object>
@@ -55,7 +59,7 @@
       <object class="GtkImage" id="icon"/>
     </child>
     <child>
-      <object class="GtkLabel" id="title"/>
+      <object class="GtkLabel" id="title_label"/>
     </child>
   </object>
 </interface>

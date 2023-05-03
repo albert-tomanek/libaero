@@ -12,15 +12,14 @@
 
 	padding: 6px;
 	padding-top: 0px;
+
+	/* Default font */
+
+	font-size: 12px;
+	font-family: "Segoe UI";
 	
-	* {
-		font-family: "Segoe UI";
-		font-size: 12px;
-
-		caret-color: black;
-
-		transition: all 100ms linear;
-	}
+	caret-color: black;
+	transition: all 100ms linear;
 
 	#startmenu {
 		background: radial-gradient(7.68% 76.94% at 0% 50%, rgba(199, 199, 199, 0.26) 99.99%, rgba(255, 255, 255, 0) 100%), #000000;
@@ -39,7 +38,7 @@
 		border-radius: 4px;
 		background: #FCFCFC;
 		box-shadow: inset 0px 1px 2px #848484;
-	}
+	}s
 
 	/* Aero stuff */
 
@@ -87,43 +86,59 @@
 		}
 
 		> :last-child {
-			border-radius: 0px 0px 4px 0px;
-
 			> button {
-				background: linear-gradient(180deg, rgba(255, 255, 255, 0.58) 0%, rgba(255, 255, 255, 0.43) 42.84%, rgba(255, 255, 255, 0) 45.01%), rgba(151, 126, 126, 0.01);
+				background: linear-gradient(180deg, #FFFFFF 10.15%, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%);
 				border-width: 0px 1px 1px 1px;
-				border-radius: 0;
 				border-style: solid;
-				border-color: #6F7A9B;
-				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.5);
-
-				min-width: 24px;
-				min-height: 12px;
+				border-color: rgba(0, 0, 0, 0.64);
+				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
+				border-radius: 0px 0px 3px 0px;
 			}
 
 			> button:hover {
-				background: linear-gradient(180deg, rgba(255, 255, 255, 0.58) 0%, rgba(255, 255, 255, 0.43) 42.84%, rgba(255, 255, 255, 0) 45.01%), linear-gradient(180deg, #18409E 45.91%, #51C6F0 89.7%);
-				filter: drop-shadow(0px 1px 8px #49AFE2);
-				background-clip: padding-box;
+				background: linear-gradient(180deg, #FFFFFF 10.15%, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%), radial-gradient(54.23% 40% at 50% 95%, #0AFEFB 0%, rgba(10, 254, 251, 0) 100%), linear-gradient(180deg, #02558E 0%, #236EA4 100%);
+				border-width: 0px 1px 1px 1px;
+				border-style: solid;
+				border-color: rgba(0, 0, 0, 0.64);
+				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
+				border-radius: 0px 0px 3px 0px;
 			}
 
 			> button:active {
-				background: linear-gradient(180deg, rgba(255, 255, 255, 0.58) 0%, rgba(255, 255, 255, 0.43) 31.74%, rgba(255, 255, 255, 0) 33.74%), linear-gradient(180deg, #18409E 45.91%, #398EAD 89.7%);
-				filter: drop-shadow(0px 1px 8px #49AFE2);
+				background: linear-gradient(180deg, #FFFFFF 10.15%, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%), radial-gradient(54.23% 40% at 50% 95%, #0AFEFB 0%, #16D6C5 0.01%, rgba(10, 254, 251, 0) 100%), linear-gradient(180deg, #04213F 0%, #194169 100%);
+				border-width: 0px 1px 1px 1px;
+				border-style: solid;
+				border-color: rgba(0, 0, 0, 0.64);
+				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
+				border-radius: 0px 0px 3px 0px;
 			}
 
 			> .close {
-				background: linear-gradient(180deg, rgba(255, 255, 255, 0.58) 0%, rgba(255, 255, 255, 0.43) 42.84%, rgba(255, 255, 255, 0) 45.01%), linear-gradient(180deg, #B9442E 54.17%, #D16549 100%);
+				background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgba(212, 73, 48, 0) 0.01%, #D44930 35.94%, rgba(213, 76, 52, 0.982301) 63.02%, rgba(212, 73, 48, 0) 100%), linear-gradient(180deg, #B34434 58.7%, #C47463 91.68%);
+				border-width: 0px 1px 1px 1px;
+				border-style: solid;
+				border-color: #5B3027;
+				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
+				border-radius: 0px 0px 3px 0px;
+
 			}
 
 			> .close:hover {
-				background: linear-gradient(180deg, rgba(255, 255, 255, 0.58) 0%, rgba(255, 255, 255, 0.43) 42.84%, rgba(255, 255, 255, 0) 45.01%), linear-gradient(180deg, #CF3518 50.02%, #EC562E 100%);
-				filter: drop-shadow(0px 1px 8px #CF3518);
+				background: radial-gradient(110.58% 22.22% at 51.02% 94.44%, rgba(255, 230, 0, 0.2) 17.59%, rgba(255, 230, 0, 0) 100%), linear-gradient(270deg, #F1745E 0%, rgba(210, 34, 2, 0) 0.01%, #D22202 35.94%, rgba(210, 34, 2, 0.982301) 63.02%, rgba(210, 34, 2, 0) 100%), linear-gradient(180deg, #B34434 58.7%, #C47463 91.68%);
+				border-width: 0px 1px 1px 1px;
+				border-style: solid;
+				border-color: #5B3027;
+				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
+				border-radius: 0px 0px 3px 0px;
 			}
 
 			> .close:active {
-				background: linear-gradient(180deg, rgba(255, 255, 255, 0.58) 0%, rgba(255, 255, 255, 0.43) 33.26%, rgba(255, 255, 255, 0) 37.1%), linear-gradient(180deg, #811E0B 50.02%, #AF4123 100%);
-				filter: drop-shadow(0px 1px 8px #AF4123);
+				background: linear-gradient(0deg, rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0.38)), radial-gradient(110.58% 22.22% at 51.02% 94.44%, rgba(255, 230, 0, 0.2) 17.59%, rgba(255, 230, 0, 0) 100%), linear-gradient(270deg, #F1745E 0%, rgba(210, 34, 2, 0) 0.01%, #D22202 35.94%, rgba(210, 34, 2, 0.982301) 63.02%, rgba(210, 34, 2, 0) 100%), linear-gradient(180deg, #B34434 58.7%, #C47463 91.68%);
+				border-width: 0px 1px 1px 1px;
+				border-style: solid;
+				border-color: #5B3027;
+				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
+				border-radius: 0px 0px 3px 0px;
 			}
 		}
 	}
@@ -225,14 +240,14 @@
 		font-weight: 400;
 		font-style: normal;
 		font-size: 12px;
-
-		color: black;
 	}
 
 	/* Various types of boxes */
 
 	.markup {
 		padding: 19px 33px;
+
+		color: black;
 
 		/*
 		natural-wrap-mode: GTK_NATURAL_WRAP_NONE
@@ -245,6 +260,13 @@
 
 		scrolledwindow {
 			border: 1px solid #b0b0b0;
+		}
+
+		entry {
+			background: #FFFFFF;
+			border: 1px solid #E5E8ED;
+			box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
+			border-radius: 3px;
 		}
 	}
 
@@ -263,30 +285,30 @@
 		> revealer > box {
 			padding: 4px 10px;
 		}
-	}
+		
+		button {
+			border-radius: 2px;
+			border: 1px solid transparent;
+			background: transparent;
+			box-shadow: none;
 
-	actionbar button, .flat {
-		border-radius: 2px;
-		border: 1px solid transparent;
-		background: transparent;
-		box-shadow: none;
+			&:not(.image-button) {
+				padding-left: 10px;
+				padding-right: 10px;
+			}
 
-		&:not(.image-button) {
-			padding-left: 10px;
-			padding-right: 10px;
-		}
+			&:hover {
+				background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 49.41%, rgba(0, 0, 0, 0.05) 50.33%, rgba(0, 0, 0, 0.04) 100%);
+				border: 1px solid rgba(255, 255, 255, 0.44);
+				box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.24);
+			}
 
-		&:hover {
-			background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 49.41%, rgba(0, 0, 0, 0.05) 50.33%, rgba(0, 0, 0, 0.04) 100%);
-			border: 1px solid rgba(255, 255, 255, 0.44);
-			box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.24);
-		}
-
-		&:active {
-			background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 49.41%, rgba(0, 0, 0, 0.05) 50.33%, rgba(0, 0, 0, 0.04) 100%);
-			background-blend-mode: luminosity;
-			border: 1px solid rgba(255, 255, 255, 0.44);
-			box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.24), inset 0px 1px 4px rgba(0, 0, 0, 0.25);
+			&:active {
+				background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 49.41%, rgba(0, 0, 0, 0.05) 50.33%, rgba(0, 0, 0, 0.04) 100%);
+				background-blend-mode: luminosity;
+				border: 1px solid rgba(255, 255, 255, 0.44);
+				box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.24), inset 0px 1px 4px rgba(0, 0, 0, 0.25);
+			}
 		}
 	}
 
@@ -298,11 +320,13 @@
 		box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.81);
 		border-radius: 3px;
 
-		padding: 0;
+		padding: 0px;
 		
 		&:not(.image-button) {
 			min-width: 66px;
 			min-height: 21px;
+
+			// padding: 0px 8px;
 		}
 
 		&:hover {
@@ -342,6 +366,76 @@
 		}
 	}
 
+	.flat {
+		background: transparent;
+		border: 1px solid transparent;
+		border-radius: 4px;
+
+		.heading { color: black; }
+		
+		&:hover {
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.03) 100%);
+			border: 1px solid #C6C6C6;
+			color: #084BE5;
+
+			.heading { color: #084BE5; }
+		}
+
+		&:active {
+			background: rgba(0, 0, 0, 0.03);
+			border: 1px solid #C6C6C6;
+			box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.25);
+			color: #084BE5;
+
+			.heading { color: #084BE5; }
+		}
+	}
+
+	combobox {
+		arrow {
+			padding: 0px 2px;
+			color: transparent;
+			background: url("resource:///com/github/albert-tomanek/aero/images/combobox_arrow.svg");
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+
+		.combo cellview {
+			padding-left: 2px;
+		}
+
+		contents {
+			padding: 0px;
+			border-radius: 0;
+			border: none;
+	
+			.menu {
+				margin-top: 0;
+			}
+			
+			scrolledwindow {
+				border: 1px solid #646464;
+				box-shadow: 5px 5px 3px -3px rgba(0, 0, 0, 0.5);
+			}
+	
+			.flat {
+				padding: 2px 2px;
+				min-height: 0px;
+	
+				color: black;
+				font-size: 12px;
+				background: white;
+				border: none;
+				border-radius: 0;
+	
+				&:hover {
+					color: white;
+					background: #3399FF;
+				}
+			}
+		}	
+	}
+
 	.link {
 		color: #0066CC;
 	}
@@ -352,6 +446,10 @@
 
 	checkbutton {
 		color: black;
+
+		label {
+			margin-left: 4px;
+		}
 
 		check {
 			// width: 20px;
@@ -419,6 +517,61 @@
 
 		> range.horizontal > trough > slider {
 			min-height: 15px;
+		}
+	}
+
+
+	popover {
+		min-width: 200px;
+
+		separator {
+			margin-top: 2px;
+			margin-bottom: 2px;
+
+			&.horizontal {
+				min-height: 2px;
+				background: linear-gradient(180deg, #E1E1E1 49.99%, #FFFFFF 50%);
+			}
+		}
+
+		contents {
+			padding: 0px;
+			border-radius: 0;
+			border: none;
+
+			.menu {
+				margin-top: 0;
+			}
+			
+			scrolledwindow {
+				padding-left: 30px;
+				
+				border: 1px solid #979797;
+				background: #f0f0f0;
+				box-shadow: 5px 5px 3px -3px rgba(0, 0, 0, 0.5);
+
+				> * {
+					border-left: 1px solid #E1E1E1;
+				}
+			}
+
+			.flat {
+				padding: 4px 4px;
+				min-height: 0px;
+
+				color: black;
+				font-size: 12px;
+				border: 1px solid transparent;
+
+				&:selected {
+					background: linear-gradient(180deg, rgba(192, 217, 248, 0) 0%, rgba(192, 217, 248, 0.43) 96.21%);
+					box-shadow: inset 0px 0px 0px 2px rgba(247, 250, 255, 0.84);
+					border: 1px solid #AECFF7;
+					border-radius: 3px;
+
+					color: black;
+				}
+			}
 		}
 	}
 

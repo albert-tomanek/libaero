@@ -85,7 +85,32 @@ class Demo1 : Gtk.Window
 	[GtkCallback]
 	void cb_open_wizard()
 	{
-		var wiz = new Aero.Wizard(this);
+		var wiz = new Aero.Wizard(this) { title = "Example wizard" };
+		make_stack(wiz);
 		wiz.show();
+	}
+
+	[GtkChild] Gtk.Box page2;
+
+	void make_stack(Aero.Wizard wiz)
+	{
+		var stack = wiz.stack;
+		Gtk.Widget w;
+		Gtk.Box b;
+
+		{
+			b = new Gtk.Box(Gtk.Orientation.VERTICAL, 0) { spacing = 19 };
+			w = new Gtk.Label("Page 1") { halign = Gtk.Align.START };
+			w.add_css_class("heading");
+			b.append(w);
+			var v = new Aero.Wizard.OptionButton("Continue", "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.");
+			v.clicked.connect(wiz.next_page);
+			b.append(v);
+			w = new Aero.Wizard.OptionButton("Quit", "Exit this wizard");
+			b.append(w);
+			stack.add_named(b, "1");
+		}
+
+		stack.add_named(page2, "2");
 	}
 }
