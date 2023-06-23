@@ -72,7 +72,7 @@ class Demo1 : Gtk.Window
 	[GtkChild] Gtk.TextView text_view;
 
 	construct {
-		var orb = new Aero.Orb("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg");
+		var orb = new Aero.NavButtons();//new Aero.Orb("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg");
 		orb.valign = Gtk.Align.CENTER;
 		titlebar_content.prepend(orb);
 		this.titlebar = new Aero.HeaderBar.with_contents(titlebar_content);

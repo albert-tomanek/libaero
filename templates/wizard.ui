@@ -8,7 +8,7 @@
     <property name="modal">True</property>
     <child>
       <object class="GtkBox">
-        <property name="css-classes">contents</property>
+        <property name="css-classes">content</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkStack" id="stack">

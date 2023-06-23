@@ -1,13 +1,28 @@
 namespace Aero
 {
+    public void make_aero(Gtk.Window win)
+    {
+    }
+
+    internal void push_path(Cairo.Context cr, double start_x, double start_y, double[] coords, double w, double h)
+    {
+        cr.move_to(start_x * w, start_y * h);
+
+        for (int i = 0; i < coords.length; i += 6)
+            cr.curve_to(coords[i+0]*w, coords[i+1]*h, coords[i+2]*w, coords[i+3]*h, coords[i+4]*w, coords[i+5]*h);
+        
+        cr.close_path();
+    }
+
+
     public class Orb : Gtk.Button
     {
         public Orb(string icon_res)
         {
             var overlay = new Gtk.Overlay();
-            var refl_dummy = new DummyWidget() { visible = false };     // We steal the CSS style ctx from this one. Haven;t found a way to make a dummy css node.
-            overlay.add_overlay(refl_dummy);
-            overlay.add_overlay(new Reflection(refl_dummy.get_style_context()));
+            var style_dummy = new DummyWidget() { visible = false };     // We steal the CSS style ctx from this one. Haven;t found a way to make a dummy css node.
+            overlay.add_overlay(style_dummy);
+            overlay.add_overlay(new Reflection(style_dummy.get_style_context()));
             overlay.add_overlay(new Gtk.Image.from_resource(icon_res) {
                 //  halign = Gtk.Align.CENTER,
                 //  valign = Gtk.Align.CENTER
@@ -19,6 +34,8 @@ namespace Aero
         construct {
             //  this.set_size_request(37, 37);
             this.set_size_request(25, 25);
+
+            valign = Gtk.Align.CENTER;
         }
 
         static construct {
@@ -55,18 +72,73 @@ namespace Aero
                     ctx.render_frame(cr, 0, 0, w, h);
                 });
             }
+        }
+    }
 
-            static void push_path(Cairo.Context cr, double start_x, double start_y, double[] coords, double w, double h)
+    public class NavButtons : Gtk.Box
+    {
+        public Orb left;
+        public Orb right;
+
+        construct {
+            var overlay = new Gtk.Overlay();
+            this.append(overlay);
+
+            // Recess
+            var style_dummy = new DummyWidget() { visible = false };     // We steal the CSS style ctx from this one. Haven;t found a way to make a dummy css node.
+            overlay.add_overlay(style_dummy);
+            overlay.add_overlay(new Recess(style_dummy.get_style_context()));
+
+            // Buttons
+            var button_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
+            overlay.add_overlay(button_box);
+
+            this.left = new Orb("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg");
+            button_box.append(this.left);
+            this.right = new Orb("/com/github/albert-tomanek/aero/images/orb_arrow_right.svg");
+            button_box.append(this.right);
+
+            overlay.set_measure_overlay(button_box, true);
+        }
+
+        static construct {
+            set_css_name("navbuttons");
+        }
+
+        class DummyWidget : Gtk.Widget
+        {
+            static construct {
+                set_css_name("recess");
+            }    
+        }
+
+        class Recess : Gtk.DrawingArea
+        {
+            public Recess(Gtk.StyleContext ctx)
             {
-                cr.move_to(start_x * w, start_y * h);
+                set_draw_func((da, cr, w, h) => {
+                    cr.set_source_rgb(1, 0, 0);
+                    push_path(cr, 0.7125, 0.9803, {
+                        0.6189, 0.9199, 0.3793, 0.9249, 0.2838, 0.9826,
+                        0.265, 0.9939, 0.2452, 1.0, 0.2248, 1.0,
+                        0.1006, 1.0, 8.661e-06, 0.7762, 4.224e-10, 0.5,
+                        0, 0.2239, 0.1006, 0, 0.2248, 0,
+                        0.2452, 0, 0.2651, 0.005411, 0.2838, 0.01744,
+                        0.4565, 0.1283, 0.5362, 0.133, 0.7125, 0.0197,
+                        0.7325, 0.006914, 0.7535, 0, 0.7752, 0,
+                        0.8994, 0, 1.0, 0.2239, 1.0, 0.5,
+                        1.0, 0.7762, 0.8994, 1.0, 0.7752, 1.0,
+                        0.7535, 1.0, 0.7324, 0.9931, 0.7125, 0.9803
+                    }, w, h);
+                    cr.clip();
 
-                for (int i = 0; i < coords.length; i += 6)
-                    cr.curve_to(coords[i+0]*w, coords[i+1]*h, coords[i+2]*w, coords[i+3]*h, coords[i+4]*w, coords[i+5]*h);
-                
-                cr.close_path();
+                    ctx.render_background(cr, 0, 0, w, h);
+                    ctx.render_frame(cr, 0, 0, w, h);
+                });
             }
         }
     }
+
 
     [GtkTemplate (ui = "/com/github/albert-tomanek/aero/templates/windowcontrols.ui")]
     public class HeaderBar : Gtk.Box
@@ -226,6 +298,19 @@ namespace Aero
             static construct {
                 set_css_name("optionbutton");
             }    
+        }
+    }
+
+    public class Ribbon : Gtk.Box
+    {
+        public Gtk.Notebook rib = new Gtk.Notebook();
+
+        construct {
+            this.add_css_class("ribbon");
+            this.append(rib);
+
+            this.hexpand = true;
+            rib.hexpand = true;
         }
     }
 }

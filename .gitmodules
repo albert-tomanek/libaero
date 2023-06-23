@@ -1,0 +1,3 @@
+[submodule "subprojects/cambalache"]
+	path = subprojects/cambalache
+	url = https://gitlab.gnome.org/jpu/cambalache/

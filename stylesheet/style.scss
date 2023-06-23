@@ -1,6 +1,18 @@
 // FIXME: Gtk can't render borders where the `border-image-source` is a gradient
 
+/*
+BEST PRACTICE
+=============
+ - Please keep layout information outside of .ui files and in the CSS
+ - Order CSS properties so that layout props come first and style props follow
+*/
+
 .aero {
+	/* Unset stuff set by the adwaita Default.css */
+	window > box {
+		min-height: 0;
+	}
+
 	/* The window itself */
 
 	background: linear-gradient(0deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.22)), radial-gradient(300px /* So that the title remains equally visible when stretching */ 35% at 0% 0%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(27.72% 32.17% at 100% 0%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(30.29% 35.15% at 100% 100%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(25.16% 29.19% at 0% 100%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0) 15.48%, #FFFFFF 200px, rgba(255, 255, 255, 0) 201px);
@@ -56,7 +68,7 @@
 		background: none;
 	} */
 
-	> .contents {
+	> .content {
 		border: 1px solid #000000;
 		box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.49), inset 0px 0px 0px 2px rgba(255, 255, 255, 0.62);
 		border-radius: 3px;
@@ -85,14 +97,28 @@
 			border-radius: 0px 0px 0px 4px;
 		}
 
-		> :last-child {
+		// The box with the 3 buttons
+		buttons {
+			/* Curves */
+			> :first-child {
+				border-radius: 0px 0px 0px 3px;
+			}
+
+			> :last-child {
+				border-radius: 0px 0px 3px 0px;
+			}
+	
+			/* Fill */
 			> button {
+				min-width:  25px;
+				min-height: 17px;
+
 				background: linear-gradient(180deg, #FFFFFF 10.15%, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%);
 				border-width: 0px 1px 1px 1px;
 				border-style: solid;
+				border-radius: 0px;
 				border-color: rgba(0, 0, 0, 0.64);
 				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
-				border-radius: 0px 0px 3px 0px;
 			}
 
 			> button:hover {
@@ -101,7 +127,6 @@
 				border-style: solid;
 				border-color: rgba(0, 0, 0, 0.64);
 				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
-				border-radius: 0px 0px 3px 0px;
 			}
 
 			> button:active {
@@ -110,35 +135,33 @@
 				border-style: solid;
 				border-color: rgba(0, 0, 0, 0.64);
 				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
-				border-radius: 0px 0px 3px 0px;
 			}
 
 			> .close {
-				background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgba(212, 73, 48, 0) 0.01%, #D44930 35.94%, rgba(213, 76, 52, 0.982301) 63.02%, rgba(212, 73, 48, 0) 100%), linear-gradient(180deg, #B34434 58.7%, #C47463 91.68%);
+				min-width:  45px;
+
+				background: linear-gradient(180deg, #E8BBB4 0%, #CE8276 47.25%, #BA4735 47.25%, #CF8479 100%);
 				border-width: 0px 1px 1px 1px;
 				border-style: solid;
 				border-color: #5B3027;
-				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
-				border-radius: 0px 0px 3px 0px;
-
+				// box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
 			}
 
-			> .close:hover {
-				background: radial-gradient(110.58% 22.22% at 51.02% 94.44%, rgba(255, 230, 0, 0.2) 17.59%, rgba(255, 230, 0, 0) 100%), linear-gradient(270deg, #F1745E 0%, rgba(210, 34, 2, 0) 0.01%, #D22202 35.94%, rgba(210, 34, 2, 0.982301) 63.02%, rgba(210, 34, 2, 0) 100%), linear-gradient(180deg, #B34434 58.7%, #C47463 91.68%);
+			> .close:hover {background: linear-gradient(0deg, rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0.38)), radial-gradient(110.58% 22.22% at 51.02% 94.44%, rgba(255, 230, 0, 0.2) 17.59%, rgba(255, 230, 0, 0) 100%), linear-gradient(270deg, #F1745E 0%, rgba(210, 34, 2, 0) 0.01%, #D22202 35.94%, rgba(210, 34, 2, 0.982301) 63.02%, rgba(210, 34, 2, 0) 100%), linear-gradient(180deg, #B34434 58.7%, #C47463 91.68%);
+				background: radial-gradient(50% 16.67% at 50% 100%, #F6EE92 0%, rgba(229, 147, 77, 0) 100%), linear-gradient(180deg, #F1C0A0 0%, #E99181 46.28%, #D22302 46.63%, #E5934D 100%);
 				border-width: 0px 1px 1px 1px;
 				border-style: solid;
 				border-color: #5B3027;
-				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
-				border-radius: 0px 0px 3px 0px;
+				// box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
 			}
 
 			> .close:active {
-				background: linear-gradient(0deg, rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0.38)), radial-gradient(110.58% 22.22% at 51.02% 94.44%, rgba(255, 230, 0, 0.2) 17.59%, rgba(255, 230, 0, 0) 100%), linear-gradient(270deg, #F1745E 0%, rgba(210, 34, 2, 0) 0.01%, #D22202 35.94%, rgba(210, 34, 2, 0.982301) 63.02%, rgba(210, 34, 2, 0) 100%), linear-gradient(180deg, #B34434 58.7%, #C47463 91.68%);
+				background: linear-gradient(180deg, rgba(255, 255, 255, 0.2958) 0%, rgba(255, 255, 255, 0.261) 47.5%, rgba(255, 255, 255, 0) 47.5%), linear-gradient(270deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.15) 25%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.15) 74.99%, rgba(0, 0, 0, 0.3) 100%), radial-gradient(50% 16.67% at 50% 100%, #F6EE92 0%, rgba(229, 147, 77, 0) 100%), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), radial-gradient(50% 16.67% at 50% 100%, #F6EE92 0%, rgba(229, 147, 77, 0) 100%), linear-gradient(180deg, #E5934D 0%, #D22302 46.63%, #E5934D 100%);
+				background-blend-mode: normal, normal, overlay, normal, overlay, normal;
 				border-width: 0px 1px 1px 1px;
 				border-style: solid;
 				border-color: #5B3027;
-				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
-				border-radius: 0px 0px 3px 0px;
+				// box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
 			}
 		}
 	}
@@ -150,7 +173,7 @@
 		label {
 			color: black;
 			text-shadow: 0px 0px 6px #FFFFFF;
-			font-size: 12px;
+			font-size: 12px;//10pt;
 			font-weight: 400;
 		}
 
@@ -160,11 +183,15 @@
 			border: 1px solid rgba(35, 35, 35, 0.7);
 			border-radius: 4px;
 
-			&:focus-within {
-				background: white;
+			transition: 50ms linear;
+
+			&:focus-within, &:hover {
+				background: rgba(255, 255, 255, 0.90);
 			}
 		}
 	}
+
+	/* Aero-specific widgets */
 
 	orb {
 		/* background: url("resource:///com/github/albert-tomanek/aero/images/orb_bg.png");
@@ -224,6 +251,63 @@
 		border-radius: 33px;
 	}
 
+	navbuttons {
+		recess {
+			background: linear-gradient(180deg, #A3A3A3ff 0%, #D9D9D900 100%);
+		}
+		box {
+			border-spacing: 3px;
+			padding: 1px;
+		}
+	}
+
+	.ribbon notebook {
+		header {
+			background: #DFE9F5;
+			min-height: 23px;
+		}
+
+		tab {
+			margin-top: 1px;
+			padding: 0px 12px;
+
+			background: transparent;
+			border: 1px solid transparent;
+			border-width: 1px 1px 0px 1px;
+
+			font-size: 12px;
+
+			&:checked {
+				background: #F5FAFF;
+				border-width: 1px 1px 0px 1px;
+				border-style: solid;
+				border-color: #BAC9DB;
+				box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.33);
+				border-radius: 2px 2px 0px 0px;
+
+				
+			}
+			&:not(:checked):hover {
+				box-shadow: none;//adwaita
+			}
+
+			&.blue {
+				background: linear-gradient(180deg, #4884C1 5.28%, #2E68B2 45.35%, #1A4087 45.91%, #409ACF 100%);
+				border: 1px solid #426ABD;
+				box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.25);
+			}
+		}
+
+		stack {
+			min-height: 92px;
+
+			background: linear-gradient(180deg, #F5FAFF 17.24%, #DCE7F5 100%);
+			border-width: 0 0 1px 0;
+			border-style: solid;
+			border-color: #9FAEC2;
+		}
+	}
+
 	/* Text markup */
 
 	.heading {
@@ -246,6 +330,7 @@
 
 	.markup {
 		padding: 19px 33px;
+		border-spacing: 19px;//14pt;
 
 		color: black;
 
@@ -271,11 +356,11 @@
 	}
 
 	.dialog-footer {
+		padding: 10px 11px;
+		border-spacing: 10px;
+		
 		background: #F0F0F0;
 		box-shadow: inset 0px 3px 0px -2px rgba(0, 0, 0, 0.08);
-
-		padding: 10px 11px;
-		/* spacing: 10px; */
 	}
 
 	actionbar {
@@ -442,46 +527,48 @@
 
 	entry {
 		min-height: 20px;
+		animation-timing-function: unset;
 	}
 
 	checkbutton {
 		color: black;
 
 		label {
-			margin-left: 4px;
+			margin-left: 3px;
 		}
 
 		check {
-			// width: 20px;
-			// height: 20px;
+			min-width:  12px;
+			min-height: 12px;
 
 			background: #E8E8E8;
 			border: 1px solid #F4F4F4;
 			border-radius: 0;
 			box-shadow: 0px 0px 0px 1px #8E8F8F, inset 0px 0px 0px 2px rgba(0, 0, 0, 0.08), inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
 
-			&:hover, &:focus-visible {
+			color: transparent;
+			// -gtk-icon-source: -gtk-scaled(-gtk-recolor(url(resource:///com/github/albert-tomanek/aero/images/check.svg)), 1);
+			// -gtk-icon-source: url(resource:///com/github/albert-tomanek/aero/images/check.svg);
+			-gtk-icon-size: 12px;
+
+			&:checked {
+				color: #495F96;
+			}
+
+			&:hover, &:focus-visible, &:active {
+				color: #042271;
 				background: #C4EAFD;
 				border: 1px solid #C4EAFD;
 				box-shadow: 0px 0px 0px 1px #5586A3, inset 0px 0px 0px 2px #89D1F9, inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
 
 			}
 
-			&:active {
-				background: #B0DBF2;
-				border: 1px solid #DEF9FA;
-				box-shadow: 0px 0px 0px 1px #5586A3, inset 0px 0px 0px 2px #56A6D6, inset 5px 9px 8px rgba(82, 162, 214, 0.55);
-			}
-
 			&:disabled {
+				color: #BEBEBE;
 				background: #FBFBFB;
 				border: 1px solid #FFFFFF;
 				box-shadow: inset 0px 0px 0px 1px #ADB2B5, inset 0px 0px 0px 2px rgba(0, 0, 0, 0.03), inset 4px 4px 4px rgba(0, 0, 0, 0.1);
 			}
-		}
-
-		check.checked {
-			background: url("resource:///com/github/albert-tomanek/aero/images/check.svg");
 		}
 	}
 
@@ -520,8 +607,21 @@
 		}
 	}
 
+	tooltip {
+		background: linear-gradient(180deg, #FFFFFF 0%, #E5ECF7 100%);
+		border: 1px solid #767676;
+		box-shadow: 5px 3px 2px rgba(0, 0, 0, 0.23);
+		border-radius: 2px;
+
+		color: #4a4c4f;
+
+		box {
+		}
+	}
 
 	popover {
+		// If you wanna see how to add icons to the menus, look here: https://zetcode.com/gui/gtk2/menusandtoolbars/
+
 		min-width: 200px;
 
 		separator {
@@ -573,10 +673,5 @@
 				}
 			}
 		}
-	}
-
-	/* Unset stuff set by the adwaitha Default.css */
-	window > box {
-		min-height: 0;
 	}
 }

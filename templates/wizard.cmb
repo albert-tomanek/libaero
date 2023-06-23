@@ -21,7 +21,7 @@
 	(1,1,"GtkWidget","css-classes","aero",None,None,None,None,None),
 	(1,1,"GtkWindow","modal","True",None,None,None,None,None),
 	(1,5,"GtkOrientable","orientation","vertical",None,None,None,None,None),
-	(1,5,"GtkWidget","css-classes","contents",None,None,None,None,None),
+	(1,5,"GtkWidget","css-classes","content",None,None,None,None,None),
 	(1,6,"GtkWidget","css-classes","dialog-footer",None,None,None,None,None),
 	(1,6,"GtkWidget","hexpand","True",None,None,None,None,None),
 	(1,8,"GtkBox","spacing","10",None,None,None,None,None),

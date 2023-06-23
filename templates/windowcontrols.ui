@@ -39,33 +39,34 @@
                 </child>
                 <child>
                   <object class="GtkBox">
+                    <property name="css-name">buttons</property>
                     <property name="halign">end</property>
                     <property name="hexpand">True</property>
                     <child>
                       <object class="GtkButton" id="minimize">
                         <property name="css-classes">maximize</property>
-                        <property name="height-request">17</property>
+                        <property name="height-request">0</property>
                         <property name="icon-name">window-minimize-symbolic</property>
                         <property name="valign">start</property>
-                        <property name="width-request">24</property>
+                        <property name="width-request">0</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkButton" id="maximize">
                         <property name="css-classes">maximize</property>
-                        <property name="height-request">17</property>
+                        <property name="height-request">0</property>
                         <property name="icon-name">window-maximize-symbolic</property>
                         <property name="valign">start</property>
-                        <property name="width-request">24</property>
+                        <property name="width-request">0</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkButton" id="close">
                         <property name="css-classes">close</property>
-                        <property name="height-request">17</property>
+                        <property name="height-request">0</property>
                         <property name="icon-name">window-close-symbolic</property>
                         <property name="valign">start</property>
-                        <property name="width-request">45</property>
+                        <property name="width-request">0</property>
                       </object>
                     </child>
                   </object>

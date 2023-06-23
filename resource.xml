@@ -17,4 +17,7 @@
     <file>images/option_arrow.svg</file>
     <file>images/combobox_arrow.svg</file>
   </gresource>
+  <gresource prefix="/com/github/albert-tomanek/aero-apps">
+    <file compressed="true" preprocess="xml-stripblanks">mspaint/main.ui</file>
+  </gresource>
 </gresources>
