@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/com/github/albert-tomanek/gkeep">
-    <file compressed="true" preprocess="xml-stripblanks">example.ui</file>
-  </gresource>
   <gresource prefix="/com/github/albert-tomanek/aero">
-    <file compressed="true" preprocess="xml-stripblanks">demos/demo1.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/windowcontrols.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/wizard.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">templates/wizardoptionbutton.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">templates/wizardchoicebutton.ui</file>
     <file compressed="true">aero.css</file>
     <file>images/orb_bg.png</file>
     <file>images/orb_arrow_right.svg</file>
@@ -16,8 +12,5 @@
     <file>images/check_disabled.svg</file>
     <file>images/option_arrow.svg</file>
     <file>images/combobox_arrow.svg</file>
-  </gresource>
-  <gresource prefix="/com/github/albert-tomanek/aero-apps">
-    <file compressed="true" preprocess="xml-stripblanks">mspaint/main.ui</file>
   </gresource>
 </gresources>

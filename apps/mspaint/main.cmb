@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
+<cambalache-project version="0.10.3" target_tk="gtk-4.0">
+  <ui>
+	(1,1,"demo1.ui","main.ui",None,None,None,None,None,None)
+  </ui>
+  <object>
+	(1,1,"GtkWindow","MsPaint",None,None,None,None,None),
+	(1,5,"GtkBox","contents",1,None,None,None,None),
+	(1,10,"GtkBox",None,5,None,None,None,1),
+	(1,12,"GtkLabel",None,10,None,None,None,None),
+	(1,13,"GtkLabel",None,10,None,None,None,None),
+	(1,14,"GtkBox",None,5,None,None,None,2),
+	(1,15,"GtkBox",None,14,None,None,None,1),
+	(1,16,"GtkButton",None,15,None,None,None,None),
+	(1,17,"GtkButton",None,15,None,None,None,None),
+	(1,22,"GtkLinkButton",None,14,None,None,None,None),
+	(1,23,"GtkScrolledWindow",None,10,None,None,None,None),
+	(1,24,"GtkTextView","text_view",23,None,None,None,None),
+	(1,25,"GtkCheckButton","wrap_check",10,None,None,None,None)
+  </object>
+  <object_property>
+	(1,1,"GtkWidget","css-classes","aero",None,None,None,None,None),
+	(1,5,"GtkOrientable","orientation","vertical",None,None,None,None,None),
+	(1,5,"GtkWidget","css-classes","content",None,None,None,None,None),
+	(1,5,"GtkWidget","height-request","0",None,None,None,None,None),
+	(1,5,"GtkWidget","width-request","0",None,None,None,None,None),
+	(1,10,"GtkBox","spacing","19",None,None,None,None,None),
+	(1,10,"GtkOrientable","orientation","vertical",None,None,None,None,None),
+	(1,10,"GtkWidget","css-classes","markup",None,None,None,None,None),
+	(1,10,"GtkWidget","halign","start",None,None,None,None,None),
+	(1,10,"GtkWidget","hexpand","True",None,None,None,None,None),
+	(1,10,"GtkWidget","vexpand","True",None,None,None,None,None),
+	(1,12,"GtkLabel","label","Uninstall or change a program",None,None,None,None,None),
+	(1,12,"GtkWidget","css-classes","heading",None,None,None,None,None),
+	(1,12,"GtkWidget","halign","start",None,None,None,None,None),
+	(1,13,"GtkLabel","justify","fill",None,None,None,None,None),
+	(1,13,"GtkLabel","label","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",None,None,None,None,None),
+	(1,13,"GtkLabel","natural-wrap-mode","word",None,None,None,None,None),
+	(1,13,"GtkLabel","use-markup","True",None,None,None,None,None),
+	(1,13,"GtkLabel","wrap","True",None,None,None,None,None),
+	(1,13,"GtkWidget","css-classes","body",None,None,None,None,None),
+	(1,13,"GtkWidget","halign","start",None,None,None,None,None),
+	(1,14,"GtkWidget","css-classes","dialog-footer",None,None,None,None,None),
+	(1,15,"GtkBox","spacing","10",None,None,None,None,None),
+	(1,15,"GtkWidget","halign","end",None,None,None,None,None),
+	(1,15,"GtkWidget","hexpand","True",None,None,None,None,None),
+	(1,16,"GtkButton","label","Cancel",None,None,None,None,None),
+	(1,16,"GtkButton","use-underline","True",None,None,None,None,None),
+	(1,17,"GtkButton","label","OK",None,None,None,None,None),
+	(1,17,"GtkButton","use-underline","True",None,None,None,None,None),
+	(1,22,"GtkButton","label","More info...",None,None,None,None,None),
+	(1,22,"GtkButton","use-underline","True",None,None,None,None,None),
+	(1,23,"GtkScrolledWindow","hscrollbar-policy","never",None,None,None,None,None),
+	(1,23,"GtkScrolledWindow","overlay-scrolling","False",None,None,None,None,None),
+	(1,23,"GtkScrolledWindow","vscrollbar-policy","always",None,None,None,None,None),
+	(1,23,"GtkWidget","height-request","200",None,None,None,None,None),
+	(1,23,"GtkWidget","hexpand","True",None,None,None,None,None),
+	(1,24,"GtkTextView","accepts-tab","False",None,None,None,None,None),
+	(1,25,"GtkCheckButton","label","_Wrap text",None,None,None,None,None),
+	(1,25,"GtkCheckButton","use-underline","True",None,None,None,None,None),
+	(1,25,"GtkWidget","halign","end",None,None,None,None,None)
+  </object_property>
+</cambalache-project>

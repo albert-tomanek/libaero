@@ -4,7 +4,12 @@
 BEST PRACTICE
 =============
  - Please keep layout information outside of .ui files and in the CSS
- - Order CSS properties so that layout props come first and style props follow
+
+CSS Property order:
+1. Layout
+2. Style
+3. Animation
+
 */
 
 .aero {
@@ -50,7 +55,7 @@ BEST PRACTICE
 		border-radius: 4px;
 		background: #FCFCFC;
 		box-shadow: inset 0px 1px 2px #848484;
-	}s
+	}
 
 	/* Aero stuff */
 
@@ -202,9 +207,10 @@ BEST PRACTICE
 		border-radius: 35px;
 
 		background: radial-gradient(80.21% 57.89% at 50% 100%, #3AC2F9 12.62%, #01155B 100%);
-		box-shadow: inset 0px 0px 0px 2px rgba(182, 243, 255, 0.7);
-		border: 0.5px solid #00249D;
-		// border-image-source: linear-gradient(180deg, #00249D 0%, #424242 100%);
+		box-shadow: 0px 0px 8px #ffffff00, inset 0px 0px 0px 1px rgba(182, 243, 255, 0.7);
+		border: 0.5px solid #003AFF;
+
+		transition: all 300ms linear;
 
 		reflection {
 			background: radial-gradient(87.27% 124.91% at 50% 101.96%, rgba(112, 203, 255, 0.38) 18.18%, #FFFFFF 91.85%);
@@ -214,14 +220,14 @@ BEST PRACTICE
 			/* filter: brightness(80%) contrast(180%) saturate(180%) drop-shadow(-1px 1px 2px rgba(0, 0, 0, 0.4)) drop-shadow(0px 0px 14px #49AFE2); */
 	
 			background: radial-gradient(80.21% 57.89% at 50% 100%, #3AC2F9 28.94%, #015EC3 100%);
-			box-shadow: 0px 0px 8px #08A8EE, inset 0px 0px 0px 2px rgba(182, 243, 255, 0.7);
+			box-shadow: 0px 0px 8px #08A8EE, inset 0px 0px 0px 1px rgba(182, 243, 255, 0.7);
 			border: 1px solid;
 			border-image-source: linear-gradient(180deg, #00249D 0%, #424242 100%);
 		}
 
 		&:active {
 			background: radial-gradient(80.21% 57.89% at 50% 100%, #3AC2F9 12.62%, #010633 77.24%);
-			box-shadow: inset 0px 0px 0px 2px rgba(182, 243, 255, 0.7);
+			box-shadow: inset 0px 0px 0px 1px rgba(182, 243, 255, 0.7);
 			border: 1px solid;
 			border-image-source: linear-gradient(180deg, #00249D 0%, #424242 100%);
 	
@@ -232,15 +238,18 @@ BEST PRACTICE
 		}
 
 		&:disabled {
-			background: transparent;
-			box-shadow: none;
-			border: 1px solid;
-			border-image-source: linear-gradient(180deg, #4F4F4F 0%, #424242 100%);
-			
+			background: radial-gradient(80.21% 57.89% at 50% 100%, #D9E3EF 12.62%, #D7DFE7 77.24%);
+			box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.7);
+			border: 1px solid #929292;
 			
 			reflection {
-				background: radial-gradient(87.27% 124.91% at 50% 101.96%, rgba(183, 183, 183, 0.38) 18.18%, #FFFFFF 91.85%);			
+				background: radial-gradient(87.27% 124.91% at 50% 101.96%, rgba(255, 255, 255, 0.38) 18.18%, #FFFFFF 91.85%);			
 				border: 1px solid #4F4F4F;
+			}
+
+			&:not(.content) {	// The pale blue background looks bad atop transparent glass.
+				background: radial-gradient(80.21% 57.89% at 50% 100%, #999999 12.62%, #626262 77.24%);
+				// background: rgba(100, 100, 100, 0.3);
 			}
 		}
 	}
@@ -350,7 +359,7 @@ BEST PRACTICE
 		entry {
 			background: #FFFFFF;
 			border: 1px solid #E5E8ED;
-			box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
+			// box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
 			border-radius: 3px;
 		}
 	}

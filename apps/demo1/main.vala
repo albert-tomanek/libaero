@@ -64,7 +64,7 @@ public class KeepApp : Gtk.Application {
 //  	//  }
 //  }
 
-[GtkTemplate (ui = "/com/github/albert-tomanek/aero/demos/demo1.ui")]
+[GtkTemplate (ui = "/com/github/albert-tomanek/aero/apps/demo1/demo1.ui")]
 class Demo1 : Gtk.Window
 {
 	[GtkChild] Gtk.Box titlebar_content;
@@ -72,9 +72,9 @@ class Demo1 : Gtk.Window
 	[GtkChild] Gtk.TextView text_view;
 
 	construct {
-		var orb = new Aero.NavButtons();//new Aero.Orb("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg");
-		orb.valign = Gtk.Align.CENTER;
-		titlebar_content.prepend(orb);
+		var navs = new Aero.NavButtons();//new Aero.Orb("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg");
+		navs.right.sensitive = false;
+		titlebar_content.prepend(navs);
 		this.titlebar = new Aero.HeaderBar.with_contents(titlebar_content);
 
 		wrap_check.notify["active"].connect(() => {
@@ -103,10 +103,10 @@ class Demo1 : Gtk.Window
 			w = new Gtk.Label("Page 1") { halign = Gtk.Align.START };
 			w.add_css_class("heading");
 			b.append(w);
-			var v = new Aero.Wizard.OptionButton("Continue", "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.");
+			var v = new Aero.Wizard.ChoiceButton("Continue", "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.");
 			v.clicked.connect(wiz.next_page);
 			b.append(v);
-			w = new Aero.Wizard.OptionButton("Quit", "Exit this wizard");
+			w = new Aero.Wizard.ChoiceButton("Quit", "Exit this wizard");
 			b.append(w);
 			stack.add_named(b, "1");
 		}

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
+<cambalache-project version="0.12.0" target_tk="gtk-4.0">
+  <ui>
+	(2,1,"wizardoptionbutton.ui","wizardchoicebutton.ui",None,None,None,None,None,None,None)
+  </ui>
+  <ui_library>
+	(2,"gtk","4.6",None)
+  </ui_library>
+  <object>
+	(2,1,"GtkButton","AeroWizardChoiceButton",None,None,None,None,None,None),
+	(2,2,"GtkGrid",None,1,None,None,None,None,None),
+	(2,3,"GtkImage",None,2,None,None,None,None,None),
+	(2,4,"GtkLabel","label_title",2,None,None,None,1,None),
+	(2,5,"GtkLabel","label_desc",2,None,None,None,2,None)
+  </object>
+  <object_property>
+	(2,1,"GtkWidget","css-classes","flat",None,None,None,None,None,None,None,None,None),
+	(2,1,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
+	(2,2,"GtkGrid","column-spacing","8",None,None,None,None,None,None,None,None,None),
+	(2,2,"GtkGrid","row-spacing","3",None,None,None,None,None,None,None,None,None),
+	(2,2,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
+	(2,2,"GtkWidget","margin-bottom","8",None,None,None,None,None,None,None,None,None),
+	(2,2,"GtkWidget","margin-end","11",None,None,None,None,None,None,None,None,None),
+	(2,2,"GtkWidget","margin-start","8",None,None,None,None,None,None,None,None,None),
+	(2,2,"GtkWidget","margin-top","11",None,None,None,None,None,None,None,None,None),
+	(2,3,"GtkImage","resource","/com/github/albert-tomanek/aero/images/option_arrow.svg",None,None,None,None,None,None,None,None,None),
+	(2,4,"GtkLabel","natural-wrap-mode","word",None,None,None,None,None,None,None,None,None),
+	(2,4,"GtkLabel","use-markup","True",None,None,None,None,None,None,None,None,None),
+	(2,4,"GtkLabel","wrap","True",None,None,None,None,None,None,None,None,None),
+	(2,4,"GtkWidget","css-classes","heading",None,None,None,None,None,None,None,None,None),
+	(2,4,"GtkWidget","halign","start",None,None,None,None,None,None,None,None,None),
+	(2,4,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
+	(2,5,"GtkLabel","natural-wrap-mode","word",None,None,None,None,None,None,None,None,None),
+	(2,5,"GtkLabel","use-markup","True",None,None,None,None,None,None,None,None,None),
+	(2,5,"GtkLabel","wrap","True",None,None,None,None,None,None,None,None,None),
+	(2,5,"GtkWidget","halign","start",None,None,None,None,None,None,None,None,None),
+	(2,5,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None)
+  </object_property>
+  <object_layout_property>
+	(2,2,3,"GtkGridLayoutChild","column","0",None,None,None,None),
+	(2,2,3,"GtkGridLayoutChild","row","0",None,None,None,None),
+	(2,2,4,"GtkGridLayoutChild","column","1",None,None,None,None),
+	(2,2,4,"GtkGridLayoutChild","row","0",None,None,None,None),
+	(2,2,5,"GtkGridLayoutChild","column","1",None,None,None,None),
+	(2,2,5,"GtkGridLayoutChild","column-span","1",None,None,None,None),
+	(2,2,5,"GtkGridLayoutChild","row","1",None,None,None,None),
+	(2,2,5,"GtkGridLayoutChild","row-span","1",None,None,None,None)
+  </object_layout_property>
+  <object_data>
+	(2,1,"GtkWidget",1,1,None,None,None),
+	(2,1,"GtkWidget",2,2,None,1,None),
+	(2,1,"GtkWidget",2,3,None,1,None)
+  </object_data>
+</cambalache-project>

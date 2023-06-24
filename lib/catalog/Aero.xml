@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+ Handy Extra meta data
+
+ Copyright (C) 2022  Juan Pablo Ugarte
+-->
+<meta>
+  <types>
+    <AeroOrb>
+      <properties>
+        <!-- <property id="icon-name" type="CmbIconName"/>
+        <property id="subtitle" translatable="True"/> -->
+      </properties>
+    </AeroOrb>
+  </types>
+</meta>
