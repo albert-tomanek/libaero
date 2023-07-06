@@ -11,6 +11,9 @@
     <file>images/check.svg</file>
     <file>images/check_disabled.svg</file>
     <file>images/option_arrow.svg</file>
-    <file>images/combobox_arrow.svg</file>
+    <file>images/button_arrow_down.svg</file>
+    <file>images/button_arrow_right.svg</file>
+    <file>images/slider-grip-h.svg</file>
+    <file>images/slider-grip-v.svg</file>
   </gresource>
 </gresources>

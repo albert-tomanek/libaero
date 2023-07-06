@@ -11,6 +11,13 @@ resources = gnome.compile_resources(
 	export: true,
 )
 
+icon_resources = gnome.compile_resources(
+   'aero_res_icons', 'icon_resource.xml',
+    source_dir: '.',
+	dependencies: css_dep,
+	export: true,
+)
+
 lib = shared_library('aero',
 	[css_dep, resources],
 	version: '0.0.1',

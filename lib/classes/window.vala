@@ -7,7 +7,7 @@ public class Aero.HeaderBar : Gtk.Box
     [GtkChild] Gtk.Button maximize;
     [GtkChild] Gtk.Button close;
 
-    [GtkChild] public Gtk.Label title;
+    [GtkChild] Gtk.Label title; // private; this syncs with the official window title automatically.
     [GtkChild] public Gtk.Image icon;
     [GtkChild] Gtk.Box   content_box;
     [GtkChild] Gtk.Box   info_box;
@@ -15,7 +15,7 @@ public class Aero.HeaderBar : Gtk.Box
     public bool show_info { get; set; default = true; }
 
     construct {
-        this.realize.connect(() => {
+        this.realize.connect(() => {    // Once it's actually attached to a window...
             var win = this.get_ancestor(typeof(Gtk.Window)) as Gtk.Window;
             
             /* Window controls callbacks */
@@ -36,6 +36,7 @@ public class Aero.HeaderBar : Gtk.Box
             /* Bind to window properties */
             win.bind_property("modal", minimize, "visible", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
             win.bind_property("resizable", maximize, "visible", BindingFlags.SYNC_CREATE);
+            win.bind_property("title", this.title, "label", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
             this.bind_property("show_info", info_box, "visible", BindingFlags.SYNC_CREATE);
         }); 

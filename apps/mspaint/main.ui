@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- Created with Cambalache 0.10.3 -->
+<!-- Created with Cambalache 0.12.1 -->
 <interface>
   <!-- interface-name demo1.ui -->
-  <requires lib="gtk" version="4.6"/>
+  <requires lib="gtk" version="4.8"/>
   <template class="MsPaint" parent="GtkWindow">
     <property name="css-classes">aero</property>
     <child>
@@ -12,6 +12,36 @@
         <property name="orientation">vertical</property>
         <property name="width-request">0</property>
         <child>
+          <object class="GtkNotebook">
+            <property name="css-classes">ribbon</property>
+            <property name="group-name">Home</property>
+            <property name="hexpand">True</property>
+            <property name="page">0</property>
+            <child type="tab">
+              <object class="GtkBox">
+                <child>
+                  <object class="GtkFrame">
+                    <property name="label">Clipboard</property>
+                    <child>
+                      <object class="GtkBox">
+                        <child>
+                          <object class="GtkButton">
+                            <property name="icon-name">edit-paste-symbolic</property>
+                            <property name="label">Paste</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton"/>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
           <object class="GtkBox">
             <property name="css-classes">markup</property>
             <property name="halign">start</property>
@@ -19,75 +49,6 @@
             <property name="orientation">vertical</property>
             <property name="spacing">19</property>
             <property name="vexpand">True</property>
-            <child>
-              <object class="GtkLabel">
-                <property name="css-classes">heading</property>
-                <property name="halign">start</property>
-                <property name="label">Uninstall or change a program</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="css-classes">body</property>
-                <property name="halign">start</property>
-                <property name="justify">fill</property>
-                <property name="label">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</property>
-                <property name="natural-wrap-mode">word</property>
-                <property name="use-markup">True</property>
-                <property name="wrap">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkScrolledWindow">
-                <property name="height-request">200</property>
-                <property name="hexpand">True</property>
-                <property name="hscrollbar-policy">never</property>
-                <property name="overlay-scrolling">False</property>
-                <property name="vscrollbar-policy">always</property>
-                <child>
-                  <object class="GtkTextView" id="text_view">
-                    <property name="accepts-tab">False</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkCheckButton" id="wrap_check">
-                <property name="halign">end</property>
-                <property name="label">_Wrap text</property>
-                <property name="use-underline">True</property>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkBox">
-            <property name="css-classes">dialog-footer</property>
-            <child>
-              <object class="GtkLinkButton">
-                <property name="label">More info...</property>
-                <property name="use-underline">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkBox">
-                <property name="halign">end</property>
-                <property name="hexpand">True</property>
-                <property name="spacing">10</property>
-                <child>
-                  <object class="GtkButton">
-                    <property name="label">Cancel</property>
-                    <property name="use-underline">True</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton">
-                    <property name="label">OK</property>
-                    <property name="use-underline">True</property>
-                  </object>
-                </child>
-              </object>
-            </child>
           </object>
         </child>
       </object>

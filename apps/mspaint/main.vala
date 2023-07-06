@@ -7,7 +7,7 @@ public class MsPaintApp : Gtk.Application {
 
 	protected override void activate () {
 		var win = new MsPaint() { application = this };
-		win.set_size_request(300, 200);
+		win.set_size_request(800, 600);
 		win.show();
 	}
 
@@ -27,17 +27,17 @@ class MsPaint : Gtk.Window
 	construct {
 		this.titlebar = new Aero.HeaderBar();
 
-		this.ribbon = new Aero.Ribbon();
-		{
-			var b = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
-			var l = new Gtk.Label("Home");
-			this.ribbon.rib.append_page(b, l);
-		}
-		{
-			var b = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
-			var l = new Gtk.Label("View");
-			this.ribbon.rib.append_page(b, l);
-		}
-        this.contents.prepend(this.ribbon);
+		//  this.ribbon = new Aero.Ribbon();
+		//  {
+		//  	var b = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
+		//  	var l = new Gtk.Label("Home");
+		//  	this.ribbon.rib.append_page(b, l);
+		//  }
+		//  {
+		//  	var b = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
+		//  	var l = new Gtk.Label("View");
+		//  	this.ribbon.rib.append_page(b, l);
+		//  }
+        //  this.contents.prepend(this.ribbon);
 	}
 }

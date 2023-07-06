@@ -22,8 +22,12 @@ public class AeroPhotosApp : Gtk.Application {
 class AeroPhotos : Gtk.Window
 {
 	[GtkChild] Gtk.Box contents;
+	[GtkChild] Gtk.ActionBar action_bar;
 
 	construct {
 		this.titlebar = new Aero.HeaderBar();
+		var navs = new Aero.NavButtons();
+		//  navs.right.sensitive = false;
+		this.action_bar.pack_start(navs);
 	}
 }
