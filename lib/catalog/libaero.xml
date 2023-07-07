@@ -12,6 +12,11 @@
     <glade-widget-class name="AeroWizardChoiceButton" generic-name="wizardchoicebutton" title="Wizard"/>
     <glade-widget-class name="AeroRibbon" generic-name="ribbon" title="Ribbon"/>
     <glade-widget-class name="AeroRibbonSection" generic-name="ribbonsection" title="Ribbon Section"/>
+    <glade-widget-class name="AeroActionButton" generic-name="actionbutton" title="Action Button">
+      <properties>
+        <property id="size" type="GtkIconSize"/>
+      </properties>
+    </glade-widget-class>
   </glade-widget-classes>
 
   <glade-widget-group title="Aero Widgets" name="aero-widgets">
@@ -26,5 +31,6 @@
   <glade-widget-group title="Aero Ribbon" name="aero-ribbon">
     <glade-widget-class-ref name="AeroRibbon"/>
     <glade-widget-class-ref name="AeroRibbonSection"/>
+    <glade-widget-class-ref name="AeroActionButton"/>
   </glade-widget-group>
 </glade-catalog>

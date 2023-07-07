@@ -25,7 +25,6 @@
                     <child>
                       <object class="GtkImage" id="icon">
                         <property name="icon-name">application-x-executable</property>
-                        <property name="pixel-size">16</property>
                       </object>
                     </child>
                     <child>
@@ -45,10 +44,9 @@
                     <child>
                       <object class="GtkButton" id="minimize">
                         <property name="child">
-                          <object class="GtkImage">
+                          <object class="GtkPicture">
+                            <property name="content-fit">scale-down</property>
                             <property name="height-request">10</property>
-                            <property name="pixel-size">0</property>
-                            <property name="resource">/com/github/albert-tomanek/aero/images/window-minimize.svg</property>
                             <property name="width-request">12</property>
                           </object>
                         </property>
@@ -61,9 +59,9 @@
                     <child>
                       <object class="GtkButton" id="maximize">
                         <property name="child">
-                          <object class="GtkImage">
+                          <object class="GtkPicture">
+                            <property name="content-fit">scale-down</property>
                             <property name="height-request">10</property>
-                            <property name="resource">/com/github/albert-tomanek/aero/images/window-maximize.svg</property>
                             <property name="width-request">12</property>
                           </object>
                         </property>
@@ -76,9 +74,9 @@
                     <child>
                       <object class="GtkButton" id="close">
                         <property name="child">
-                          <object class="GtkImage">
+                          <object class="GtkPicture">
+                            <property name="content-fit">scale-down</property>
                             <property name="height-request">10</property>
-                            <property name="resource">/com/github/albert-tomanek/aero/images/window-close.svg</property>
                             <property name="width-request">12</property>
                           </object>
                         </property>

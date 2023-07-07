@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
 <gresource prefix="/com/github/albert-tomanek/aero">
-<file>icons/orig/accessibilitycpl_1.png</file>
+<!-- <file>icons/orig/accessibilitycpl_1.png</file>
 <file>icons/orig/accessibilitycpl_321.png</file>
 <file>icons/orig/accessibilitycpl_322.png</file>
 <file>icons/orig/accessibilitycpl_325.png</file>
@@ -225,9 +225,9 @@
 <file>icons/orig/imageres_1025.png</file>
 <file>icons/orig/imageres_1026.png</file>
 <file>icons/orig/imageres_1027.png</file>
-<file>icons/orig/imageres_1029.png</file>
+<file>icons/orig/imageres_1029.png</file>-->
 <file>icons/orig/imageres_102.png</file>
-<file>icons/orig/imageres_1030.png</file>
+<!--<file>icons/orig/imageres_1030.png</file>
 <file>icons/orig/imageres_1031.png</file>
 <file>icons/orig/imageres_1032.png</file>
 <file>icons/orig/imageres_1033.png</file>
@@ -499,9 +499,9 @@
 <file>icons/orig/netshell_1924.png</file>
 <file>icons/orig/netshell_1925.png</file>
 <file>icons/orig/netshell_1951.png</file>
-<file>icons/orig/netshell_23511.png</file>
+<file>icons/orig/netshell_23511.png</file>-->
 <file>icons/orig/networkexplorer_115.png</file>
-<file>icons/orig/networkexplorer_124.png</file>
+<!--<file>icons/orig/networkexplorer_124.png</file>
 <file>icons/orig/networkexplorer_127.png</file>
 <file>icons/orig/networkexplorer_128.png</file>
 <file>icons/orig/networkexplorer_130.png</file>
@@ -795,9 +795,9 @@
 <file>icons/orig/shell32_242.png</file>
 <file>icons/orig/shell32_243.png</file>
 <file>icons/orig/shell32_245.png</file>
-<file>icons/orig/shell32_246.png</file>
+<file>icons/orig/shell32_246.png</file>-->
 <file>icons/orig/shell32_24.png</file>
-<file>icons/orig/shell32_252.png</file>
+<!--<file>icons/orig/shell32_252.png</file>
 <file>icons/orig/shell32_253.png</file>
 <file>icons/orig/shell32_254.png</file>
 <file>icons/orig/shell32_255.png</file>
@@ -995,6 +995,6 @@
 <file>icons/orig/xpsrchvw_100.png</file>
 <file>icons/orig/xpsrchvw_109.png</file>
 <file>icons/orig/xpsrchvw_112.png</file>
-<file>icons/orig/xpsrchvw_113.png</file>
+<file>icons/orig/xpsrchvw_113.png</file> -->
 </gresource>
 </gresources>

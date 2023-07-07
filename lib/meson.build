@@ -18,7 +18,7 @@ icon_resources = gnome.compile_resources(
 )
 
 lib = shared_library('aero',
-	[css_dep, lib_resources],
+	[css_dep, lib_resources, icon_resources],
 	version: '0.0.1',
 	sources: lib_sources,
 	dependencies: [

@@ -141,7 +141,7 @@ CSS Property order:
 				transition: 200ms linear all;
 
 				&:hover {
-					background: linear-gradient(180deg, #FFFFFF 10.15%, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%), radial-gradient(54.23% 40% at 50% 95%, #0AFEFB 0%, rgba(10, 254, 251, 0) 100%), linear-gradient(180deg, #02558E 0%, #236EA4 100%);
+					background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%), radial-gradient(54.23% 40% at 50% 95%, #0AFEFB 0%, rgba(10, 254, 251, 0) 100%), linear-gradient(180deg, #02558E 0%, #236EA4 100%);
 					border-width: 0px 1px 1px 1px;
 					border-style: solid;
 					border-color: rgba(0, 0, 0, 0.64);
@@ -149,7 +149,7 @@ CSS Property order:
 				}
 
 				&:active {
-					background: linear-gradient(180deg, #FFFFFF 10.15%, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%), radial-gradient(54.23% 40% at 50% 95%, #0AFEFB 0%, #16D6C5 0.01%, rgba(10, 254, 251, 0) 100%), linear-gradient(180deg, #04213F 0%, #194169 100%);
+					background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%), radial-gradient(54.23% 40% at 50% 95%, #0AFEFB 0%, #16D6C5 0.01%, rgba(10, 254, 251, 0) 100%), linear-gradient(180deg, #04213F 0%, #194169 100%);
 					border-width: 0px 1px 1px 1px;
 					border-style: solid;
 					border-color: rgba(0, 0, 0, 0.64);
@@ -353,11 +353,13 @@ CSS Property order:
 					padding: 0px 8px;
 					
 					> label {
+						margin-bottom: 2px;
 						color: #738399;
 					}
 
 					> box {
 						padding: 8px 0px;
+						border-spacing: 8px;
 					}
 				}
 
@@ -370,24 +372,82 @@ CSS Property order:
 				}
 			}
 
-			button {
-				border-radius: 3px;
-				border: 1px solid transparent;
+			@mixin yellow-hover-lighter {
+				background: linear-gradient(180deg, #FFF 0%, rgba(255, 255, 255, 0.44) 39.87%, rgba(255, 255, 255, 0.00) 39.88%), linear-gradient(180deg, #FFE999 67.32%, #FFFEAC 96.48%);
+				box-shadow: 0px 0px 2px 2px #FFF inset;
+			}
+
+			@mixin yellow-hover {
+				border-color: #FFB700;
+				background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.37) 39.87%, rgba(255, 255, 255, 0.00) 40.29%), linear-gradient(180deg, #FFB169 7.81%, #FFCE69 75%, #FFFEAC 96.48%);
+				box-shadow: 0px 0px 2px 1px #FFF inset;
+			}
+
+			@mixin yellow-pressed {
+				border-color: #C29B29;
+				background: linear-gradient(180deg, #FFDCA0 0%, #FFD181 39.15%, #FFC45D 39.71%, #FFC45D 73.80%, #FFD781 100%);
+				box-shadow: 0px 1px 2px 1px #D69E22 inset;
+			}
+
+			@mixin flat {
+				border-color: transparent;
 				background: transparent;
 				box-shadow: none;
 
 				transition: box-shadow 200ms linear;
-				
-				&:hover {
-					border-color: #FFB700;
-					background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.37) 39.87%, rgba(255, 255, 255, 0.00) 40.29%), linear-gradient(180deg, #FFB169 7.81%, #FFCE69 75%, #FFFEAC 96.48%);
-					box-shadow: 0px 0px 2px 1px #FFF inset;
+			}
+
+			@mixin border {
+				// This creates a border around each widget in the container.
+
+				> * {
+					border-radius: 3px;
+					border: 1px solid;
+				}
+				&.joined > * {
+					&:not(:last-child) {
+						border-bottom-left-radius: 0;
+						border-bottom-right-radius: 0;
+						border-bottom-width: 0;
+					}
+					&:not(:first-child) {
+						border-top-left-radius: 0;
+						border-top-right-radius: 0;
+					}
+				}
+			}
+
+			// button:not(actionbutton) {
+			// 	&:hover {
+			// 		@include yellow-hover;
+			// 	}
+			// 	&:active {
+			// 		@include yellow-pressed;
+			// 	}
+			// }
+			
+			actionbutton {
+				@include border;
+
+				> * {
+					@include flat;
+
+					&:active {
+						@include yellow-pressed;
+					}
 				}
 
-				&:active {
-					border-color: #C29B29;
-					background: linear-gradient(180deg, #FFDCA0 0%, #FFD181 39.15%, #FFC45D 39.71%, #FFC45D 73.80%, #FFD781 100%);
-					box-shadow: 0px 1px 2px 1px #D69E22 inset;
+				&.border > * {
+					// When not being hovered over, display a border only if they have opted into it
+					border-color: #a7b9d1;
+				}
+
+				&:hover {
+					@include yellow-hover;
+
+					> * {
+						border-color: #FFB700;
+					}
 				}
 			}
 		}

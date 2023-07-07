@@ -20,8 +20,16 @@ public class Aero.Ribbon : Gtk.Box
             set_css_name("section");
         }
 
+        class Separator : Gtk.Widget
+        {
+            static construct {
+                set_css_name("separator");
+            }
+        }
+
         construct {
             this.orientation = Gtk.Orientation.HORIZONTAL;
+            this.notify["orientation"].connect(() => { this.orientation = Gtk.Orientation.HORIZONTAL; });   // Users shouldn't really be able to set this.
             this.append(new Separator() { vexpand = true });
 
             var title_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
@@ -36,16 +44,11 @@ public class Aero.Ribbon : Gtk.Box
             title_box.append(label);
         }
 
+        /* Forward stuff to the inner box that we're pretending to be. */
+
         public override void add_child(Gtk.Builder builder, Object child, string? type)
         {
             this.internal_box.add_child(builder, child, type);
-        }
-
-        class Separator : Gtk.Widget
-        {
-            static construct {
-                set_css_name("separator");
-            }
         }
     }
 }
