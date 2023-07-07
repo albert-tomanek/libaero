@@ -85,7 +85,7 @@ class Demo1 : Gtk.Window
 	[GtkCallback]
 	void cb_open_wizard()
 	{
-		var wiz = new Aero.Wizard(this) { title = "Example wizard" };
+		var wiz = new Aero.Wizard(null) { title = "Example wizard" };
 		make_stack(wiz);
 		wiz.show();
 	}
@@ -103,11 +103,11 @@ class Demo1 : Gtk.Window
 			w = new Gtk.Label("Page 1") { halign = Gtk.Align.START };
 			w.add_css_class("heading");
 			b.append(w);
-			var v = new Aero.Wizard.ChoiceButton("Continue", "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.");
+			var v = new Gtk.Button.with_label("Next page");//Aero.Wizard.ChoiceButton("Continue", "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.");
 			v.clicked.connect(wiz.next_page);
 			b.append(v);
-			w = new Aero.Wizard.ChoiceButton("Quit", "Exit this wizard");
-			b.append(w);
+			//  w = new Aero.Wizard.ChoiceButton("Quit", "Exit this wizard");
+			//  b.append(w);
 			stack.add_named(b, "1");
 		}
 
