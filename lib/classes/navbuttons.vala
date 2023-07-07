@@ -5,7 +5,7 @@ public class Aero.NavButtons : Gtk.Box
 
     construct {
         var overlay = new Gtk.Overlay();
-        this.append(overlay);
+        this.pack_start(overlay);
 
         // Recess
         var style_dummy = new DummyWidget() { visible = false };     // We steal the CSS style ctx from this one. Haven;t found a way to make a dummy css node.
@@ -17,11 +17,11 @@ public class Aero.NavButtons : Gtk.Box
         overlay.add_overlay(button_box);
 
         this.left = new Orb("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg");
-        button_box.append(this.left);
+        button_box.pack_start(this.left);
         this.right = new Orb("/com/github/albert-tomanek/aero/images/orb_arrow_right.svg");
-        button_box.append(this.right);
+        button_box.pack_start(this.right);
 
-        overlay.set_measure_overlay(button_box, true);
+        // FIXME  overlay.set_measure_overlay(button_box, true);
     }
 
     static construct {
@@ -39,7 +39,10 @@ public class Aero.NavButtons : Gtk.Box
     {
         public Recess(Gtk.StyleContext ctx)
         {
-            set_draw_func((da, cr, w, h) => {
+            this.draw.connect((cr) => {
+                var w = this.get_allocated_width();
+                var h = this.get_allocated_height();
+
                 cr.set_source_rgb(1, 0, 0);
                 push_path(cr, 0.7125, 0.9803, {
                     0.6189, 0.9199, 0.3793, 0.9249, 0.2838, 0.9826,
@@ -57,6 +60,8 @@ public class Aero.NavButtons : Gtk.Box
 
                 ctx.render_background(cr, 0, 0, w, h);
                 ctx.render_frame(cr, 0, 0, w, h);
+
+                return false;   // false to propagate draw event further
             });
         }
     }

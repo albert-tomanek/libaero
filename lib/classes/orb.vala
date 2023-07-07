@@ -36,7 +36,10 @@ public class Aero.Orb : Gtk.Button
     {
         public Reflection(Gtk.StyleContext ctx)
         {
-            set_draw_func((da, cr, w, h) => {
+            this.draw.connect((cr) => {
+                var w = this.get_allocated_width();
+                var h = this.get_allocated_height();
+
                 cr.set_source_rgb(1, 0, 0);
                 push_path(cr, 0.9576, 0.5126, {
                     0.9656, 0.5140, 0.9729, 0.5080, 0.9729, 0.5,
@@ -53,6 +56,8 @@ public class Aero.Orb : Gtk.Button
 
                 ctx.render_background(cr, 0, 0, w, h);
                 ctx.render_frame(cr, 0, 0, w, h);
+
+                return false;   // false to propagate draw event further
             });
         }
     }

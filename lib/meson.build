@@ -25,7 +25,7 @@ lib = shared_library('aero',
 	dependencies: [
 		dependency('glib-2.0'),
 		dependency('gobject-2.0'),
-		dependency('gtk4'),
+		dependency('gtk+-3.0'),
 	],
 	install: true,
 

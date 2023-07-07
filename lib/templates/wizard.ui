@@ -1,65 +1,135 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<!-- Created with Cambalache 0.10.3 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.40.0 -->
 <interface>
-  <!-- interface-name wizard.ui -->
-  <requires lib="gtk" version="4.6"/>
+  <requires lib="gtk+" version="3.24"/>
   <template class="AeroWizard" parent="GtkWindow">
-    <property name="css-classes">aero</property>
-    <property name="modal">True</property>
+    <property name="can-focus">False</property>
     <child>
       <object class="GtkBox">
-        <property name="css-classes">content</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkStack" id="stack">
-            <property name="css-classes">markup</property>
-            <property name="height-request">320</property>
-            <property name="transition-duration">300</property>
-            <property name="transition-type">slide-left-right</property>
-            <property name="vexpand">True</property>
-            <property name="width-request">543</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <placeholder/>
+            </child>
+            <style>
+              <class name="markup"/>
+            </style>
           </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
         </child>
         <child>
           <object class="GtkBox">
-            <property name="css-classes">dialog-footer</property>
-            <property name="hexpand">True</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
             <child>
               <object class="GtkBox" id="footer">
-                <property name="spacing">10</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <placeholder/>
+                </child>
               </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
             </child>
             <child>
               <object class="GtkBox">
-                <property name="halign">end</property>
-                <property name="hexpand">True</property>
-                <property name="spacing">10</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkButton" id="cancel">
-                    <property name="label">_Cancel</property>
-                    <property name="use-underline">True</property>
-                    <signal name="clicked" handler="gtk_window_close"/>
+                    <property name="label" translatable="yes">Cancel</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
                   </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
                 </child>
                 <child>
                   <object class="GtkButton" id="next">
-                    <property name="label">_Next</property>
-                    <property name="use-underline">True</property>
+                    <property name="label" translatable="yes">Next</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
                   </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
             </child>
+            <style>
+              <class name="dialog-footer"/>
+            </style>
           </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
         </child>
+        <style>
+          <class name="content"/>
+        </style>
       </object>
     </child>
+    <style>
+      <class name="aero"/>
+    </style>
   </template>
   <object class="GtkBox" id="header">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
     <child>
-      <object class="GtkImage" id="icon"/>
+      <object class="GtkImage" id="icon">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="stock">gtk-missing-image</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
     </child>
     <child>
-      <object class="GtkLabel" id="title_label"/>
+      <object class="GtkLabel" id="title_label">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">&lt;label&gt;</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <placeholder/>
     </child>
   </object>
 </interface>

@@ -15,7 +15,7 @@ public class Aero.Wizard : Gtk.Window
     public bool can_next { get; set; default = true; }
 
     public uint page { get; set; default = 0; }
-    public bool last_page { get { return (page == this.stack.pages.get_n_items() - 1); } }
+    public bool last_page { get { return (page == this.stack.get_children().length() - 1); } }
 
     public Wizard(Gtk.Window? parent)
     {
@@ -31,18 +31,18 @@ public class Aero.Wizard : Gtk.Window
             titlebar.icon.bind_property("paintable", this.icon, "paintable", BindingFlags.SYNC_CREATE);
             titlebar.show_info = false;
 
-            this.titlebar = titlebar;
+            this.set_titlebar(titlebar);
 
             this.page = 0;
         });
 
         back = new Orb("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg");
         back.sensitive = false;
-        header.prepend(back);
+        header.pack_start(back);
 
         /* Bind UI */
         this.notify["page"].connect(() => {
-            this.stack.visible_child = (this.stack.pages.get_item(this.page) as Gtk.StackPage).child;
+            this.stack.visible_child = this.stack.get_children().nth_data(this.page);
 
             this.back.sensitive = (page != 0);
             this.next.visible   = !last_page;
@@ -97,7 +97,7 @@ public class Aero.Wizard : Gtk.Window
         }
 
         static construct {
-            set_css_name("ChoiceButton");
+            set_css_name("choicebutton");
         }    
     }
 }

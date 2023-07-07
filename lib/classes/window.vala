@@ -20,17 +20,17 @@ public class Aero.HeaderBar : Gtk.Box
             
             /* Window controls callbacks */
             close.clicked.connect(() => { win.close(); });
-            maximize.clicked.connect(() => { win.maximized = !win.maximized; });
-            minimize.clicked.connect(() => { win.minimize(); });
+            maximize.clicked.connect(() => { if (win.is_maximized) { win.unmaximize(); } else { win.maximize(); } });
+            minimize.clicked.connect(() => { win.iconify(); });
 
             win.notify["maximized"].connect(() => {
-                maximize.icon_name = win.maximized ? "window-restore-symbolic" : "window-maximize-symbolic";
+                (maximize.image as Gtk.Image).icon_name = win.is_maximized ? "window-restore-symbolic" : "window-maximize-symbolic";
             });
 
             /* Window icon */
             icon.state_flags_changed.connect((old) => {
-                if (((old & Gtk.StateFlags.ACTIVE) != 0) && ((icon.get_state_flags() & Gtk.StateFlags.ACTIVE) == 0))
-                    (win.get_native().get_surface() as Gdk.Toplevel).titlebar_gesture(Gdk.TitlebarGesture.RIGHT_CLICK);
+                //  if (((old & Gtk.StateFlags.ACTIVE) != 0) && ((icon.get_state_flags() & Gtk.StateFlags.ACTIVE) == 0))
+                    // FIXME: (win.get_native().get_surface() as Gdk.Toplevel).titlebar_gesture(Gdk.TitlebarGesture.RIGHT_CLICK);
             });
             
             /* Bind to window properties */
@@ -44,7 +44,7 @@ public class Aero.HeaderBar : Gtk.Box
 
     public HeaderBar.with_contents(Gtk.Widget contents)
     {
-        this.content_box.append(contents);
+        this.content_box.pack_start(contents);
     }
 
     static construct {
@@ -52,6 +52,6 @@ public class Aero.HeaderBar : Gtk.Box
 
         var css_provider = new Gtk.CssProvider();
         css_provider.load_from_resource("/com/github/albert-tomanek/aero/aero.css");
-        Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);    
+        Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);    
     }
 }

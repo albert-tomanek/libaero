@@ -74,12 +74,14 @@ class Demo1 : Gtk.Window
 	construct {
 		var navs = new Aero.NavButtons();//new Aero.Orb("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg");
 		navs.right.sensitive = false;
-		titlebar_content.prepend(navs);
-		this.titlebar = new Aero.HeaderBar.with_contents(titlebar_content);
+		titlebar_content.pack_start(navs);
+		this.set_titlebar(new Aero.HeaderBar.with_contents(titlebar_content));
 
 		wrap_check.notify["active"].connect(() => {
 			text_view.wrap_mode = wrap_check.active ? Gtk.WrapMode.WORD : Gtk.WrapMode.NONE;
 		});
+
+		Timeout.add(1000/30, () => { this.queue_draw(); });	// The transparency doesn;t update properly otherwise.
 	}
 
 	[GtkCallback]
@@ -101,13 +103,13 @@ class Demo1 : Gtk.Window
 		{
 			b = new Gtk.Box(Gtk.Orientation.VERTICAL, 0) { spacing = 19 };
 			w = new Gtk.Label("Page 1") { halign = Gtk.Align.START };
-			w.add_css_class("heading");
-			b.append(w);
-			var v = new Aero.Wizard.ChoiceButton("Continue", "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.");
+			w.get_style_context().add_class("heading");
+			b.pack_start(w);
+			var v = new Gtk.Button.with_label("Next page");//Aero.Wizard.ChoiceButton("Continue", "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.");
 			v.clicked.connect(wiz.next_page);
-			b.append(v);
-			w = new Aero.Wizard.ChoiceButton("Quit", "Exit this wizard");
-			b.append(w);
+			b.pack_start(v);
+			//  w = new Aero.Wizard.ChoiceButton("Quit", "Exit this wizard");
+			//  b.pack_start(w);
 			stack.add_named(b, "1");
 		}
 
