@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- Created with Cambalache 0.10.3 -->
+<!-- Created with Cambalache 0.12.1 -->
 <interface>
   <!-- interface-name windowcontrols.ui -->
-  <requires lib="gtk" version="4.6"/>
+  <requires lib="gtk" version="4.8"/>
   <template class="AeroHeaderBar" parent="GtkBox">
     <property name="hexpand">True</property>
     <child>
@@ -44,27 +44,46 @@
                     <property name="hexpand">True</property>
                     <child>
                       <object class="GtkButton" id="minimize">
+                        <property name="child">
+                          <object class="GtkImage">
+                            <property name="height-request">10</property>
+                            <property name="pixel-size">0</property>
+                            <property name="resource">/com/github/albert-tomanek/aero/images/window-minimize.svg</property>
+                            <property name="width-request">12</property>
+                          </object>
+                        </property>
                         <property name="css-classes">maximize</property>
                         <property name="height-request">0</property>
-                        <property name="icon-name">window-minimize-symbolic</property>
                         <property name="valign">start</property>
                         <property name="width-request">0</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkButton" id="maximize">
+                        <property name="child">
+                          <object class="GtkImage">
+                            <property name="height-request">10</property>
+                            <property name="resource">/com/github/albert-tomanek/aero/images/window-maximize.svg</property>
+                            <property name="width-request">12</property>
+                          </object>
+                        </property>
                         <property name="css-classes">maximize</property>
                         <property name="height-request">0</property>
-                        <property name="icon-name">window-maximize-symbolic</property>
                         <property name="valign">start</property>
                         <property name="width-request">0</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkButton" id="close">
+                        <property name="child">
+                          <object class="GtkImage">
+                            <property name="height-request">10</property>
+                            <property name="resource">/com/github/albert-tomanek/aero/images/window-close.svg</property>
+                            <property name="width-request">12</property>
+                          </object>
+                        </property>
                         <property name="css-classes">close</property>
                         <property name="height-request">0</property>
-                        <property name="icon-name">window-close-symbolic</property>
                         <property name="valign">start</property>
                         <property name="width-request">0</property>
                       </object>

@@ -1,7 +1,7 @@
 public class Aero.NavButtons : Gtk.Box
 {
-    public Orb left;
-    public Orb right;
+    public Orb left  { get; private set; }  
+    public Orb right { get; private set; } 
 
     construct {
         var overlay = new Gtk.Overlay();

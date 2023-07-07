@@ -1,19 +1,21 @@
 
-public class MsPaintApp : Gtk.Application {
-	public MsPaintApp () {
-		Object(application_id: "com.github.albert-tomanek.aero-apps.mspaint",
+public class KeepApp : Gtk.Application {
+	public KeepApp () {
+		Object(application_id: "com.github.albert-tomanek.aero.demo",
 				flags: ApplicationFlags.FLAGS_NONE);
 	}
 
 	protected override void activate () {
+		//  var window = new Keep (this);
+		//  window.show ();
+
 		var win = new MsPaint() { application = this };
-		win.set_size_request(800, 600);
 		win.show();
 	}
 
 	public static int main(string[] args)
 	{
-		var app = new MsPaintApp();
+		var app = new KeepApp();
 		return app.run(args);
 	}
 }
@@ -21,23 +23,7 @@ public class MsPaintApp : Gtk.Application {
 [GtkTemplate (ui = "/com/github/albert-tomanek/aero/apps/mspaint/main.ui")]
 class MsPaint : Gtk.Window
 {
-	[GtkChild] Gtk.Box contents;
-	Aero.Ribbon ribbon;
-
 	construct {
 		this.titlebar = new Aero.HeaderBar();
-
-		//  this.ribbon = new Aero.Ribbon();
-		//  {
-		//  	var b = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
-		//  	var l = new Gtk.Label("Home");
-		//  	this.ribbon.rib.append_page(b, l);
-		//  }
-		//  {
-		//  	var b = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
-		//  	var l = new Gtk.Label("View");
-		//  	this.ribbon.rib.append_page(b, l);
-		//  }
-        //  this.contents.prepend(this.ribbon);
 	}
 }

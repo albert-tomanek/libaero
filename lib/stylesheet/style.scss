@@ -126,61 +126,63 @@ CSS Property order:
 	
 			/* Fill */
 			> button {
+				$refl-height: 8px;
+
 				min-width:  25px;
 				min-height: 17px;
 
-				background: linear-gradient(180deg, #FFFFFF 10.15%, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%);
+				background: transparent; //linear-gradient(180deg, #FFFFFF 10.15%, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%);
 				border-width: 0px 1px 1px 1px;
 				border-style: solid;
 				border-radius: 0px;
 				border-color: rgba(0, 0, 0, 0.64);
-				box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
-			}
-
-			> button:hover {
-				background: linear-gradient(180deg, #FFFFFF 10.15%, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%), radial-gradient(54.23% 40% at 50% 95%, #0AFEFB 0%, rgba(10, 254, 251, 0) 100%), linear-gradient(180deg, #02558E 0%, #236EA4 100%);
-				border-width: 0px 1px 1px 1px;
-				border-style: solid;
-				border-color: rgba(0, 0, 0, 0.64);
-				box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
-
+				box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px $refl-height 0px rgba(255, 255, 255, 0.43);
+				
 				transition: 200ms linear all;
-			}
 
-			> button:active {
-				background: linear-gradient(180deg, #FFFFFF 10.15%, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%), radial-gradient(54.23% 40% at 50% 95%, #0AFEFB 0%, #16D6C5 0.01%, rgba(10, 254, 251, 0) 100%), linear-gradient(180deg, #04213F 0%, #194169 100%);
-				border-width: 0px 1px 1px 1px;
-				border-style: solid;
-				border-color: rgba(0, 0, 0, 0.64);
-				box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
-			}
+				&:hover {
+					background: linear-gradient(180deg, #FFFFFF 10.15%, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%), radial-gradient(54.23% 40% at 50% 95%, #0AFEFB 0%, rgba(10, 254, 251, 0) 100%), linear-gradient(180deg, #02558E 0%, #236EA4 100%);
+					border-width: 0px 1px 1px 1px;
+					border-style: solid;
+					border-color: rgba(0, 0, 0, 0.64);
+					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
+				}
 
-			> .close {
-				min-width:  45px;
+				&:active {
+					background: linear-gradient(180deg, #FFFFFF 10.15%, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%), radial-gradient(54.23% 40% at 50% 95%, #0AFEFB 0%, #16D6C5 0.01%, rgba(10, 254, 251, 0) 100%), linear-gradient(180deg, #04213F 0%, #194169 100%);
+					border-width: 0px 1px 1px 1px;
+					border-style: solid;
+					border-color: rgba(0, 0, 0, 0.64);
+					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
+				}
 
-				background: linear-gradient(180deg, #E8BBB4 0%, #CE8276 47.25%, #BA4735 47.25%, #CF8479 100%);
-				border-width: 0px 1px 1px 1px;
-				border-style: solid;
-				border-color: #5B3027;
-				// box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
-			}
+				&.close {
+					min-width:  45px;
 
-			> .close:hover {
-				// background: linear-gradient(0deg, rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0.38)), radial-gradient(110.58% 22.22% at 51.02% 94.44%, rgba(255, 230, 0, 0.2) 17.59%, rgba(255, 230, 0, 0) 100%), linear-gradient(270deg, #F1745E 0%, rgba(210, 34, 2, 0) 0.01%, #D22202 35.94%, rgba(210, 34, 2, 0.982301) 63.02%, rgba(210, 34, 2, 0) 100%), linear-gradient(180deg, #B34434 58.7%, #C47463 91.68%);
-				background: radial-gradient(50% 30.67% at 50% 100%, #F6EE92 0%, rgba(229, 147, 77, 0) 100%), linear-gradient(180deg, #F1C0A0 0%, #E99181 46.28%, #D22302 46.63%, #E5934D 100%);
-				border-width: 0px 1px 1px 1px;
-				border-style: solid;
-				border-color: #5B3027;
-				// box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
-			}
+					background: linear-gradient(180deg, #E8BBB4 0%, #CE8276 $refl-height, #BA4735 47.25%, #CF8479 100%);
+					border-width: 0px 1px 1px 1px;
+					border-style: solid;
+					border-color: #5B3027;
+					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59);
 
-			> .close:active {
-				background: linear-gradient(180deg, rgba(255, 255, 255, 0.2958) 0%, rgba(255, 255, 255, 0.261) 47.5%, rgba(255, 255, 255, 0) 47.5%), linear-gradient(270deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.15) 25%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.15) 74.99%, rgba(0, 0, 0, 0.3) 100%), radial-gradient(50% 16.67% at 50% 100%, #F6EE92 0%, rgba(229, 147, 77, 0) 100%), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), radial-gradient(50% 16.67% at 50% 100%, #F6EE92 0%, rgba(229, 147, 77, 0) 100%), linear-gradient(180deg, #E5934D 0%, #D22302 46.63%, #E5934D 100%);
-				background-blend-mode: normal, normal, overlay, normal, overlay, normal;
-				border-width: 0px 1px 1px 1px;
-				border-style: solid;
-				border-color: #5B3027;
-				// box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
+					&:hover {
+						// background: linear-gradient(0deg, rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0.38)), radial-gradient(110.58% 22.22% at 51.02% 94.44%, rgba(255, 230, 0, 0.2) 17.59%, rgba(255, 230, 0, 0) 100%), linear-gradient(270deg, #F1745E 0%, rgba(210, 34, 2, 0) 0.01%, #D22202 35.94%, rgba(210, 34, 2, 0.982301) 63.02%, rgba(210, 34, 2, 0) 100%), linear-gradient(180deg, #B34434 58.7%, #C47463 91.68%);
+						background: radial-gradient(50% 30.67% at 50% 100%, #F6EE92 0%, rgba(229, 147, 77, 0) 100%), linear-gradient(180deg, #F1C0A0 0%, #E99181 46.28%, #D22302 46.63%, #E5934D 100%);
+						border-width: 0px 1px 1px 1px;
+						border-style: solid;
+						border-color: #5B3027;
+						// box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
+					}
+
+					&:active {
+						background: linear-gradient(180deg, rgba(255, 255, 255, 0.2958) 0%, rgba(255, 255, 255, 0.261) 47.5%, rgba(255, 255, 255, 0) 47.5%), linear-gradient(270deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.15) 25%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.15) 74.99%, rgba(0, 0, 0, 0.3) 100%), radial-gradient(50% 16.67% at 50% 100%, #F6EE92 0%, rgba(229, 147, 77, 0) 100%), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), radial-gradient(50% 16.67% at 50% 100%, #F6EE92 0%, rgba(229, 147, 77, 0) 100%), linear-gradient(180deg, #E5934D 0%, #D22302 46.63%, #E5934D 100%);
+						background-blend-mode: normal, normal, overlay, normal, overlay, normal;
+						border-width: 0px 1px 1px 1px;
+						border-style: solid;
+						border-color: #5B3027;
+						// box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
+					}
+				}
 			}
 		}
 	}
@@ -288,21 +290,43 @@ CSS Property order:
 		// }
 	}
 
-	.ribbon notebook {
-		header {
-			background: #DFE9F5;
+	notebook.ribbon {
+		@mixin tab-size {
+			margin-top: 1px;
+			min-width: 0;
 			min-height: 23px;
+			padding: 0px 12px;
+
+			border-radius: 3px 3px 0px 0px;
+			font-size: 12px;
+		}
+
+		header {
+			border-spacing: 2px;
+			background: #DFE9F5;
+
+			> button:first-child {
+				@include tab-size;
+
+				margin-bottom: -1px;
+				
+				background: linear-gradient(180deg, #4884C1 5.28%, #2E68B2 45.35%, #1A4087 45.91%, #409ACF 100%);
+				border: 1px solid #426ABD;
+				box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.25);
+				color: white;
+			}
+		}
+
+		tabs {
+			margin-left: 0;
 		}
 
 		tab {
-			margin-top: 1px;
-			padding: 0px 12px;
+			@include tab-size;
 
 			background: transparent;
 			border: 1px solid transparent;
 			border-width: 1px 1px 0px 1px;
-
-			font-size: 12px;
 
 			&:checked {
 				background: #F5FAFF;
@@ -310,18 +334,9 @@ CSS Property order:
 				border-style: solid;
 				border-color: #BAC9DB;
 				box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.33);
-				border-radius: 2px 2px 0px 0px;
-
-				
 			}
 			&:not(:checked):hover {
 				box-shadow: none;//adwaita
-			}
-
-			&.blue {
-				background: linear-gradient(180deg, #4884C1 5.28%, #2E68B2 45.35%, #1A4087 45.91%, #409ACF 100%);
-				border: 1px solid #426ABD;
-				box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.25);
 			}
 		}
 
@@ -332,6 +347,49 @@ CSS Property order:
 			border-width: 0 0 1px 0;
 			border-style: solid;
 			border-color: #9FAEC2;
+
+			section {
+				> box {
+					padding: 0px 8px;
+					
+					> label {
+						color: #738399;
+					}
+
+					> box {
+						padding: 8px 0px;
+					}
+				}
+
+				separator {
+					min-width: 1px;
+					margin: 8px 0px;
+
+					background: #a7b9d1;
+					box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.50);
+				}
+			}
+
+			button {
+				border-radius: 3px;
+				border: 1px solid transparent;
+				background: transparent;
+				box-shadow: none;
+
+				transition: box-shadow 200ms linear;
+				
+				&:hover {
+					border-color: #FFB700;
+					background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.37) 39.87%, rgba(255, 255, 255, 0.00) 40.29%), linear-gradient(180deg, #FFB169 7.81%, #FFCE69 75%, #FFFEAC 96.48%);
+					box-shadow: 0px 0px 2px 1px #FFF inset;
+				}
+
+				&:active {
+					border-color: #C29B29;
+					background: linear-gradient(180deg, #FFDCA0 0%, #FFD181 39.15%, #FFC45D 39.71%, #FFC45D 73.80%, #FFD781 100%);
+					box-shadow: 0px 1px 2px 1px #D69E22 inset;
+				}
+			}
 		}
 	}
 
@@ -361,6 +419,14 @@ CSS Property order:
 
 		color: black;
 
+		box.horizontal, grid {
+			border-spacing: 6px;
+		}
+
+		box.vertical {
+			border-spacing: 19px;
+		}
+
 		/*
 		natural-wrap-mode: GTK_NATURAL_WRAP_NONE
 		wrape: true
@@ -370,10 +436,6 @@ CSS Property order:
 		halign: 
 		*/
 
-		grid {
-			border-spacing: 19px;
-		}
-
 		scrolledwindow {
 			border: 1px solid #b0b0b0;
 		}
@@ -381,7 +443,7 @@ CSS Property order:
 		entry {
 			background: #FFFFFF;
 			border: 1px solid #E5E8ED;
-			// box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
+			box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
 			border-radius: 3px;
 		}
 	}

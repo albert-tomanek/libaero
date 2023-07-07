@@ -1,6 +1,4 @@
 
-# https://github.com/GNOME/libadwaita/blob/main/src/stylesheet/meson.build
-
 converter = find_program(join_paths(meson.source_root(), 'utils/glade2gtk4.py'), required: true)
 
 glade_files = ['demo1']

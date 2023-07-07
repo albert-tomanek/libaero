@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- env GLADE_CATALOG_SEARCH_PATH=lib/catalog/ glade -->
+<!-- https://developer-old.gnome.org/gladeui/stable/catalogintro.html -->
+
+<glade-catalog name="aero" library="aero-dummy" depends="gtk+">
+
+  <glade-widget-classes>
+    <glade-widget-class name="AeroHeaderBar" generic-name="orb" title="Orb"/>
+    <glade-widget-class name="AeroOrb" generic-name="orb" title="Orb"/>
+    <glade-widget-class name="AeroNavButtons" generic-name="navbutton" title="Navigation Buttons"/>
+    <glade-widget-class name="AeroWizard" generic-name="wizard" title="Wizard"/>
+    <glade-widget-class name="AeroWizardChoiceButton" generic-name="wizardchoicebutton" title="Wizard"/>
+    <glade-widget-class name="AeroRibbon" generic-name="ribbon" title="Ribbon"/>
+    <glade-widget-class name="AeroRibbonSection" generic-name="ribbonsection" title="Ribbon Section"/>
+  </glade-widget-classes>
+
+  <glade-widget-group title="Aero Widgets" name="aero-widgets">
+    <glade-widget-class-ref name="AeroHeaderBar"/>
+    <glade-widget-class-ref name="AeroOrb"/>
+    <glade-widget-class-ref name="AeroNavButtons"/>
+  </glade-widget-group>
+  <glade-widget-group title="Aero Wizards" name="aero-wizards">
+    <glade-widget-class-ref name="AeroWizard"/>
+    <glade-widget-class-ref name="AeroWizardChoiceButton"/>
+  </glade-widget-group>
+  <glade-widget-group title="Aero Ribbon" name="aero-ribbon">
+    <glade-widget-class-ref name="AeroRibbon"/>
+    <glade-widget-class-ref name="AeroRibbonSection"/>
+  </glade-widget-group>
+</glade-catalog>

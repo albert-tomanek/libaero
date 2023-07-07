@@ -1,36 +1,31 @@
-# https://gitlab.gnome.org/jpu/cambalache/-/blob/main/catalogs/Makefile
-#
-#CAMBALACHE_DB=flatpak run \
-#	--env=LD_LIBRARY_PATH=../tools \
-#	--env=GI_TYPELIB_PATH=../tools \
-#	--share=ipc \
-#	--socket=fallback-x11 \
-#	--socket=wayland \
-#	--device=all \
-#	--filesystem=host \
-#	--command=python3 \
-#	org.gnome.Sdk//44 \
-#	../tools/cambalache-db.py
-#gnome/libadwaita-1.xml: gtk/gtk-4.0.xml
-#	${CAMBALACHE_DB} \
-#		--target-gtk4 \
-#		--dependencies gtk-4.0 \
-#		--gir /usr/share/gir-1.0/Adw-1.gir \
-#		--external-catalogs ${GTK4_DEPS} gtk/gtk-4.0.xml \
-#		--extra-data gnome/Adwaita.xml \
-#		--skip-types AdwAnimation AdwSwipeTracker AdwPropertyAnimationTarget \
-#		--output $@
+# gladeui_dep = dependency('gladeui-2.0', required: true)
+# glade_catalogdir = gladeui_dep.get_pkgconfig_variable('catalogdir')
+# install_data('libaero.xml', install_dir: glade_catalogdir)
 
-# env GI_TYPELIB_PATH=. LD_LIBRARY_PATH=. python3 cambalache-db.py --target-gtk4 --dependencies gtk-4.0 --gir /usr/share/gir-1.0/Aero-0.gir --extra-data ../../../catalog/Aero.xml --output ../../../catalog/libaero-0.xml
+# https://github.com/alice-mkh/libhandy/blob/master/glade/meson.build
 
-cambalache_db = find_program('python3', required: true)
+# Glade loads the actual library to introspect infromation about widgets.
+# Unfortunately, as Glade is Gtk3, it cannot load out gtk4 library. 
+# So we create a summy library from the .vapi where the widgets inherit from Gtk+-3.0
 
-cambalache_db_opts = [ '../subprojects/cambalache/tools/cambalache-db.py', '-a', '-M', '-t', 'compact' ]
+converter = find_program(join_paths(meson.source_root(), 'utils/mkdummylib.py'), required: true)
 
-catalog = custom_target('libaero-0.xml', #[lib],
-        input: 'Aero.xml',
-        output: 'libaero-0.xml',
-        command: [
-          cambalache_db, cambalache_db_opts, '--extra-data', '@INPUT@', '--output', '@OUTPUT@',
-        ],
-      )
+dummy_code = custom_target('dummy.vala',
+      depends: [lib],      # for the .vapi to exist
+      input: join_paths(meson.current_build_dir(), '../aero.vapi'),
+      output: 'dummy.vala',
+      command: [
+            converter, '@INPUT@', '@OUTPUT@',
+      ],
+)
+
+dummy_lib = shared_library('aero-dummy',
+	version: '0.0.1',
+	sources: [dummy_code, lib_resources],
+	dependencies: [
+		dependency('glib-2.0'),
+		dependency('gobject-2.0'),
+		dependency('gtk+-3.0'),
+	],
+	install: true,
+)

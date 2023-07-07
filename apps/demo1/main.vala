@@ -70,11 +70,11 @@ class Demo1 : Gtk.Window
 	[GtkChild] Gtk.Box titlebar_content;
 	[GtkChild] Gtk.CheckButton wrap_check;
 	[GtkChild] Gtk.TextView text_view;
+	[GtkChild] Aero.NavButtons navs;
 
 	construct {
-		var navs = new Aero.NavButtons();//new Aero.Orb("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg");
 		navs.right.sensitive = false;
-		titlebar_content.prepend(navs);
+		navs.orientation = Gtk.Orientation.VERTICAL;
 		this.titlebar = new Aero.HeaderBar.with_contents(titlebar_content);
 
 		wrap_check.notify["active"].connect(() => {

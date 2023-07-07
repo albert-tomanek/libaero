@@ -1,10 +1,9 @@
 pkg = import('pkgconfig')
 
 subdir('stylesheet')
-# subdir('catalog')
 subdir('classes')
 
-resources = gnome.compile_resources(
+lib_resources = gnome.compile_resources(
    'aero_res', 'resource.xml',
     source_dir: '.',
 	dependencies: css_dep,
@@ -19,7 +18,7 @@ icon_resources = gnome.compile_resources(
 )
 
 lib = shared_library('aero',
-	[css_dep, resources],
+	[css_dep, lib_resources],
 	version: '0.0.1',
 	sources: lib_sources,
 	dependencies: [
@@ -30,8 +29,8 @@ lib = shared_library('aero',
 	install: true,
 
 	# https://mesonbuild.com/Vala.html
-	vala_gir: 'Aero-0.gir',
-	install_dir: [true, true, true, true],
+	# vala_gir: 'Aero-0.gir',
+	# install_dir: [true, true, true, true],
 )
 
 pkg.generate(lib)	# Register with pkg-config
@@ -45,3 +44,5 @@ pkg.generate(lib)	# Register with pkg-config
 #               install_dir: get_option('libdir') / 'girepository-1.0')
 
 #install_data(['aero/libaero-0.xml'], install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'cambalache', 'catalogs'))
+
+subdir('catalog')

@@ -15,5 +15,9 @@
     <file>images/button_arrow_right.svg</file>
     <file>images/slider-grip-h.svg</file>
     <file>images/slider-grip-v.svg</file>
+    <file>images/window-close.svg</file>
+    <file>images/window-minimize.svg</file>
+    <file>images/window-maximize.svg</file>
+    <file>images/window-unmaximize.svg</file>
   </gresource>
 </gresources>

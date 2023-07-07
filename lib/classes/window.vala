@@ -24,7 +24,7 @@ public class Aero.HeaderBar : Gtk.Box
             minimize.clicked.connect(() => { win.minimize(); });
 
             win.notify["maximized"].connect(() => {
-                maximize.icon_name = win.maximized ? "window-restore-symbolic" : "window-maximize-symbolic";
+                (maximize.child as Gtk.Image).resource = win.maximized ? "/com/github/albert-tomanek/aero/images/window-unmaximize.svg" : "/com/github/albert-tomanek/aero/images/window-maximize.svg";
             });
 
             /* Window icon */
