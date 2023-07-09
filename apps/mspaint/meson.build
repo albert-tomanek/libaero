@@ -21,8 +21,14 @@ res = gnome.compile_resources(
 	export: true,
 )
 
+res_icons = gnome.compile_resources(
+    'res_icons', 'resources_icons.xml',
+    source_dir: '.',
+	export: true,
+)
+
 executable('mspaint',
-	[res],
+	[res, res_icons],
 	vala_args: ['--gresourcesdir', meson.current_build_dir()],
 	sources: [
 		'main.vala',

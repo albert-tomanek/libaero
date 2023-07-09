@@ -23,7 +23,12 @@ public class KeepApp : Gtk.Application {
 [GtkTemplate (ui = "/com/github/albert-tomanek/aero/apps/mspaint/main.ui")]
 class MsPaint : Gtk.Window
 {
+	[GtkChild]
+	Gtk.Image help_icon;
+
 	construct {
 		this.titlebar = new Aero.HeaderBar();
+
+		this.help_icon.paintable = Gdk.Texture.from_resource("/com/github/albert-tomanek/aero/icons/orig/shell32_24.png");
 	}
 }

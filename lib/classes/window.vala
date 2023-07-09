@@ -24,7 +24,7 @@ public class Aero.HeaderBar : Gtk.Box
             minimize.clicked.connect(() => { win.minimize(); });
 
             win.notify["maximized"].connect(() => {
-                (maximize.child as Gtk.Picture).set_resource(win.maximized ? "/com/github/albert-tomanek/aero/images/window-unmaximize.svg" : "/com/github/albert-tomanek/aero/images/window-maximize.svg");
+                (maximize.child as Gtk.Image).resource = (win.maximized ? "/com/github/albert-tomanek/aero/images/window-unmaximize.svg" : "/com/github/albert-tomanek/aero/images/window-maximize.svg");
             });
             (maximize.child as Gtk.Picture).set_resource("/com/github/albert-tomanek/aero/images/window-maximize.svg");
             (minimize.child as Gtk.Picture).set_resource("/com/github/albert-tomanek/aero/images/window-minimize.svg");

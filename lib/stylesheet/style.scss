@@ -51,25 +51,12 @@ CSS Property order:
 		// font-weight: bolder;
 	}
 
-	/**/
-
-	#startmenu {
-		background: radial-gradient(7.68% 76.94% at 0% 50%, rgba(199, 199, 199, 0.26) 99.99%, rgba(255, 255, 255, 0) 100%), #000000;
-		box-shadow: 0px 0px 0px 1px #000000;
-		border-radius: 6px 6px 0px 0px;
-		border: 1px solid #6B6B6B;
+	.large-icons {
+		-gtk-icon-size: 36px;
 	}
 
-	#startmenu>box {
-		/* Box containinig the pains */
-
-		border: 8px solid transparent;
-	}
-
-	#startmenu iconview {
-		border-radius: 4px;
-		background: #FCFCFC;
-		box-shadow: inset 0px 1px 2px #848484;
+	.normal-icons {
+		-gtk-icon-size: 16px;
 	}
 
 	/* Aero stuff */
@@ -130,6 +117,7 @@ CSS Property order:
 
 				min-width:  25px;
 				min-height: 17px;
+				-gtk-icon-size: 12px;
 
 				background: transparent; //linear-gradient(180deg, #FFFFFF 10.15%, rgba(255, 255, 255, 0.22) 10.16%, rgba(255, 255, 255, 0.22) 23.17%, rgba(255, 255, 255, 0.01) 40.58%, rgba(255, 255, 255, 0.03) 48.96%);
 				border-width: 0px 1px 1px 1px;
@@ -145,7 +133,7 @@ CSS Property order:
 					border-width: 0px 1px 1px 1px;
 					border-style: solid;
 					border-color: rgba(0, 0, 0, 0.64);
-					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
+					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px $refl-height 0px rgba(255, 255, 255, 0.43);
 				}
 
 				&:active {
@@ -153,7 +141,7 @@ CSS Property order:
 					border-width: 0px 1px 1px 1px;
 					border-style: solid;
 					border-color: rgba(0, 0, 0, 0.64);
-					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px 10px 0px rgba(255, 255, 255, 0.43);
+					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px $refl-height 0px rgba(255, 255, 255, 0.43);
 				}
 
 				&.close {
@@ -191,6 +179,8 @@ CSS Property order:
 
 	.titlebar
 	{
+		min-height: 0;
+
 		label {
 			color: black;
 			text-shadow: 0px 0px 6px #FFFFFF;
@@ -357,9 +347,13 @@ CSS Property order:
 						color: #738399;
 					}
 
-					> box {
+					> box {	// Content box
 						padding: 8px 0px;
-						border-spacing: 8px;
+						border-spacing: 4px;
+
+						> box.vertical {	// Any box inside that
+							border-spacing: 3px;
+						}
 					}
 				}
 
@@ -404,7 +398,7 @@ CSS Property order:
 					border-radius: 3px;
 					border: 1px solid;
 				}
-				&.joined > * {
+				&.joined.vertical > * {
 					&:not(:last-child) {
 						border-bottom-left-radius: 0;
 						border-bottom-right-radius: 0;
@@ -415,25 +409,46 @@ CSS Property order:
 						border-top-right-radius: 0;
 					}
 				}
+				&.joined.horizontal > * {
+					&:not(:last-child) {
+						border-top-right-radius: 0;
+						border-bottom-right-radius: 0;
+						border-right-width: 0;
+					}
+					&:not(:first-child) {
+						border-top-left-radius: 0;
+						border-bottom-left-radius: 0;
+					}
+				}
 			}
 
-			// button:not(actionbutton) {
-			// 	&:hover {
-			// 		@include yellow-hover;
-			// 	}
-			// 	&:active {
-			// 		@include yellow-pressed;
-			// 	}
-			// }
+			button {
+				@include flat;
+
+				border-radius: 3px;
+				border: 1px solid;
+				border-color: #a7b9d1;
+
+				&:hover {
+					border-color: #FFB700;
+					@include yellow-hover;
+				}
+				&:active {
+					@include yellow-pressed;
+				}
+			}
 			
 			actionbutton {
 				@include border;
+				border-spacing: 0;
 
 				> * {
 					@include flat;
+					border-color: transparent;
 
 					&:active {
-						@include yellow-pressed;
+						// @include yellow-pressed;
+						// It's probably a button anyway, and those have this rule too.
 					}
 				}
 
@@ -445,9 +460,30 @@ CSS Property order:
 				&:hover {
 					@include yellow-hover;
 
-					> * {
+					> *:not(:active) {
+						@include flat;
 						border-color: #FFB700;
 					}
+				}
+
+				label {
+					margin: 0px 2px;
+				}
+
+				box {
+					border-spacing: 0;					
+				}
+
+				> button {
+					min-width: 0;
+					min-height: 0;
+					padding: 2px 2px;
+
+				}
+
+				> :last-child > image {
+					// The arrow
+					-gtk-icon-size: 8px;
 				}
 			}
 		}
@@ -623,6 +659,7 @@ CSS Property order:
 		background: transparent;
 		border: 1px solid transparent;
 		border-radius: 4px;
+		box-shadow: none;
 
 		.heading { color: black; }
 		
