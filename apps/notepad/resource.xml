@@ -2,5 +2,6 @@
 <gresources>
   <gresource prefix="/com/github/albert-tomanek/aero/apps/notepad">
     <file compressed="true" preprocess="xml-stripblanks">main.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">menu.ui</file>
   </gresource>
 </gresources>
