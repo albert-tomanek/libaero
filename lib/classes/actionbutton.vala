@@ -71,12 +71,13 @@ namespace Aero
     }
 
     [Compact]
-    public struct Action
+    public struct Action    // Inspired by Gtk.Action
     {
         string id;
         string name;
         string? icon_resource;
         string? icon_name;
+        string? tooltip;
 
         /* Registry of actions for the application */
 
@@ -123,3 +124,4 @@ namespace Aero
         private static const Action fallback = { "", "????", null, "image-missing" };
     }
 }
+

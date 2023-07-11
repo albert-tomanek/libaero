@@ -24,9 +24,18 @@ class Notepad : Gtk.Window
 {
 	[GtkChild] Gtk.PopoverMenuBar menubar;
 
+	public Notepad()
+	{
+		Object();
+		this.make_menu();
+	}
+
 	construct {
 		this.titlebar = new Aero.HeaderBar();
+	}
 
+	void make_menu()
+	{
 		GLib.Menu sub;
 		GLib.MenuItem item;
 		GLib.SimpleAction act;
@@ -38,6 +47,7 @@ class Notepad : Gtk.Window
 		sub = new GLib.Menu();
 		{
 			item = new GLib.MenuItem("_Open", null);
+			item.set_attribute("icon", "s", "media-floppy");
 			sub.append_item(item);
 		}
 		menu.append_section(null, sub);
@@ -64,7 +74,19 @@ class Notepad : Gtk.Window
 				subsub.append_item(item);
 			}
 			sub.append_submenu("_Encoding", subsub);
+
+			{	
+				var b = new Gtk.ColorButton();
+				this.menubar.add_child(b, "cbutton");
+
+				item = new GLib.MenuItem("_Color", null);
+				//  item.set_attribute("custom", "s", "cbutton");
+				sub.append_item(item);
+
+				// https://stackoverflow.com/questions/70334091/gtk4-example-of-gtk-popover-menu-bar-add-child
+				// https://github.com/GNOME/gtk/blob/1f3db35271020ec7a266e0a350fd25f9725567af/gtk/gtkpopovermenu.c
+			}
 		}
-		menu.append_section(null, sub);
+		menu.append_section("Settings", sub);
 	}
 }

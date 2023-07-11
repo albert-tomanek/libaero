@@ -59,6 +59,31 @@ CSS Property order:
 		-gtk-icon-size: 16px;
 	}
 
+	.linked {
+		&.vertical > * {
+			&:not(:last-child) {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+				border-bottom-width: 0;
+			}
+			&:not(:first-child) {
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+		}
+		&.horizontal > * {
+			&:not(:last-child) {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+				border-right-width: 0;
+			}
+			&:not(:first-child) {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+		}
+	}
+
 	/* Aero stuff */
 
 	/* Blur settings:
@@ -66,10 +91,6 @@ CSS Property order:
 	* brightness = 0.75
 	* opacity = 255
 	*/
-
-	/* .aero headerbar {
-		background: none;
-	} */
 
 	> .content {
 		border: 1px solid #000000;
@@ -81,7 +102,7 @@ CSS Property order:
 
 	/* Window controls */
 
-	:not(.aero-window-contents) label {
+	:not(.content) label {
 		text-shadow: 0px 0px 16px #FFFFFF;
 	}
 
@@ -102,13 +123,15 @@ CSS Property order:
 
 		// The box with the 3 buttons
 		buttons {
+			border-radius: 0;
+
 			/* Curves */
 			> :first-child {
-				border-radius: 0px 0px 0px 3px;
+				border-bottom-left-radius: 3px;
 			}
 
 			> :last-child {
-				border-radius: 0px 0px 3px 0px;
+				border-bottom-right-radius: 3px;
 			}
 	
 			/* Fill */
@@ -143,6 +166,10 @@ CSS Property order:
 					border-color: rgba(0, 0, 0, 0.64);
 					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59), inset 0px $refl-height 0px rgba(255, 255, 255, 0.43);
 				}
+
+				&:not(:last-child) {
+					border-right-width: 0;
+				}	
 
 				&.close {
 					min-width:  45px;
@@ -383,7 +410,7 @@ CSS Property order:
 				box-shadow: 0px 1px 2px 1px #D69E22 inset;
 			}
 
-			@mixin flat {
+			.flat {
 				border-color: transparent;
 				background: transparent;
 				box-shadow: none;
@@ -391,40 +418,7 @@ CSS Property order:
 				transition: box-shadow 200ms linear;
 			}
 
-			@mixin border {
-				// This creates a border around each widget in the container.
-
-				> * {
-					border-radius: 3px;
-					border: 1px solid;
-				}
-				&.joined.vertical > * {
-					&:not(:last-child) {
-						border-bottom-left-radius: 0;
-						border-bottom-right-radius: 0;
-						border-bottom-width: 0;
-					}
-					&:not(:first-child) {
-						border-top-left-radius: 0;
-						border-top-right-radius: 0;
-					}
-				}
-				&.joined.horizontal > * {
-					&:not(:last-child) {
-						border-top-right-radius: 0;
-						border-bottom-right-radius: 0;
-						border-right-width: 0;
-					}
-					&:not(:first-child) {
-						border-top-left-radius: 0;
-						border-bottom-left-radius: 0;
-					}
-				}
-			}
-
-			button {
-				@include flat;
-
+			button {	// Notice, this includes buttons inside actionbuttons
 				border-radius: 3px;
 				border: 1px solid;
 				border-color: #a7b9d1;
@@ -439,12 +433,13 @@ CSS Property order:
 			}
 			
 			actionbutton {
-				@include border;
 				border-spacing: 0;
+				border-width: 0px;
 
 				> * {
-					@include flat;
 					border-color: transparent;
+					border-radius: 3px;
+					border: 1px solid;
 
 					&:active {
 						// @include yellow-pressed;
@@ -453,15 +448,15 @@ CSS Property order:
 				}
 
 				&.border > * {
-					// When not being hovered over, display a border only if they have opted into it
+					// When not being hovered over, display a border only if they have opted into this
 					border-color: #a7b9d1;
 				}
 
 				&:hover {
 					@include yellow-hover;
+					border-width: 0px;
 
 					> *:not(:active) {
-						@include flat;
 						border-color: #FFB700;
 					}
 				}
@@ -535,21 +530,18 @@ CSS Property order:
 		scrolledwindow {
 			border: 1px solid #b0b0b0;
 		}
-
-		entry {
-			background: #FFFFFF;
-			border: 1px solid #E5E8ED;
-			box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
-			border-radius: 3px;
-		}
 	}
 
-	.dialog-footer {
+	.dialog-footer, .dialog-action-box {
 		padding: 10px 11px;
 		border-spacing: 10px;
 		
 		background: #F0F0F0;
 		box-shadow: inset 0px 3px 0px -2px rgba(0, 0, 0, 0.08);
+	}
+
+	.dialog-action-area {
+		border-spacing: 10px;
 	}
 
 	actionbar {
@@ -681,6 +673,17 @@ CSS Property order:
 		}
 	}
 
+	@mixin entry {
+		background: #FFFFFF;
+		border: 1px solid #E5E8ED;
+		box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
+		border-radius: 3px;
+	}
+
+	entry {
+		@include entry;
+	}
+
 	combobox {
 		arrow {
 			padding: 0px 2px;
@@ -777,6 +780,39 @@ CSS Property order:
 		}
 	}
 
+	spinbutton {
+		@include entry;
+
+		min-height: 22px;
+
+		text {
+			padding: 4px;
+
+		}
+
+		button {
+			-gtk-icon-size: 8px;
+			min-height: 0px;
+			min-width: 16px;
+
+			&.down {	// I still can't believe we managed to trick Gtk to reposition widgets for us like this
+				margin-top: 12px;
+
+				> image {
+					-gtk-icon-source: url("resource:///com/github/albert-tomanek/aero/images/button_arrow_down.svg");
+				}
+			}
+			&.up {
+				margin-left: -26px;
+				margin-bottom: 12px;
+
+				> image {
+					-gtk-icon-source: url("resource:///com/github/albert-tomanek/aero/images/button_arrow_up.svg");
+				}
+			}
+		}
+	}
+
 	scrollbar {
 		> range.vertical {
 			> trough {
@@ -829,6 +865,24 @@ CSS Property order:
 		background: linear-gradient(180deg, #FCFFFF 0%, #E3E9F5 34.38%, #D5DCEC 34.38%, #E0E5F8 100%);		
 
 		color: #1b1d23;
+
+		> item {
+			padding: 1px 6px 0px 6px;
+			
+			> label {
+				padding: 0px 2px;
+				border: 1px solid transparent;
+			}
+			&:selected > label {
+				border-radius: 3px;
+				border: 1px solid #575757;
+				background: #CBD1E1;
+				box-shadow: 2px 3px 2px 0px rgba(0, 0, 0, 0.25) inset;
+			}
+			&:selected {
+				box-shadow: none;
+			}
+		}
 	}
 
 	popover.menu {
@@ -857,6 +911,25 @@ CSS Property order:
 			}
 		}
 
+		label.separator.title {
+			font-family: "segoe ui";
+			font-size: 12px;
+			font-weight: bold;
+			padding: 2px 7px;
+			margin-top: -1px;
+			margin-bottom: 2px;
+
+			background: #e8e8e8/*#e0e0e0*/;
+			border-top: 1px solid white;
+			border-bottom: 1px solid #c0c0c0;
+			box-shadow: 0px 1px 0px 0px white, 0px -1px 0px 0px #e0e0e0/*#b8b8b8*/;
+			// background: #e0e0e0;
+			// color: #ffffff;
+			// text-shadow: 1px 1px 0px #808080;
+
+			opacity: 1;
+		}
+
 		modelbutton {
 			padding: 0;
 			margin: 0;
@@ -867,13 +940,20 @@ CSS Property order:
 			font-size: 12px;
 			font-family: "Segoe UI";
 
-			&:selected {
-				background: linear-gradient(180deg, rgba(192, 217, 248, 0) 0%, rgba(192, 217, 248, 0.43) 96.21%);
-				box-shadow: inset 0px 0px 0px 1px rgba(247, 250, 255, 0.84);
+			&:hover {
 				border: 1px solid #AECFF7;
 				border-radius: 3px;
 
-				color: black;
+				background: linear-gradient(180deg, hsla(213, 80.0, 86.3, 0) 0%, hsla(213, 80.0, 86.3, 0.43) 96.21%);
+				box-shadow: inset 0px 0px 0px 1px hsla(247, 100.0, 98.4, 0.84);
+
+				> label {
+					color: black;
+				}
+			}
+			&:disabled:hover {
+				background: linear-gradient(180deg, hsla(213, 0, 86.3, 0) 0%, hsla(213, 0, 86.3, 0.43) 96.21%);
+				box-shadow: inset 0px 0px 0px 1px hsla(0, 0%, 98%, 0.84);
 			}
 
 			> label {
@@ -888,10 +968,13 @@ CSS Property order:
 				min-width:  30px;
 				// min-height: 22px;
 
-				// border-right: 1px solid #E1E1E1;
+				> * {
+					margin-left: 6px;
+				}
 			}
 
 			arrow {
+				color: black;
 				-gtk-icon-source: -gtk-recolor(url("resource:///com/github/albert-tomanek/aero/images/button_arrow_right.svg"));//-gtk-icontheme("");
 				-gtk-icon-size: 8px;
 				min-width: 0;
@@ -901,32 +984,20 @@ CSS Property order:
 		}
 
 		contents {
-			padding: 0px;
+			padding: 2px;
+
 			border-radius: 0;
-			border: none;
+			border: 1px solid #979797;
+			box-shadow: 5px 5px 3px -3px rgba(0, 0, 0, 0.5);
+			background: #F0F0F0;
 
 			.menu {
 				margin-top: 0;
 			}
 			
 			scrolledwindow {
-				// padding-left: 30px;
-				
-				border: 1px solid #979797;
 				background: linear-gradient(90deg, #F0F0F0 0px, #F0F0F0 30px, #E1E1E1 30px, #E1E1E1 31px, #FFF 31px, #FFF 32px, #F0F0F0 32px, #F1F1F1 100%);//#f0f0f0;
-				box-shadow: 5px 5px 3px -3px rgba(0, 0, 0, 0.5);
-
-				> * {
-					// border-left: 1px solid #E1E1E1;
-				}
-			}
-
-			.flat {
-				// padding: 4px 4px;
-				// min-height: 0px;
-
-				// border: 1px solid transparent;
-
+				// background: linear-gradient(90deg, #e0e0e0 0px, #e0e0e0 30px, #F0F0F0 30px, #F1F1F1 100%);//#f0f0f0;
 			}
 		}
 	}

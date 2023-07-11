@@ -6,4 +6,5 @@ lib_sources = [
     'classes/ribbon.vala',
     'classes/window.vala',
     'classes/wizard.vala',
+    'classes/messagebox.vala',
 ]
