@@ -2,6 +2,7 @@ lib_sources = [
     'classes/aero.vala',
     'classes/navbuttons.vala',
     'classes/actionbutton.vala',
+    'classes/action.vala',
     'classes/orb.vala',
     'classes/ribbon.vala',
     'classes/window.vala',

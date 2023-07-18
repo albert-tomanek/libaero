@@ -5,11 +5,12 @@
 	(1,1,"demo1.ui","main.ui",None,None,None,None,None,None,None)
   </ui>
   <object>
-	(1,1,"GtkWindow","Notepad",None,None,None,None,None,None),
+	(1,1,"GtkApplicationWindow","Notepad",None,None,None,None,None,None),
 	(1,5,"GtkBox","contents",1,None,None,None,None,None),
 	(1,6,"GtkPopoverMenuBar","menubar",5,None,None,None,None,None),
 	(1,7,"GtkScrolledWindow",None,5,None,None,None,1,None),
-	(1,8,"GtkTextView",None,7,None,None,None,None,None)
+	(1,8,"GtkTextView",None,7,None,None,None,None,None),
+	(1,9,"GtkButton",None,5,None,None,None,None,None)
   </object>
   <object_property>
 	(1,1,"GtkWidget","css-classes","aero",None,None,None,None,None,None,None,None,None),
@@ -22,6 +23,8 @@
 	(1,7,"GtkScrolledWindow","hscrollbar-policy","always",None,None,None,None,None,None,None,None,None),
 	(1,7,"GtkScrolledWindow","vscrollbar-policy","always",None,None,None,None,None,None,None,None,None),
 	(1,7,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
-	(1,7,"GtkWidget","vexpand","True",None,None,None,None,None,None,None,None,None)
+	(1,7,"GtkWidget","vexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,9,"GtkActionable","action-name","win.open",None,None,None,None,None,None,None,None,None),
+	(1,9,"GtkButton","label","open",None,None,None,None,None,None,None,None,None)
   </object_property>
 </cambalache-project>

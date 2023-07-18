@@ -36,6 +36,11 @@ CSS Property order:
 		border-radius: 2px;
 	}
 
+	&.fullscreen {
+		padding: 0px;
+		border-width: 0px;
+	}
+
 	/* Default font */
 
 	font-size: 12px;
@@ -307,7 +312,7 @@ CSS Property order:
 		// }
 	}
 
-	notebook.ribbon {
+	notebook.ribbon, .ribbon > notebook {	// People can make their own Notebooks and style them with .ribbon if they don't fancy costrucing them with MenuModels
 		@mixin tab-size {
 			margin-top: 1px;
 			min-width: 0;

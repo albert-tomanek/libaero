@@ -20,7 +20,7 @@ public class NotepadApp : Gtk.Application {
 }
 
 [GtkTemplate (ui = "/com/github/albert-tomanek/aero/apps/notepad/main.ui")]
-class Notepad : Gtk.Window
+class Notepad : Gtk.ApplicationWindow
 {
 	[GtkChild] Gtk.PopoverMenuBar menubar;
 
@@ -41,13 +41,17 @@ class Notepad : Gtk.Window
 		/* Add Actions */
 		GLib.SimpleAction act;
 
-		act = new GLib.SimpleAction.stateful("wrap", null, new Variant.boolean(true));
+		act = new GLib.SimpleAction("open", null);
+		act.activate.connect(() => { message("Open action."); });
+		this.add_action(act);	// this.application.add_action(act);
+
+		act = new GLib.SimpleAction.stateful("wrap", VariantType.BOOLEAN, new Variant.boolean(true));
 		act.activate.connect(() => {});
-		GLib.Application.get_default().add_action(act);	// this.application.add_action(act);
+		this.add_action(act);	// this.application.add_action(act);
 
 		act = new GLib.SimpleAction.stateful("encoding", VariantType.STRING, new Variant.string("utf8"));
 		act.activate.connect(() => {});
-		GLib.Application.get_default().add_action(act);	// this.application.add_action(act);
+		this.add_action(act);	// this.application.add_action(act);
 
 		var b = new Gtk.ColorButton();
 		this.menubar.add_child(b, "cbutton");

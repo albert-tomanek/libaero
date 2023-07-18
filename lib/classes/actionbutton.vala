@@ -2,14 +2,15 @@ namespace Aero
 {
     public class ActionButton : Gtk.Box
     {
-        public string action_id { private get; construct; }
-        public Gtk.IconSize size { get; set; }
-        public string s_size { construct { this.size = (value == "large") ? Gtk.IconSize.LARGE : Gtk.IconSize.NORMAL; } }
-        public Gtk.Popover? popover { get; set; default = new Gtk.Popover(); }
+        string action_id;
+        Gtk.IconSize size;
+        int i;
+        public string s_size { construct; } // only here for Glade
+        public Gtk.Popover? popover { get; construct; default = null; }
         unowned Action? action;
 
-        Gtk.Button icon_button;
-        Gtk.Button arrow;
+        Gtk.Image icon;
+        Gtk.Label label;
 
         static construct {
             set_css_name("actionbutton");
@@ -17,64 +18,78 @@ namespace Aero
 
         public ActionButton(string action_id, Gtk.IconSize size)
         {
-            Object(action_id: action_id, size: size);
-        }
-        
-        construct {
-            this.action = Action.find(this.action_id);
+            this.action_id = action_id;
+            this.size = size;
+
+            this.realize.connect(() => {
+                this.action = (this.root as Gtk.ApplicationWindow).lookup_action(this.action_id);
+                this.on_new_action();
+            });
 
             this.orientation = (size == Gtk.IconSize.LARGE) ? Gtk.Orientation.VERTICAL : Gtk.Orientation.HORIZONTAL;
+            message(@"orientation computed $(size) -> $orientation");
+
             this.hexpand = false;
             this.add_css_class("linked");
             this.add_css_class("flat");
 
-            this.icon_button = new Gtk.Button();
-            this.icon_button.add_css_class("flat");
-            this.icon_button.clicked.connect(() => {
+            var top_button = new Gtk.Button();
+            top_button.add_css_class("flat");
+            top_button.clicked.connect(() => {
                 (this.root as Gtk.ApplicationWindow).activate_action(this.action_id, null);
             });
-            this.append(this.icon_button);
-            this.icon_button.child = new Gtk.Box(this.orientation, 0) {
+            this.append(top_button);
+            top_button.child = new Gtk.Box(this.orientation, 0) {
                 hexpand = true,
                 vexpand = true,
                 halign = (size == Gtk.IconSize.LARGE) ? Gtk.Align.CENTER : Gtk.Align.FILL
             };
 
-            var icon = new Gtk.Image() {
+            this.icon = new Gtk.Image() {
                 icon_size = this.size,
                 halign = Gtk.Align.CENTER
             };
-            if (this.action.icon_name != null)
-                icon.icon_name = this.action.icon_name;
-            else if (this.action.icon_resource != null)
-                icon.resource = this.action.icon_resource;
-            else
-                warning("No icon specified for stock action with ID `%s`.", this.action.id);
-            (this.icon_button.child as Gtk.Box).append(icon);
-            (this.icon_button.child as Gtk.Box).append(
-                new Gtk.Label.with_mnemonic(this.action.name) {
-                    halign = (size == Gtk.IconSize.LARGE) ? Gtk.Align.CENTER : Gtk.Align.START,
-                    hexpand = true
-                }
-            );
 
-            this.arrow = new Gtk.Button() {
+            this.label = new Gtk.Label.with_mnemonic(null) {
+                halign = (size == Gtk.IconSize.LARGE) ? Gtk.Align.CENTER : Gtk.Align.START,
+                hexpand = true
+            };
+
+            (top_button.child as Gtk.Box).append(icon);
+            (top_button.child as Gtk.Box).append(this.label);
+
+            var arrow_button = new Gtk.Button() {
                 child = new Gtk.Image.from_resource("/com/github/albert-tomanek/aero/images/button_arrow_down.svg") {
                     valign = Gtk.Align.CENTER
                 }
             };
-            this.arrow.add_css_class("flat");
-            this.append(this.arrow);
-            this.notify["popover"].connect(() => { this.arrow.visible = (this.popover != null); });
-            this.arrow.clicked.connect(() => {
-                if (this.popover != null)
-                    this.popover.popdown();
-            });
+
+            if (this.popover != null)
+            {
+                arrow_button.add_css_class("flat");
+                this.append(arrow_button);
+                arrow_button.clicked.connect(() => {
+                    if (this.popover != null)
+                        this.popover.popdown();
+                });
+            }
+        }
+
+        void on_new_action()
+        {
+            if (this.action.get_data<unowned string>("icon") != null)
+                this.icon.icon_name = this.action.get_data<unowned string>("icon");
+            else {
+                warning("Display information is missing for the action `%s`. It wasn't created using Aero.ActionEntry.add().", this.action.name);
+                this.icon.icon_name = "image-missing";
+            }
+
+            this.label.label = this.action.get_data<unowned string>("title") ?? "????";
         }
     }
 
     [Compact]
-    public struct Action    // Inspired by Gtk.Action
+    public struct OldAction    // Inspired by Gtk.Action
     {
         string id;
         string name;
@@ -84,11 +99,11 @@ namespace Aero
 
         /* Registry of actions for the application */
 
-        private static GenericArray<unowned Action?>? custom = null;
+        private static GenericArray<unowned OldAction?>? custom = null;
 
-        public static unowned Action? find(string stock_id)
+        public static unowned OldAction? find(string stock_id)
         {
-            foreach (unowned Action? act in stock)
+            foreach (unowned OldAction? act in stock)
             {
                 if (act.id == stock_id)
                     return act;
@@ -104,18 +119,18 @@ namespace Aero
             }
 
             warning("Could not find stock action with ID `%s`.", stock_id);
-            return Action.fallback;
+            return OldAction.fallback;
         }
 
-        public void register(unowned Action act)
+        public void register(unowned OldAction act)
         {
             if (custom == null)
-                custom = new GenericArray<unowned Action?>();
+                custom = new GenericArray<unowned OldAction?>();
             
             custom.add(act);
         }
         
-        private static const Action[] stock = {
+        private static const OldAction[] stock = {
             //  { "save", "Save", null, "media-floppy" },
             { "print", "_Print", "/com/github/albert-tomanek/aero/icons/orig/networkexplorer_115.png", null },
             { "new", "_New File", "/com/github/albert-tomanek/aero/icons/orig/imageres_102.png", null },
@@ -124,7 +139,7 @@ namespace Aero
             { "paste", "Paste", "/com/github/albert-tomanek/aero/icons/orig/shell32_16763.png", null },
         };
 
-        private static const Action fallback = { "", "????", null, "image-missing" };
+        private static const OldAction fallback = { "", "????", null, "image-missing" };
     }
 }
 

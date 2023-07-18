@@ -3,7 +3,7 @@
 <interface>
   <!-- interface-name demo1.ui -->
   <requires lib="gtk" version="4.8"/>
-  <template class="Notepad" parent="GtkWindow">
+  <template class="Notepad" parent="GtkApplicationWindow">
     <property name="css-classes">aero</property>
     <property name="title">Notepad</property>
     <child>
@@ -14,6 +14,12 @@
         <property name="width-request">800</property>
         <child>
           <object class="GtkPopoverMenuBar" id="menubar"/>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="action-name">win.open</property>
+            <property name="label">open</property>
+          </object>
         </child>
         <child>
           <object class="GtkScrolledWindow">

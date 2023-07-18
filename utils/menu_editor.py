@@ -143,11 +143,11 @@ class App:
         file_menu = tk.Menu(menu_bar)
         menu_bar.add_cascade(label="File", menu=file_menu)
 
-        def open(_):
+        def open(*args):
             self.load_xml_file(
                 filedialog.askopenfilename(filetypes=[("UI Files", "*.ui")])
             )
-        def save(_):
+        def save(*args):
             path = self.filepath if self.filepath else filedialog.asksaveasfilename(defaultextension=".ui", filetypes=[("UI Files", "*.ui")])
             self.save_xml_file(path)
         file_menu.add_command(label="Open", command=open)
@@ -218,8 +218,16 @@ class App:
     def get_element_attributes(self, element_name):
         # Dictionary mapping element names to their attributes
         dtd_attributes = {
-            "item": ["label", "use-markup", "action", "target", "icon", "submenu-action", "hidden-when", "custom"],
-            "submenu": ["label", "icon"],
+            "item": [
+                "label", "use-markup", "action", "target", "icon", "submenu-action", "hidden-when", "custom",
+                # The following are exclusive to Aero Ribbon
+                "item-size", # "large", "normal" (Gtk.IconSize)
+            ],
+            "submenu": [
+                "label", "icon",
+                # The following are exclusive to Aero Ribbon
+                "ribbon-type", # "app-menu"
+            ],
             "section": ["label", "display-hint", "text-direction"]
         }
 
