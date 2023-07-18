@@ -143,13 +143,19 @@ class App:
         file_menu = tk.Menu(menu_bar)
         menu_bar.add_cascade(label="File", menu=file_menu)
 
-        file_menu.add_command(label="Open", command=lambda: self.load_xml_file(
-            filedialog.askopenfilename(filetypes=[("UI Files", "*.ui")])
-        ))
-        file_menu.add_command(label="Save", command=lambda: self.save_xml_file(
-            filedialog.asksaveasfilename(initialfile=self.filepath, defaultextension=".ui", filetypes=[("UI Files", "*.ui")])
-        ))
+        def open(_):
+            self.load_xml_file(
+                filedialog.askopenfilename(filetypes=[("UI Files", "*.ui")])
+            )
+        def save(_):
+            path = self.filepath if self.filepath else filedialog.asksaveasfilename(defaultextension=".ui", filetypes=[("UI Files", "*.ui")])
+            self.save_xml_file(path)
+        file_menu.add_command(label="Open", command=open)
+        file_menu.add_command(label="Save", command=save)
         file_menu.add_command(label="Exit", command=self.root.quit)
+        
+        self.root.bind('<Control-o>', open)
+        self.root.bind('<Control-s>', save)
 
         # Populate the tree view with XML elements
         self.populate_tree_view(self.xml_data)
@@ -241,6 +247,8 @@ class App:
             attr_element = ET.Element('attribute')
             attr_element.set('name', name)
             element.append(attr_element)
+        if not value:
+            element.remove(attr_element)
 
         attr_element.text = value
 
@@ -248,8 +256,7 @@ class App:
         attributes = self.get_element_attributes(element.tag)
 
         for name, entry in zip(attributes, self.attr_entries):
-            if entry.get():
-                self.update_element_attribute(element, name, entry.get())
+            self.update_element_attribute(element, name, entry.get())
 
     def populate_table_view(self, element):
         # Get the attributes for the element
@@ -349,29 +356,30 @@ class App:
             del self.item_to_element[selected_item]
 
     def load_xml_file(self, file_path):
-        if file_path:
-            try:
-                # Clear the tree view
-                self.clear_tree_view()
+        self.file_path = file_path
 
-                # Parse the XML file
-                root = ET.parse(file_path).getroot()
+        try:
+            # Clear the tree view
+            self.clear_tree_view()
 
-                if root.tag != 'interface':
-                    messagebox.showerror("Error", "File is not a Gtk UI file.")
-                    return
+            # Parse the XML file
+            root = ET.parse(file_path).getroot()
 
-                self.xml_data = root.find('*')
+            if root.tag != 'interface':
+                messagebox.showerror("Error", "File is not a Gtk UI file.")
+                return
 
-                # Clear the existing mapping
-                self.item_to_element.clear()
+            self.xml_data = root.find('*')
 
-                # Re-populate the tree view and update the item_to_element mapping
-                self.populate_tree_view(self.xml_data)
+            # Clear the existing mapping
+            self.item_to_element.clear()
 
-            except ET.ParseError:
-                # Handle parsing errors
-                messagebox.showerror("Error", "Failed to parse the XML file.")
+            # Re-populate the tree view and update the item_to_element mapping
+            self.populate_tree_view(self.xml_data)
+
+        except ET.ParseError:
+            # Handle parsing errors
+            messagebox.showerror("Error", "Failed to parse the XML file.")
 
     def clear_tree_view(self):
         # Clear the tree view

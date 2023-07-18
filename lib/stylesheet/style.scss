@@ -544,6 +544,23 @@ CSS Property order:
 		border-spacing: 10px;
 	}
 
+	.statusbar {
+		min-height: 26px;
+
+		background: #F0F0F0;
+		border-top: 1px solid #959595;
+		box-shadow: inset -1px 0px 0px 1px #fefefe;
+
+		> box {
+			border-spacing: 8px;
+			padding: 4px 8px;
+
+			&:not(:last-child) {
+				border-right: 1px solid #d7d7d7;
+			}
+		}
+	}
+
 	actionbar {
 		background: linear-gradient(180deg, #FAFCFD 0%, #E6F0FA 48.22%, #DCE6F4 49.51%, #DCE7F6 100%);
 		box-shadow: inset 0px -2px 1px -1px rgba(0, 48, 74, 0.25);
@@ -593,9 +610,18 @@ CSS Property order:
 		}
 	}
 
+	.document-background {
+		background: #ced8e6;
+
+		> :first-child {
+			box-shadow: 8px 8px 8px 0px rgba(0, 0, 0, 0.3);
+			margin: 5px;
+		}
+	}
+
 	/* Normal widgets */
 
-	button {
+	button, scale slider {
 		background: linear-gradient(180deg, #F6F6F6 0%, #EBEBEB 47.33%, #DDDDDD 47.73%, #CFCFCF 100%);
 		border: 1px solid #707070;
 		box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.81);
@@ -608,6 +634,15 @@ CSS Property order:
 			min-height: 21px;
 
 			// padding: 0px 8px;
+		}
+
+		&.symbol-button {
+			min-width: 16px;
+			min-height: 16px;
+
+			border-radius: 8px;
+			font-weight: bold;
+			font-size: 8px;
 		}
 
 		&:hover {
@@ -813,6 +848,23 @@ CSS Property order:
 		}
 	}
 
+	scale {
+		padding: 4px;
+
+		trough {
+			border-radius: 1px;
+			min-height: 1px;
+			box-shadow: inset -1px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 1px -1px 1px 0px rgba(255, 255, 255, 1);
+		}
+	}
+
+	.symbol-button + scale {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+
+	/* Non-independent widgets */
+
 	scrollbar {
 		> range.vertical {
 			> trough {
@@ -845,6 +897,15 @@ CSS Property order:
 
 		> range.horizontal > trough > slider {
 			min-height: 15px;
+		}
+	}
+
+	scrolledwindow {
+		junction {
+			min-width: 15px;
+			min-height: 15px;
+			
+			background: #f0f0f0;
 		}
 	}
 

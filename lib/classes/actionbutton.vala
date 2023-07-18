@@ -30,6 +30,9 @@ namespace Aero
 
             this.icon_button = new Gtk.Button();
             this.icon_button.add_css_class("flat");
+            this.icon_button.clicked.connect(() => {
+                (this.root as Gtk.ApplicationWindow).activate_action(this.action_id, null);
+            });
             this.append(this.icon_button);
             this.icon_button.child = new Gtk.Box(this.orientation, 0) {
                 hexpand = true,

@@ -36,6 +36,8 @@ class Notepad : Gtk.Window
 
 	void make_menu()
 	{
+		// https://wiki.gnome.org/Projects/GLib/GApplication/GMenuModel
+
 		/* Add Actions */
 		GLib.SimpleAction act;
 
@@ -46,6 +48,9 @@ class Notepad : Gtk.Window
 		act = new GLib.SimpleAction.stateful("encoding", VariantType.STRING, new Variant.string("utf8"));
 		act.activate.connect(() => {});
 		GLib.Application.get_default().add_action(act);	// this.application.add_action(act);
+
+		var b = new Gtk.ColorButton();
+		this.menubar.add_child(b, "cbutton");
 
 		/* Load menu tree from UI file */
 		menubar.menu_model = (new Gtk.Builder.from_resource("/com/github/albert-tomanek/aero/apps/notepad/menu.ui")).get_object("menu") as GLib.MenuModel;
