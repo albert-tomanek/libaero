@@ -64,6 +64,11 @@ CSS Property order:
 		-gtk-icon-size: 16px;
 	}
 
+	separator {
+		min-width: 1px;
+		min-height: 1px;
+	}
+
 	.linked {
 		&.vertical > * {
 			&:not(:last-child) {
@@ -118,8 +123,28 @@ CSS Property order:
 	}
 
 	window-controls {
-		> :first-child {
+		title-box {
 			padding: 4px 1px 0px;
+		}
+
+		action-box-parent {
+			border-spacing: 4px;
+			box { border-spacing: inherit; }
+
+			button {
+				-gtk-icon-size: 16px;
+				min-width: 14px;
+				min-height: 14px;
+			}
+
+			separator {
+				background: #516179;
+				box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.34);
+
+				min-width: 1px;
+
+				margin: 2px 4px;
+			}
 		}
 
 		> :first-child {
@@ -312,6 +337,33 @@ CSS Property order:
 		// }
 	}
 
+	@mixin yellow-hover-lighter {
+		background: linear-gradient(180deg, #FFF 0%, rgba(255, 255, 255, 0.44) 39.87%, rgba(255, 255, 255, 0.00) 39.88%), linear-gradient(180deg, #FFE999 67.32%, #FFFEAC 96.48%);
+		box-shadow: 0px 0px 2px 2px #FFF inset;
+	}
+
+	@mixin yellow-hover {
+		border-color: #FFB700;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.37) 39.87%, rgba(255, 255, 255, 0.00) 40.29%), linear-gradient(180deg, #FFB169 7.81%, #FFCE69 75%, #FFFEAC 96.48%);
+		box-shadow: 0px 0px 2px 1px #FFF inset;
+	}
+
+	@mixin yellow-pressed {
+		border-color: #C29B29;
+		background: linear-gradient(180deg, #FFDCA0 0%, #FFD181 39.15%, #FFC45D 39.71%, #FFC45D 73.80%, #FFD781 100%);
+		box-shadow: 0px 1px 2px 1px #D69E22 inset;
+	}
+
+	@mixin hover-gray {
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.03) 100%);
+		border: 1px solid #C6C6C6;
+	}
+
+	@mixin pressed-recess {
+		border: 1px solid #C6C6C6;
+		box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.25);
+	}
+
 	notebook.ribbon, .ribbon > notebook {	// People can make their own Notebooks and style them with .ribbon if they don't fancy costrucing them with MenuModels
 		@mixin tab-size {
 			margin-top: 1px;
@@ -327,7 +379,7 @@ CSS Property order:
 			border-spacing: 2px;
 			background: #DFE9F5;
 
-			> button:first-child {
+			.appmenu-button > button {
 				@include tab-size;
 
 				margin-bottom: -1px;
@@ -336,6 +388,11 @@ CSS Property order:
 				border: 1px solid #426ABD;
 				box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.25);
 				color: white;
+
+				&:hover, &:active {
+					background: linear-gradient(180deg, #78b9ef 5.28%, #4884d1 45.35%, #114eaf 45.91%, #35BEFF 100%);
+					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.6);
+				}
 			}
 		}
 
@@ -398,23 +455,6 @@ CSS Property order:
 				}
 			}
 
-			@mixin yellow-hover-lighter {
-				background: linear-gradient(180deg, #FFF 0%, rgba(255, 255, 255, 0.44) 39.87%, rgba(255, 255, 255, 0.00) 39.88%), linear-gradient(180deg, #FFE999 67.32%, #FFFEAC 96.48%);
-				box-shadow: 0px 0px 2px 2px #FFF inset;
-			}
-
-			@mixin yellow-hover {
-				border-color: #FFB700;
-				background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.37) 39.87%, rgba(255, 255, 255, 0.00) 40.29%), linear-gradient(180deg, #FFB169 7.81%, #FFCE69 75%, #FFFEAC 96.48%);
-				box-shadow: 0px 0px 2px 1px #FFF inset;
-			}
-
-			@mixin yellow-pressed {
-				border-color: #C29B29;
-				background: linear-gradient(180deg, #FFDCA0 0%, #FFD181 39.15%, #FFC45D 39.71%, #FFC45D 73.80%, #FFD781 100%);
-				box-shadow: 0px 1px 2px 1px #D69E22 inset;
-			}
-
 			.flat {
 				border-color: transparent;
 				background: transparent;
@@ -436,56 +476,156 @@ CSS Property order:
 					@include yellow-pressed;
 				}
 			}
-			
-			actionbutton {
-				border-spacing: 0;
-				border-width: 0px;
+		}
+	}
 
-				> * {
-					border-color: transparent;
-					border-radius: 3px;
-					border: 1px solid;
+	appmenu {
+		background-color: transparent;
 
-					&:active {
-						// @include yellow-pressed;
-						// It's probably a button anyway, and those have this rule too.
-					}
-				}
+		> contents {
+			border-radius: 2px;
+			border: 1px solid #8492A6;
+			box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.33);
 
-				&.border > * {
-					// When not being hovered over, display a border only if they have opted into this
-					border-color: #a7b9d1;
-				}
+			// min-height: 435px;
 
-				&:hover {
-					@include yellow-hover;
-					border-width: 0px;
+			.top-bar {
+				min-height: 24px;
+				background: linear-gradient(180deg, #EEF3F9 0%, #EEF3F9 3.34%, #FCFEFF 4.59%, #E8F1FB 44.89%, #DEE8F5 45.19%, #DDE9F7 95.64%);
+				border-bottom: 1px solid #ABB8C9;
 
-					> *:not(:active) {
-						border-color: #FFB700;
-					}
-				}
-
-				label {
-					margin: 0px 2px;
-				}
-
-				box {
-					border-spacing: 0;					
-				}
-
-				> button {
-					min-width: 0;
-					min-height: 0;
-					padding: 2px 2px;
-
-				}
-
-				> :last-child > image {
-					// The arrow
-					-gtk-icon-size: 8px;
+				image {
+					min-width: 54px;
+					background: linear-gradient(180deg, #4882C0 0%, #2F63AE 44.89%, #1C438A 45.19%, #358BC9 95.94%);
 				}
 			}
+
+			.bottom-bar {
+				min-height: 16px;
+
+				border-top: 1px solid #C9D5E7;
+				background: linear-gradient(180deg, #FAFDFF 0%, #E2EAF9 100%);
+			}
+
+			.action-list {
+				background: white;
+
+				.scroll-button {
+					min-height: 10px;
+	
+					-gtk-icon-size: 7px;
+					border-radius: 1px;
+					border: 1px solid #ACBCD3;
+					background: linear-gradient(180deg, #FBFDFF 0%, #EBF1F9 38.76%, #DDE7F7 40.20%, #E6F6FF 74.07%, #FFF 89.16%);
+	
+					&:hover {
+						@include yellow-hover-lighter;
+					}
+				}
+
+				separator {
+					margin-left: 44px;
+					background-color: #CFDBEB;
+				}
+			}
+
+			#recent {
+				background: #EFF5FA;
+				box-shadow: -1px 0px 0px 0px #CFDBEB, 1px 0px 0px 0px #FFF inset;
+			}
+
+			#recent .heading, subaction-overlay > .heading {
+				padding: 6px 9px;
+
+				color: #4C607A;
+				background-color: #EFF5FA;
+				box-shadow: 0px 1px 0px 0px #FFF, 0px -1px 0px 0px #CFDBEB inset;
+				font-size: 11px;
+				font-weight: bold;
+			}
+
+			subaction-overlay {
+				margin-top: 1px;
+				margin-right: 4px;
+				margin-bottom: 4px;
+				margin-left: 0px;
+
+				box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.15), 0px 0px 0px 1px #FFF inset;
+
+				border: 1px solid #8492A6;
+				border-radius: 2px;
+			}
+		}
+	}
+
+	actionbutton {
+		/* Aesthetics (size-agnostic) */
+		> *, {
+			border-color: transparent;
+			border-radius: 3px;
+			border: 1px solid;
+
+			&:active {
+				// @include yellow-pressed;
+				// It's probably a button anyway, and those have this rule too.
+			}
+		}
+
+		&.border > * {
+			// When not being hovered over, display a border only if they have opted into this
+			border-color: #a7b9d1;
+		}
+
+		&:hover {
+			@include yellow-hover;
+			border-width: 0px;
+
+			> *:not(:active) {
+				border-color: #FFB700;
+			}
+		}
+
+		.heading {
+			color: #4C607A;
+			font-size: 11px;
+			font-weight: bold;
+		}
+		
+		arrow {	// The arrow
+			min-width: 0;
+			min-height: 0;
+
+			-gtk-icon-size: 8px;
+		}
+
+		menubutton * {
+			border: none;
+			background: transparent;
+		}
+
+		/* Layout */
+		&.horizontal.large {
+			> button {
+				min-width: 0;
+				min-height: 0;
+				padding: 0;
+			}
+			
+			image {
+				-gtk-icon-size: 36px;
+				margin: 5px;
+			}
+
+			label {
+				margin-left: 2px;
+			}
+		}
+	}
+
+	choicebutton {
+		&:active {
+			color: #084BE5;
+			.heading { color: #084BE5; }
 		}
 	}
 
@@ -690,23 +830,20 @@ CSS Property order:
 	.flat {
 		background: transparent;
 		border: 1px solid transparent;
-		border-radius: 4px;
 		box-shadow: none;
 
-		.heading { color: black; }
-		
+		.heading { color: black; }	// FIXME: What's this for?
+	}
+
+	button.flat {
+		border-radius: 4px;
+
 		&:hover {
-			background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.03) 100%);
-			border: 1px solid #C6C6C6;
-			
-			color: #084BE5;
-			.heading { color: #084BE5; }
+			@include hover-gray;
 		}
 
 		&:active {
-			background: rgba(0, 0, 0, 0.03);
-			border: 1px solid #C6C6C6;
-			box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.25);
+			@include pressed-recess;
 			color: #084BE5;
 
 			.heading { color: #084BE5; }
@@ -860,6 +997,11 @@ CSS Property order:
 			border-radius: 1px;
 			min-height: 1px;
 			box-shadow: inset -1px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 1px -1px 1px 0px rgba(255, 255, 255, 1);
+		}
+
+		slider {
+			margin: -12px 0px;
+			min-width: 8px;
 		}
 	}
 

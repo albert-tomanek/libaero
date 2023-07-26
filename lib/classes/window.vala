@@ -12,6 +12,9 @@ public class Aero.HeaderBar : Gtk.Box
     [GtkChild] Gtk.Box   content_box;
     [GtkChild] Gtk.Box   info_box;
 
+    [GtkChild] Gtk.Box   action_box;
+    [GtkChild] Gtk.Box   action_box_parent;
+
     public bool show_info { get; set; default = true; }
 
     construct {
@@ -42,7 +45,10 @@ public class Aero.HeaderBar : Gtk.Box
             win.bind_property("title", this.title, "label", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
 
             this.bind_property("show_info", info_box, "visible", BindingFlags.SYNC_CREATE);
-        }); 
+        });
+
+        this.action_box_parent.prepend(new Separator());
+        this.action_box_parent.append(new Separator());
     }
 
     public HeaderBar.with_contents(Gtk.Widget contents)
@@ -57,5 +63,24 @@ public class Aero.HeaderBar : Gtk.Box
         css_provider.load_from_resource("/com/github/albert-tomanek/aero/aero.css");
         Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default(), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);    
         Gtk.IconTheme.get_for_display(Gdk.Display.get_default()).add_resource_path("/com/github/albert-tomanek/aero/icons/orig/");
+    }
+
+    public Gtk.Button add_action(string action_name)
+    {
+        this.action_box_parent.visible = true;
+
+        Aero.ActionEntry action = Aero.ActionEntry.extract(Aero.ActionEntry.find(this, action_name));
+
+        var but = new Gtk.Button() {
+            icon_name = action.icon,
+            tooltip_markup = action.title,
+        };
+        but.add_css_class("flat");
+        but.clicked.connect(() => {
+            (this.root as Gtk.ApplicationWindow).activate_action(action.name, null);
+        });
+
+        this.action_box.append(but);
+        return but;
     }
 }

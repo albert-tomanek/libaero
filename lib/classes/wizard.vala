@@ -97,7 +97,7 @@ public class Aero.Wizard : Gtk.Window
         }
 
         static construct {
-            set_css_name("ChoiceButton");
+            set_css_name("choicebutton");
         }    
     }
 }

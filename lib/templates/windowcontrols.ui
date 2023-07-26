@@ -29,9 +29,17 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkBox" id="action_box_parent">
+                        <property name="css-name">action-box-parent</property>
+                        <property name="vexpand">True</property>
+                        <property name="visible">False</property>
+                        <child>
+                          <object class="GtkBox" id="action_box"/>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkLabel" id="title">
-                        <property name="halign">start</property>
-                        <property name="hexpand">True</property>
                         <property name="label">Window Title</property>
                       </object>
                     </child>

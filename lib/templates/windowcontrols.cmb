@@ -11,14 +11,16 @@
 	(1,25,"GtkBox",None,18,None,None,None,None,None),
 	(1,26,"GtkBox","info_box",25,None,None,None,None,None),
 	(1,27,"GtkImage","icon",26,None,None,None,None,None),
-	(1,28,"GtkLabel","title",26,None,None,None,None,None),
 	(1,29,"GtkBox",None,25,None,None,None,None,None),
 	(1,30,"GtkButton","minimize",29,None,None,None,None,None),
 	(1,31,"GtkButton","maximize",29,None,None,None,None,None),
 	(1,32,"GtkButton","close",29,None,None,None,None,None),
 	(1,33,"GtkImage",None,30,None,None,None,None,None),
 	(1,34,"GtkImage",None,31,None,None,None,None,None),
-	(1,35,"GtkImage",None,32,None,None,None,None,None)
+	(1,35,"GtkImage",None,32,None,None,None,None,None),
+	(1,36,"GtkBox","action_box_parent",26,None,None,None,None,None),
+	(1,37,"GtkLabel","title",26,None,None,None,None,None),
+	(1,38,"GtkBox","action_box",36,None,None,None,None,None)
   </object>
   <object_property>
 	(1,16,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
@@ -35,9 +37,6 @@
 	(1,26,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
 	(1,27,"GtkImage","icon-name","application-x-executable",None,None,None,None,None,None,None,None,None),
 	(1,27,"GtkImage","pixel-size","16",None,None,None,None,None,None,None,None,None),
-	(1,28,"GtkLabel","label","Window Title",None,None,None,None,None,None,None,None,None),
-	(1,28,"GtkWidget","halign","start",None,None,None,None,None,None,None,None,None),
-	(1,28,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
 	(1,29,"GtkWidget","css-name","buttons",None,None,None,None,None,None,None,None,None),
 	(1,29,"GtkWidget","halign","end",None,None,None,None,None,None,None,None,None),
 	(1,29,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
@@ -69,6 +68,10 @@
 	(1,35,"GtkImage","resource","/com/github/albert-tomanek/aero/images/window-close.svg",None,None,None,None,None,None,None,None,None),
 	(1,35,"GtkWidget","height-request","10",None,None,None,None,None,None,None,None,None),
 	(1,35,"GtkWidget","valign","center",None,None,None,None,None,None,None,None,None),
-	(1,35,"GtkWidget","width-request","12",None,None,None,None,None,None,None,None,None)
+	(1,35,"GtkWidget","width-request","12",None,None,None,None,None,None,None,None,None),
+	(1,36,"GtkWidget","css-name","action-box-parent",None,None,None,None,None,None,None,None,None),
+	(1,36,"GtkWidget","vexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,36,"GtkWidget","visible","False",None,None,None,None,None,None,None,None,None),
+	(1,37,"GtkLabel","label","Window Title",None,None,None,None,None,None,None,None,None)
   </object_property>
 </cambalache-project>

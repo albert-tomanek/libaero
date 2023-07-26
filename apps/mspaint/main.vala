@@ -32,9 +32,11 @@ class MsPaint : Gtk.ApplicationWindow
 {
 	[GtkChild] Aero.Ribbon ribbon;
 	[GtkChild] Gtk.Box   canvas_box;
+	[GtkChild] Gtk.Box   statusbar;
 	[GtkChild] Gtk.Adjustment zoom_adjustment;
-	[GtkChild] Gtk.Label size_label;
 	[GtkChild] Gtk.Label zoom_label;
+	[GtkChild] Gtk.Label size_label;
+	[GtkChild] Gtk.Label selection_size_label;
 
 	[GtkChild] Gtk.Grid new_dialog;
 	[GtkChild] Gtk.SpinButton new_width;
@@ -43,7 +45,12 @@ class MsPaint : Gtk.ApplicationWindow
 	public Canvas canvas { get; set; }
 
 	construct {
+		this.register_actions();
+
 		this.titlebar = new Aero.HeaderBar();
+		(this.titlebar as Aero.HeaderBar).add_action("save-as-default");
+		(this.titlebar as Aero.HeaderBar).add_action("undo");
+		(this.titlebar as Aero.HeaderBar).add_action("redo");
 
 		this.notify["canvas"].connect(() => {
 			var old = this.canvas_box.get_first_child();
@@ -55,14 +62,18 @@ class MsPaint : Gtk.ApplicationWindow
 			this.size_label.label = @"$(canvas.width) × $(canvas.height)px";
 
 			this.zoom_adjustment.bind_property("value", this.canvas, "scale", BindingFlags.BIDIRECTIONAL|BindingFlags.SYNC_CREATE);
+
+			//
+			var cont = new Gtk.EventControllerMotion();
+			cont.leave.connect(() => { this.selection_size_label.label = ""; });
+			cont.motion.connect((x, y) => { this.selection_size_label.label = "%0.2f, %0.2f".printf(x / canvas.scale, y / canvas.scale); });
+			this.canvas.add_controller(cont);
 		});
 		this.canvas = new Canvas(400, 400);
 
 		this.zoom_adjustment.notify["value"].connect(() => {
 			this.zoom_label.label = "%0.1f%%".printf(this.zoom_adjustment.value * 100);
 		});
-
-		this.register_actions();
 
 		this.ribbon.menu_model = (new Gtk.Builder.from_resource("/com/github/albert-tomanek/aero/apps/mspaint/menu.ui")).get_object("menu") as GLib.MenuModel;
 	}
@@ -71,18 +82,38 @@ class MsPaint : Gtk.ApplicationWindow
 	{
 		Aero.ActionEntry[] actions = {
 			{ "help", this.show_help, null, null, null, "", "Help", "" },
-			{ "new", this.dia_new_document, null, null, null, "", "New", "" },
+			{ "about", this.show_help, null, null, null, "", "Abou_t Paint", "" },
+
+			{ "new", this.dia_new_document, null, null, null, "mspaint_60008", "New", "Create a new picture." },
+			{ "open", niy, null, null, null, "mspaint_60016", "Open", null },
+			{ "save", niy, null, null, null, "mspaint_60024", "Save", null },
+			{ "save-as-default", this.save_as_svg, null, null, null, "mspaint_60040", "Save _as", "Save the current picture as a new file." },
+			{ "save-as-png", null, null, null, null, "mspaint_60064", "Save as _PNG", "Standard image file" },
+			{ "save-as-svg", this.save_as_svg, null, null, null, "mspaint_60080", "Save as _SVG", "This file type can be scaled to any size" },
+
+			{ "print", niy, null, null, null, "mspaint_60096", "Print", null },
+			{ "import-scanner", niy, null, null, null, "mspaint_60136", "Fro_m scanner or camera", null },
+			{ "email", niy, null, null, null, "mspaint_60144", "Sen_d in e-mail", null },
+
+			{ "set-desktopbg", niy, null, null, null, "mspaint_60168", "Set as desktop _background", null },
+			{ "show-imgprops", niy, null, null, null, "mspaint_60200", "Prop_erties", null },
+
+			{ "undo", this.undo, null, null, null, "mspaint_38004", "Undo", null },
+			{ "redo", niy, null, null, null, "mspaint_38008", "Redo", null },
+
+			{ "cut", niy, null, null, null, "mspaint_60335", "Cut", null },
+			{ "copy", niy, null, null, null, "mspaint_60340", "Copy", null },
+			{ "copy-selection", niy, null, null, null, "mspaint_60343", "Copy selection", null },
+			{ "paste", niy, null, null, null, "mspaint_60320", "Paste", "Paste image data from the clipboard." },
+
 			{ "zoom-in", () => { this.zoom_adjustment.value += 0.1; }, null, null, null, "mspaint_60520", "Zoom in", "" },
 			{ "zoom-out", () => { this.zoom_adjustment.value -= 0.1; }, null, null, null, "mspaint_60528", "Zoom out", "" },
 			{ "100pct", null, null, null, null, "mspaint_60488", "100 %", "" },
-			{ "fullscreen", () => { 
-				if (this.is_fullscreen())
-					this.unfullscreen();
-				else
-					this.fullscreen();
-			}, null, null, null, "mspaint_60504", "Full screen", "" },
+			{ "fullscreen", () => { if (this.is_fullscreen()) { this.unfullscreen(); } else { this.fullscreen(); } }, null, null, null, "mspaint_60504", "Full screen", "" },
+			{ "show-rulers", null, "b", "false", null, "", "Rulers", "" },
+			{ "show-gridlines", null, "b", "false", null, "", "Gridlines", "" },
+			{ "show-statusbar", () => {}, "b", "true", (act, val) => { this.statusbar.visible = val.get_boolean(); }, "", "Status bar", "" },
 		};
-
 		Aero.ActionEntry.add(actions, this);
 
 		SimpleAction simple_action = new SimpleAction ("simple-action", null);
@@ -90,17 +121,15 @@ class MsPaint : Gtk.ApplicationWindow
 			print ("Simple action %s activated\n", simple_action.get_name ());
 		});
 		this.add_action (simple_action);
-
 	}
 
-	void show_help()
+	void undo()
 	{
-		var text = (
-			"This is an application made to showcase the use of libaero.\n" +
-			"\n" +
-			"Copyright (C) 2023,  Albert Tománek"
-		);
-		(new Aero.MsgBox.info(this, "Help with Aero Paint", text)).show();
+		if (this.canvas.strokes.length > 0)
+		{
+			this.canvas.strokes.remove_index(this.canvas.strokes.length - 1);
+			this.canvas.queue_draw();
+		}
 	}
 
 	void dia_new_document()
@@ -135,6 +164,60 @@ class MsPaint : Gtk.ApplicationWindow
 		return true;
 	}
 
+	void save_as_svg()
+	{
+		var ff = new Gtk.FileFilter() { name = "SVG files" };
+		ff.add_suffix(".svg");
+		var dia = new Gtk.FileChooserDialog("Save as SVG", this, Gtk.FileChooserAction.SAVE, "_Cancel", 0, "_Save", 1) {
+			filter = ff,
+		};
+		dia.set_current_folder(File.new_for_path("~/Pictures"));
+		dia.show();
+
+		dia.response.connect((rc) => {
+			if (rc == 1)
+			{
+				var file = dia.get_file();
+				var stream = file.append_to(FileCreateFlags.REPLACE_DESTINATION);
+
+				stream.write(@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".data);
+				stream.write(@"<svg width=\"$(this.canvas.width)\" height=\"$(this.canvas.height)\"><g>\n".data);
+
+				stream.write(@"<rect x=\"0\" y=\"0\" width=\"$(this.canvas.width)\" height=\"$(this.canvas.height)\" style=\"fill:#ffffff;\" />\n".data);
+
+				foreach (var stroke in this.canvas.strokes)
+				{
+					string path = "M ";
+
+					for (int i = 0; i < stroke.points.length; i += 2)
+					{
+						double x = stroke.points.index(i);
+						double y = stroke.points.index(i+1);
+
+						path += @"$x,$y ";
+					}
+
+					stream.write(@"<path d=\"$path\" style=\"fill:none; stroke:#000000; stroke-width: $(stroke.line_width)px; stroke-linecap:round; stroke-linejoin:round;\" />\n".data);
+				}
+
+				stream.write(@"</g></svg>\n".data);
+				stream.close();
+			}
+
+			dia.close();
+		});
+	}
+
+	void show_help()
+	{
+		var text = (
+			"This is an application made to showcase the use of libaero.\n" +
+			"\n" +
+			"Copyright (C) 2023,  Albert Tománek"
+		);
+		(new Aero.MsgBox.info(this, "Help with Aero Paint", text)).show();
+	}
+
 	//  [GtkCallback]	
 	void niy()
 	{
@@ -149,7 +232,7 @@ class Canvas : Gtk.DrawingArea
 	public uint16 height { get; private set; }
 	public double scale  { get; set; default = 1.0; }
 
-	GenericArray<Stroke?> strokes = new GenericArray<Stroke?>();
+	public GenericArray<Stroke?> strokes = new GenericArray<Stroke?>();
 
 	double _origin_x;
 	double _origin_y;
@@ -164,13 +247,15 @@ class Canvas : Gtk.DrawingArea
 		this.halign = Gtk.Align.START;
 		this.valign = Gtk.Align.START;
 
+		set_size_request(width, height);
+
 		this.notify["scale"].connect(() => {
 			set_size_request((int)(scale * (double) width), (int)(scale * (double) height));
 		});	
 
-		this.realize.connect(() => {
-			set_size_request(width, height);
-		});	
+		this.notify["undo-count"].connect(() => {
+			this.queue_draw();
+		});
 
 		set_draw_func((da, cr, w, h) => {
 			cr.rectangle(0, 0, w, h);
@@ -179,7 +264,6 @@ class Canvas : Gtk.DrawingArea
 
 			foreach (var stroke in strokes)
 			{
-				//  message("rendering stroke %p %d", (void *)stroke, strokes.length);
 				stroke.render(cr, w, h, scale);
 			}
 		});
@@ -211,10 +295,10 @@ class Canvas : Gtk.DrawingArea
 		this.add_controller(ges);
 	}
 
-	class Stroke
+	public class Stroke
 	{
 		public Array<double> points = new Array<double>();
-		public float line_width = 1;
+		public double line_width = 1;
 
 		public double c_r = 0;
 		public double c_g = 0;

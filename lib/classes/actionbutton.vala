@@ -2,77 +2,80 @@ namespace Aero
 {
     public class ActionButton : Gtk.Box
     {
-        string action_id;
-        Gtk.IconSize size;
-        int i;
-        public string s_size { construct; } // only here for Glade
-        public Gtk.Popover? popover { get; construct; default = null; }
         unowned Action? action;
 
-        Gtk.Image icon;
-        Gtk.Label label;
+        public Gtk.MenuButton arrow_button;
+        public Gtk.Label description;
+        public Gtk.Image icon;
+        public Gtk.Label label;
+
+        public bool show_description { get; set; }
+
+        //public Gtk.ArrowType arrow_direction {} // Just set `this.arrow_button.direction`
 
         static construct {
             set_css_name("actionbutton");
         }
 
-        public ActionButton(string action_id, Gtk.IconSize size)
+        public ActionButton(string action_id, Gtk.Orientation ort, Gtk.IconSize size)
         {
-            this.action_id = action_id;
-            this.size = size;
-
             this.realize.connect(() => {
-                this.action = (this.root as Gtk.ApplicationWindow).lookup_action(this.action_id);
+                this.action = (this.root as Gtk.ApplicationWindow).lookup_action(action_id);
                 this.on_new_action();
+                this.set_description_visible(this.show_description);
             });
 
-            this.orientation = (size == Gtk.IconSize.LARGE) ? Gtk.Orientation.VERTICAL : Gtk.Orientation.HORIZONTAL;
-            message(@"orientation computed $(size) -> $orientation");
+            this.mnemonic_activate.connect(() => { this.do_action(); return false; });
+            
+            this.show_description = (ort == Gtk.Orientation.HORIZONTAL && size == Gtk.IconSize.LARGE);
+
+            this.orientation = ort;
 
             this.hexpand = false;
             this.add_css_class("linked");
             this.add_css_class("flat");
+            this.add_css_class((size == Gtk.IconSize.NORMAL) ? "normal" : "large");
 
-            var top_button = new Gtk.Button();
-            top_button.add_css_class("flat");
-            top_button.clicked.connect(() => {
-                (this.root as Gtk.ApplicationWindow).activate_action(this.action_id, null);
-            });
-            this.append(top_button);
-            top_button.child = new Gtk.Box(this.orientation, 0) {
+            var main_button = new Gtk.Button();
+            main_button.add_css_class("flat");
+            main_button.clicked.connect(this.do_action);
+            this.append(main_button);
+            main_button.child = new Gtk.Box(this.orientation, 0) {
                 hexpand = true,
                 vexpand = true,
-                halign = (size == Gtk.IconSize.LARGE) ? Gtk.Align.CENTER : Gtk.Align.FILL
+                halign = (ort == Gtk.Orientation.VERTICAL) ? Gtk.Align.CENTER : Gtk.Align.FILL
             };
 
             this.icon = new Gtk.Image() {
-                icon_size = this.size,
+                icon_size = size,
                 halign = Gtk.Align.CENTER
             };
+            (main_button.child as Gtk.Box).append(icon);
+            
+            var b = new Gtk.Box(Gtk.Orientation.VERTICAL, 0) {
+                valign = Gtk.Align.CENTER
+            };
+            (main_button.child as Gtk.Box).append(b);
 
             this.label = new Gtk.Label.with_mnemonic(null) {
-                halign = (size == Gtk.IconSize.LARGE) ? Gtk.Align.CENTER : Gtk.Align.START,
-                hexpand = true
+                halign = (ort == Gtk.Orientation.VERTICAL) ? Gtk.Align.CENTER : Gtk.Align.START,
+                hexpand = true,
             };
+            b.append(this.label);
 
-            (top_button.child as Gtk.Box).append(icon);
-            (top_button.child as Gtk.Box).append(this.label);
-
-            var arrow_button = new Gtk.Button() {
-                child = new Gtk.Image.from_resource("/com/github/albert-tomanek/aero/images/button_arrow_down.svg") {
-                    valign = Gtk.Align.CENTER
-                }
+            this.description = new Gtk.Label(null) {
+                halign = (ort == Gtk.Orientation.VERTICAL) ? Gtk.Align.CENTER : Gtk.Align.START,
+                hexpand = true,
             };
+            b.append(this.description);
 
-            if (this.popover != null)
-            {
-                arrow_button.add_css_class("flat");
-                this.append(arrow_button);
-                arrow_button.clicked.connect(() => {
-                    if (this.popover != null)
-                        this.popover.popdown();
-                });
-            }
+            this.arrow_button = new Gtk.MenuButton() {
+                //  child = new Gtk.Image.from_resource("/com/github/albert-tomanek/aero/images/button_arrow_down.svg") {
+                //      valign = Gtk.Align.CENTER
+                //  }
+            };
+            this.arrow_button.add_css_class("flat");
+            this.append(this.arrow_button);
         }
 
         void on_new_action()
@@ -84,7 +87,33 @@ namespace Aero
                 this.icon.icon_name = "image-missing";
             }
 
-            this.label.label = this.action.get_data<unowned string>("title") ?? "????";
+            this.label.set_text_with_mnemonic(this.action.get_data<unowned string>("title") ?? "????");
+
+            var? desc = this.action.get_data<unowned string>("description");
+            if (desc != null)
+                this.description.label = desc;
+            else
+                this.description.hide();
+        }
+
+        void set_description_visible(bool b)
+        {
+            if (b)
+            {
+                this.description.show();
+                this.label.add_css_class("heading");
+            }
+            else
+            {
+                this.description.hide();
+                this.label.remove_css_class("heading");
+                this.tooltip_markup = this.description.label;
+            }
+        }
+
+        void do_action()
+        {
+            (this.root as Gtk.ApplicationWindow).activate_action(this.action.name, null);
         }
     }
 

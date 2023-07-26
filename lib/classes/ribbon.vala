@@ -1,6 +1,7 @@
 public class Aero.Ribbon : Gtk.Box
 {
     public Gtk.Notebook nb = new Gtk.Notebook();
+    public Aero.AppMenu? app_menu { get; private set; default = null; }
     public GLib.MenuModel menu_model { get; set; }
 
     construct {
@@ -18,8 +19,6 @@ public class Aero.Ribbon : Gtk.Box
     {
         var mm = this.menu_model;
 
-        message("%d items", mm.get_n_items());
-
         for (int i = 0; i < mm.get_n_items(); i++)
         {
             /* If it's the app menu */
@@ -28,10 +27,13 @@ public class Aero.Ribbon : Gtk.Box
             {
                 if (is_appmenu.get_string() == "app-menu")
                 {
+                    this.app_menu = new Aero.AppMenu.from_model(mm.get_item_link(i, "submenu"));
+
                     var button = new Gtk.MenuButton() {
-                        menu_model = mm.get_item_link(i, "submenu"),
-                        label = "Menu",
+                        child = new Gtk.Image.from_resource("/com/github/albert-tomanek/aero/images/appmenu_icon.svg"),
+                        popover = this.app_menu,
                     };
+                    button.add_css_class("appmenu-button");
 
                     this.nb.set_action_widget(button, Gtk.PackType.START);
 
@@ -60,12 +62,28 @@ public class Aero.Ribbon : Gtk.Box
         Section sec = new Section() { title = name };
         box.append(sec);
 
+        Gtk.Box? vbox = null;
+        uint vbox_children = 0;
+
         for (int i = 0; i < mm.get_n_items(); i++)
         {
-            string action_name = mm.get_item_attribute_value(i, "action", VariantType.STRING).get_string();
+            Gtk.Widget wij;
+                
+            GLib.Action action;
+            Gtk.IconSize sz;
             
-            Gtk.IconSize sz = Gtk.IconSize.LARGE;
-            var sz_v = mm.get_item_attribute_value(i, "item-size", VariantType.STRING);
+            /* Parse the item properties from the menu file */
+            var action_name = (
+                mm.get_item_attribute_value(i, "action", VariantType.STRING) ??
+                mm.get_item_attribute_value(i, "ribbon-action", VariantType.STRING)   // for when the AcitonButton is actually a <submenu> because it has children
+            ).get_string();
+            
+            action = (this.root as Gtk.ApplicationWindow).lookup_action(action_name);
+            if (action == null)
+                error(@"Action `win.$(action_name)` not found.");
+            
+            sz = Gtk.IconSize.LARGE;
+            var sz_v = mm.get_item_attribute_value(i, "ribbon-size", VariantType.STRING);
             if (sz_v != null)
             {
                 if (sz_v.get_string() == "large")
@@ -75,10 +93,46 @@ public class Aero.Ribbon : Gtk.Box
                 else
                     warning("Invalid MenuItem `item-size` for Aero.Ribbon: \"%s\". Valid values are \"large\" and \"normal\".", sz_v.get_string());
             }
+
+            /* Create the correct widget for the action type */
+            if (action.get_parameter_type().dup_string() == "b")
+            {
+                wij = new Gtk.CheckButton() {
+                    label = Aero.ActionEntry.extract(action).title,
+                    action_name = action.name,
+                };
+            }
+            else
+            { 
+                var ab = new Aero.ActionButton(action_name, (sz == Gtk.IconSize.LARGE) ? Gtk.Orientation.VERTICAL : Gtk.Orientation.HORIZONTAL, sz);
+                wij = ab;
+
+                // Attach a menu if it has children
+                var submodel = mm.get_item_link(i, "submenu");
+                if (submodel != null)
+                    ab.arrow_button.menu_model = submodel;
+                else
+                    ab.arrow_button.visible = false;
+            }
             
-            message(@"New button $(i) $sz");
-            var ab = new Aero.ActionButton(action_name, sz);
-            sec.append(ab);
+            /* Attach the button. Group small buttons into vertical boxes. */
+            if (sz == Gtk.IconSize.LARGE)
+            {
+                sec.add_item(wij);
+                vbox = null;
+            }
+            else {
+                if (vbox == null || vbox_children == 3) {
+                    vbox = new Gtk.Box(Gtk.Orientation.VERTICAL, 0) {
+                        valign = Gtk.Align.START,
+                    };
+                    vbox_children = 0;
+                    sec.add_item(vbox);
+                }
+
+                vbox.append(wij);
+                vbox_children += 1;
+            }
         }
     }
 
@@ -86,22 +140,17 @@ public class Aero.Ribbon : Gtk.Box
     {
         public string title { get; set; }
         Gtk.Box internal_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
+        Separator sep;
 
         static construct {
             set_css_name("section");
         }
 
-        class Separator : Gtk.Widget
-        {
-            static construct {
-                set_css_name("separator");
-            }
-        }
-
         construct {
             this.orientation = Gtk.Orientation.HORIZONTAL;
             this.notify["orientation"].connect(() => { this.orientation = Gtk.Orientation.HORIZONTAL; });   // Users shouldn't really be able to set this.
-            this.append(new Separator() { vexpand = true });
+            this.sep = new Separator() { vexpand = true };
+            this.append(this.sep);
 
             var title_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
             this.prepend(title_box);
@@ -122,7 +171,7 @@ public class Aero.Ribbon : Gtk.Box
             this.internal_box.add_child(builder, child, type);
         }
 
-        public void append(Gtk.Widget widget)
+        public void add_item(Gtk.Widget widget)
         {
             this.internal_box.append(widget);
         }

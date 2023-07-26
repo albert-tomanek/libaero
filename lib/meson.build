@@ -2,11 +2,12 @@ pkg = import('pkgconfig')
 
 subdir('stylesheet')
 subdir('classes')
+subdir('templates')
 
 lib_resources = gnome.compile_resources(
    'aero_res', 'resource.xml',
-    source_dir: '.',
-	dependencies: css_dep,
+    source_dir: ['.', meson.current_build_dir()],	# Some resources might be relative to us in the build tree, and not the source tree
+	dependencies: [css_dep, ui_files],
 	export: true,
 )
 
@@ -16,6 +17,8 @@ icon_resources = gnome.compile_resources(
 	dependencies: css_dep,
 	export: true,
 )
+
+add_project_arguments(['--gresourcesdir', meson.current_build_dir()], language: 'vala')
 
 lib = shared_library('aero',
 	[css_dep, lib_resources, icon_resources],

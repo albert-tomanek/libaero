@@ -1,0 +1,2 @@
+This isn't a pixel-perfect recreation, but it's good enough.
+You'll notice for example that the actual Windows mspaint has a yello accent colour on menus, but I've used the blue accent colour that's used in the rest of Windows 7 to save time.

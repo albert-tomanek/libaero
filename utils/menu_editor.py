@@ -220,13 +220,15 @@ class App:
         dtd_attributes = {
             "item": [
                 "label", "use-markup", "action", "target", "icon", "submenu-action", "hidden-when", "custom",
-                # The following are exclusive to Aero Ribbon
-                "item-size", # "large", "normal" (Gtk.IconSize)
+
+                "ribbon-size", # "large", "normal" (Gtk.IconSize)
             ],
             "submenu": [
                 "label", "icon",
-                # The following are exclusive to Aero Ribbon
+
                 "ribbon-type", # "app-menu"
+                "ribbon-size",   # This is for when a submenu is actually an ActionButton, we just have to save it as a submenu so that we're allowed to store children in it.
+                "ribbon-action",   # yes, this is for linked widgets that present a default action (that's what this is) but open up to present a more detailed choice as well.
             ],
             "section": ["label", "display-hint", "text-direction"]
         }
