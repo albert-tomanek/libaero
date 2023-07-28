@@ -3,5 +3,6 @@
   <gresource prefix="/com/github/albert-tomanek/aero/apps/mspaint">
     <file compressed="true" preprocess="xml-stripblanks">main.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">menu.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">rclick.ui</file>
   </gresource>
 </gresources>

@@ -88,7 +88,7 @@ class MsPaint : Gtk.ApplicationWindow
 			{ "open", niy, null, null, null, "mspaint_60016", "Open", null },
 			{ "save", niy, null, null, null, "mspaint_60024", "Save", null },
 			{ "save-as-default", this.save_as_svg, null, null, null, "mspaint_60040", "Save _as", "Save the current picture as a new file." },
-			{ "save-as-png", null, null, null, null, "mspaint_60064", "Save as _PNG", "Standard image file" },
+			{ "save-as-png", niy, null, null, null, "mspaint_60064", "Save as _PNG", "Standard image file" },
 			{ "save-as-svg", this.save_as_svg, null, null, null, "mspaint_60080", "Save as _SVG", "This file type can be scaled to any size" },
 
 			{ "print", niy, null, null, null, "mspaint_60096", "Print", null },
@@ -100,27 +100,25 @@ class MsPaint : Gtk.ApplicationWindow
 
 			{ "undo", this.undo, null, null, null, "mspaint_38004", "Undo", null },
 			{ "redo", niy, null, null, null, "mspaint_38008", "Redo", null },
+			{ "clear", () => { this.canvas.clear(); }, null, null, null, "mspaint_60008", "Clear", null },
 
 			{ "cut", niy, null, null, null, "mspaint_60335", "Cut", null },
 			{ "copy", niy, null, null, null, "mspaint_60340", "Copy", null },
 			{ "copy-selection", niy, null, null, null, "mspaint_60343", "Copy selection", null },
 			{ "paste", niy, null, null, null, "mspaint_60320", "Paste", "Paste image data from the clipboard." },
 
+			{ "hflip", () => { this.canvas.hflip(); }, null, null, null, "mspaint_60407", "Flip _horizontally", null },
+			{ "vflip", () => { this.canvas.vflip(); }, null, null, null, "mspaint_60403", "Flip _vertically", null },
+
 			{ "zoom-in", () => { this.zoom_adjustment.value += 0.1; }, null, null, null, "mspaint_60520", "Zoom in", "" },
 			{ "zoom-out", () => { this.zoom_adjustment.value -= 0.1; }, null, null, null, "mspaint_60528", "Zoom out", "" },
-			{ "100pct", null, null, null, null, "mspaint_60488", "100 %", "" },
+			{ "100pct", niy, null, null, null, "mspaint_60488", "100 %", "" },
 			{ "fullscreen", () => { if (this.is_fullscreen()) { this.unfullscreen(); } else { this.fullscreen(); } }, null, null, null, "mspaint_60504", "Full screen", "" },
 			{ "show-rulers", null, "b", "false", null, "", "Rulers", "" },
 			{ "show-gridlines", null, "b", "false", null, "", "Gridlines", "" },
 			{ "show-statusbar", () => {}, "b", "true", (act, val) => { this.statusbar.visible = val.get_boolean(); }, "", "Status bar", "" },
 		};
 		Aero.ActionEntry.add(actions, this);
-
-		SimpleAction simple_action = new SimpleAction ("simple-action", null);
-		simple_action.activate.connect (() => {
-			print ("Simple action %s activated\n", simple_action.get_name ());
-		});
-		this.add_action (simple_action);
 	}
 
 	void undo()
@@ -171,39 +169,48 @@ class MsPaint : Gtk.ApplicationWindow
 		var dia = new Gtk.FileChooserDialog("Save as SVG", this, Gtk.FileChooserAction.SAVE, "_Cancel", 0, "_Save", 1) {
 			filter = ff,
 		};
-		dia.set_current_folder(File.new_for_path("~/Pictures"));
 		dia.show();
 
 		dia.response.connect((rc) => {
-			if (rc == 1)
-			{
-				var file = dia.get_file();
-				var stream = file.append_to(FileCreateFlags.REPLACE_DESTINATION);
-
-				stream.write(@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".data);
-				stream.write(@"<svg width=\"$(this.canvas.width)\" height=\"$(this.canvas.height)\"><g>\n".data);
-
-				stream.write(@"<rect x=\"0\" y=\"0\" width=\"$(this.canvas.width)\" height=\"$(this.canvas.height)\" style=\"fill:#ffffff;\" />\n".data);
-
-				foreach (var stroke in this.canvas.strokes)
+			try {
+				if (rc == 1)
 				{
-					string path = "M ";
+					var file = dia.get_file();
+					var stream = file.append_to(FileCreateFlags.REPLACE_DESTINATION);
 
-					for (int i = 0; i < stroke.points.length; i += 2)
+					stream.write(@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".data);
+					stream.write(@"<svg width=\"$(this.canvas.width)\" height=\"$(this.canvas.height)\"><g>\n".data);
+
+					stream.write(@"<rect x=\"0\" y=\"0\" width=\"$(this.canvas.width)\" height=\"$(this.canvas.height)\" style=\"fill:#ffffff;\" />\n".data);
+
+					foreach (var stroke in this.canvas.strokes)
 					{
-						double x = stroke.points.index(i);
-						double y = stroke.points.index(i+1);
+						string path = "M ";
 
-						path += @"$x,$y ";
+						for (int i = 0; i < stroke.points.length; i += 2)
+						{
+							double x = stroke.points[i];
+							double y = stroke.points[i+1];
+
+							path += @"$x,$y ";
+						}
+
+						stream.write(@"<path d=\"$path\" style=\"fill:none; stroke:#000000; stroke-width: $(stroke.line_width)px; stroke-linecap:round; stroke-linejoin:round;\" />\n".data);
 					}
 
-					stream.write(@"<path d=\"$path\" style=\"fill:none; stroke:#000000; stroke-width: $(stroke.line_width)px; stroke-linecap:round; stroke-linejoin:round;\" />\n".data);
+					stream.write(@"</g></svg>\n".data);
+					stream.close();
 				}
-
-				stream.write(@"</g></svg>\n".data);
-				stream.close();
 			}
-
+			catch (GLib.IOError e) {
+				var msg = new Aero.MsgBox.error(this, "Error", @"Error writing SVG file.\n$(e.message)");
+				msg.show();
+			}
+			catch (GLib.Error e) {
+				var msg = new Aero.MsgBox.error(this, "Error", @"Error writing SVG file.\n$(e.message)");
+				msg.show();
+			}
+		
 			dia.close();
 		});
 	}
@@ -269,6 +276,8 @@ class Canvas : Gtk.DrawingArea
 		});
 
 		var ges = new Gtk.GestureDrag();
+		this.add_controller(ges);
+
 		ges.drag_begin.connect((x, y) => {
 			this.strokes.add(new Stroke());
 
@@ -286,18 +295,66 @@ class Canvas : Gtk.DrawingArea
 
 			double n;
 			n = _origin_x + x;
-			st.points.append_val(n);
+			st.points += n;
 			n = _origin_y + y;
-			st.points.append_val(n);
+			st.points += n;
 
 			this.queue_draw();
 		});
-		this.add_controller(ges);
+
+		var ges2 = new Gtk.GestureClick() {
+			button = Gdk.BUTTON_SECONDARY,
+		};
+		this.add_controller(ges2);
+
+		var popover = new Gtk.PopoverMenu.from_model(
+			(new Gtk.Builder.from_resource("/com/github/albert-tomanek/aero/apps/mspaint/rclick.ui")).get_object("menu") as GLib.MenuModel
+		) {
+			has_arrow = false,
+			halign = Gtk.Align.START,
+		};
+		popover.set_parent(this);
+		ges2.released.connect((n, x, y) => {
+			popover.set_pointing_to(Gdk.Rectangle() { x = (int) x, y = (int) y, width = 0, height = 0 });
+			popover.popup();
+		});
+	}
+
+	public void hflip()
+	{
+		double half_w = this.width / 2;
+
+		foreach (var stroke in strokes)
+		{
+			for (int i = 0; i < stroke.points.length; i += 2)
+				stroke.points[i] = half_w + (half_w - stroke.points[i]);
+		}
+
+		this.queue_draw();
+	}
+
+	public void vflip()
+	{
+		double half_h = this.height / 2;
+
+		foreach (var stroke in strokes)
+		{
+			for (int i = 1; i < stroke.points.length; i += 2)
+				stroke.points[i] = half_h + (half_h - stroke.points[i]);
+		}
+
+		this.queue_draw();
+	}
+
+	public void clear()
+	{
+		this.strokes = new GenericArray<Stroke?>();
+		this.queue_draw();
 	}
 
 	public class Stroke
 	{
-		public Array<double> points = new Array<double>();
+		public double[] points = {};
 		public double line_width = 1;
 
 		public double c_r = 0;
@@ -308,8 +365,8 @@ class Canvas : Gtk.DrawingArea
 		{
 			for (uint i = 0; i < points.length; i += 2)
 			{
-				var x = points.index(i) * s;
-				var y = points.index(i+1) * s;
+				var x = points[i] * s;
+				var y = points[i+1] * s;
 
 				if (i == 0)
 					cr.move_to(x, y);

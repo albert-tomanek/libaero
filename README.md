@@ -1,3 +1,5 @@
+➡➡➡ Demo in _Releases_ ➡➡➡
+---
 ## A sleek and exciting UI in Gtk
 
 ![](screenshot.png)
@@ -11,7 +13,7 @@ The Windows 7 HIG guidelines can be found [here](https://learn.microsoft.com/en-
 
 ### Window blur
 
-If you want the background of your windows to be blurry (which let's face it -- you do) download the 'Blur My Shell' extension and enable window blur.
+If you want the background of your windows to be blurry (which let's face it, you do) download the 'Blur My Shell' extension and enable window blur.
 Recommended settings are:
 ```
 sigma = 10
@@ -21,8 +23,4 @@ opacity = 255
 
 ### Building
 
-List of commands you realistically need:
- * `sassc`
-
-To design programs in Glade:
- * `gtk4-builder-tool`
+See [USAGE.md](USAGE.md)

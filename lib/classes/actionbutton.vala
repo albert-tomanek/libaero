@@ -4,6 +4,7 @@ namespace Aero
     {
         unowned Action? action;
 
+        public Gtk.Button main_button;
         public Gtk.MenuButton arrow_button;
         public Gtk.Label description;
         public Gtk.Image icon;
@@ -36,11 +37,11 @@ namespace Aero
             this.add_css_class("flat");
             this.add_css_class((size == Gtk.IconSize.NORMAL) ? "normal" : "large");
 
-            var main_button = new Gtk.Button();
-            main_button.add_css_class("flat");
-            main_button.clicked.connect(this.do_action);
-            this.append(main_button);
-            main_button.child = new Gtk.Box(this.orientation, 0) {
+            this.main_button = new Gtk.Button();
+            this.main_button.add_css_class("flat");
+            this.main_button.clicked.connect(this.do_action);
+            this.append(this.main_button);
+            this.main_button.child = new Gtk.Box(this.orientation, 0) {
                 hexpand = true,
                 vexpand = true,
                 halign = (ort == Gtk.Orientation.VERTICAL) ? Gtk.Align.CENTER : Gtk.Align.FILL
@@ -50,12 +51,12 @@ namespace Aero
                 icon_size = size,
                 halign = Gtk.Align.CENTER
             };
-            (main_button.child as Gtk.Box).append(icon);
+            (this.main_button.child as Gtk.Box).append(icon);
             
             var b = new Gtk.Box(Gtk.Orientation.VERTICAL, 0) {
                 valign = Gtk.Align.CENTER
             };
-            (main_button.child as Gtk.Box).append(b);
+            (this.main_button.child as Gtk.Box).append(b);
 
             this.label = new Gtk.Label.with_mnemonic(null) {
                 halign = (ort == Gtk.Orientation.VERTICAL) ? Gtk.Align.CENTER : Gtk.Align.START,
@@ -75,6 +76,7 @@ namespace Aero
                 //  }
             };
             this.arrow_button.add_css_class("flat");
+            (this.arrow_button.get_first_child() as Gtk.ToggleButton).remove_css_class("image-button");
             this.append(this.arrow_button);
         }
 

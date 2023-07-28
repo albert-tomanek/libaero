@@ -30,6 +30,9 @@ namespace Aero
         }
 
         construct {
+            this.has_arrow = false;
+            this.halign = Gtk.Align.START;
+
             this.action_list = new ActionList();
             this.action_list.set_size_request(150, -1);
             this.main_box.prepend(this.action_list);
@@ -61,6 +64,11 @@ namespace Aero
                 }
 
                 var ab = new Aero.ActionButton(action_name.get_string(), Gtk.Orientation.HORIZONTAL, Gtk.IconSize.LARGE);
+                //  ab.add_css_class("border");
+                ab.main_button.clicked.connect(this.popdown);
+                var inner_arrow_button = (ab.arrow_button.get_first_child() as Gtk.ToggleButton);
+                inner_arrow_button.sensitive = true;
+                inner_arrow_button.toggled.connect(() => { inner_arrow_button.active = false; });   // It's actually quite a useless button
                 this.action_list.add_item(ab);
 
                 ab.show_description = false;
@@ -207,8 +215,10 @@ namespace Aero
                     }
     
                     var ab = new Aero.ActionButton(action_name.get_string(), Gtk.Orientation.HORIZONTAL, Gtk.IconSize.LARGE);
-                    ab.arrow_button.visible = false;
                     this.action_list.add_item(ab);
+
+                    ab.arrow_button.visible = false;
+                    ab.main_button.clicked.connect((this.get_ancestor(typeof(Gtk.Popover)) as Gtk.Popover).popdown);
                 }    
             }
         }

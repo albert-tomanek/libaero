@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface><menu id="menu"><section><item><attribute name="label">Flip _horizontally</attribute><attribute name="action">win.hflip</attribute></item><item><attribute name="label">Flip _vertically</attribute><attribute name="action">win.vflip</attribute></item></section><section><item><attribute name="label">_Clear</attribute><attribute name="action">win.clear</attribute></item></section></menu></interface>

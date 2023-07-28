@@ -455,27 +455,24 @@ CSS Property order:
 				}
 			}
 
-			.flat {
-				border-color: transparent;
-				background: transparent;
-				box-shadow: none;
-
-				transition: box-shadow 200ms linear;
-			}
-
-			button {	// Notice, this includes buttons inside actionbuttons
-				border-radius: 3px;
-				border: 1px solid;
+			.border {
 				border-color: #a7b9d1;
-
-				&:hover {
-					border-color: #FFB700;
-					@include yellow-hover;
-				}
-				&:active {
-					@include yellow-pressed;
-				}
 			}
+			
+			// button:not(actionbutton) {	// Notice, this includes buttons inside actionbuttons
+			// 	transition: box-shadow 200ms linear;
+			// 	border-radius: 3px;
+			// 	border: 1px solid;
+			// 	border-color: transparent;
+
+			// 	&:hover {
+			// 		border-color: #FFB700;
+			// 		@include yellow-hover;
+			// 	}
+			// 	&:active {
+			// 		@include yellow-pressed;
+			// 	}
+			// }
 		}
 	}
 
@@ -560,28 +557,14 @@ CSS Property order:
 
 	actionbutton {
 		/* Aesthetics (size-agnostic) */
-		> *, {
-			border-color: transparent;
-			border-radius: 3px;
-			border: 1px solid;
-
-			&:active {
-				// @include yellow-pressed;
-				// It's probably a button anyway, and those have this rule too.
-			}
-		}
-
 		&.border > * {
 			// When not being hovered over, display a border only if they have opted into this
 			border-color: #a7b9d1;
 		}
 
 		&:hover {
-			@include yellow-hover;
-			border-width: 0px;
-
-			> *:not(:active) {
-				border-color: #FFB700;
+			button, button:hover {
+				@include yellow-hover;
 			}
 		}
 
@@ -598,26 +581,69 @@ CSS Property order:
 			-gtk-icon-size: 8px;
 		}
 
-		menubutton * {
-			border: none;
+		menubutton > button {
+			// Erase any visual trace of the thing that actually makes the menubutton look like a button
+
+			border: 1px solid rgba(0, 0, 0, 0);
 			background: transparent;
+			box-shadow: none;
 		}
 
-		/* Layout */
-		&.horizontal.large {
-			> button {
-				min-width: 0;
-				min-height: 0;
-				padding: 0;
+		&:hover menubutton {
+			> button, button:hover, button:active {
+				@include yellow-hover;
+
+				&:hover {
+					@include yellow-hover-lighter;
+				}
+	
+				&:active {
+					@include yellow-pressed;
+				}
 			}
+		}
+
+		&.horizontal menubutton button {	// .linked won;t work here because it's nested
+			margin: -1px;	// We don;t want the inner button and the menubutton both having a 1px border
 			
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+			
+		/* Layout */
+
+		> button {
+			min-width: 0;
+			min-height: 0;
+			padding: 0;
+		}
+
+		&.large {
 			image {
 				-gtk-icon-size: 36px;
 				margin: 5px;
 			}
+ 
+			menubutton {
+				min-width: 24px;
+			}
+		}
 
+		&.normal {
+			image {
+				margin: 2px;
+			}
+		}
+
+		&.horizontal {
 			label {
 				margin-left: 2px;
+			}
+		}
+
+		&.vertical {
+			label {
+				margin: 0 4px;
 			}
 		}
 	}
@@ -836,8 +862,6 @@ CSS Property order:
 	}
 
 	button.flat {
-		border-radius: 4px;
-
 		&:hover {
 			@include hover-gray;
 		}

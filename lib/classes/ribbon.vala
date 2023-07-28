@@ -34,6 +34,11 @@ public class Aero.Ribbon : Gtk.Box
                         popover = this.app_menu,
                     };
                     button.add_css_class("appmenu-button");
+                    Gtk.Allocation alloc;
+                    button.get_allocation(out alloc);
+                    alloc.width = 0;
+                    alloc.height = 0;
+                    button.popover.set_pointing_to(alloc);
 
                     this.nb.set_action_widget(button, Gtk.PackType.START);
 
