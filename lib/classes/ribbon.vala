@@ -36,8 +36,6 @@ public class Aero.Ribbon : Gtk.Box
                     button.add_css_class("appmenu-button");
                     Gtk.Allocation alloc;
                     button.get_allocation(out alloc);
-                    alloc.width = 0;
-                    alloc.height = 0;
                     button.popover.set_pointing_to(alloc);
 
                     this.nb.set_action_widget(button, Gtk.PackType.START);
@@ -46,6 +44,25 @@ public class Aero.Ribbon : Gtk.Box
                 }
             }
 
+            // Else if it's a tab bar button
+            var? is_action_name = mm.get_item_attribute_value(i, "action", VariantType.STRING);
+            if (is_action_name != null)
+            {
+                var action_name = is_action_name.get_string();
+                var action = Aero.ActionEntry.extract(Aero.ActionEntry.find(this, action_name));
+
+                var button = new Gtk.Button.from_icon_name(action.icon);
+                this.nb.set_action_widget(button, Gtk.PackType.END);
+
+                button.add_css_class("flat");
+                button.add_css_class("normal-icons");
+                button.clicked.connect(() => { (this.root as Gtk.ApplicationWindow).activate_action(action.name, null); });
+                button.tooltip_markup = action.description ?? action.title;
+
+                continue;
+            }
+
+            // Otherwise it's just a normal tab to add.
             add_tab(mm.get_item_link(i, "submenu"), mm.get_item_attribute_value(i, "label", VariantType.STRING).get_string());
         }
     }

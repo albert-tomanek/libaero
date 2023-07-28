@@ -77,7 +77,7 @@ public class Aero.HeaderBar : Gtk.Box
         };
         but.add_css_class("flat");
         but.clicked.connect(() => {
-            (this.root as Gtk.ApplicationWindow).activate_action(action.name, null);
+            (this.get_ancestor(typeof(Gtk.ApplicationWindow)) as Gtk.ApplicationWindow).activate_action(action.name, null);
         });
 
         this.action_box.append(but);

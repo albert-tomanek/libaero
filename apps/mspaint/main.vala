@@ -1,9 +1,3 @@
-/*
-Todo:
- - Look up how Glib.Actions work so that you can link the Ribbon to them.
-   Including disabling to eg. disable ribbon buttons.
-*/
-
 public class MsPaintApp : Gtk.Application {
 	public MsPaintApp () {
 		Object(application_id: "com.github.albert-tomanek.aero.mspaint",
@@ -81,8 +75,8 @@ class MsPaint : Gtk.ApplicationWindow
 	void register_actions()
 	{
 		Aero.ActionEntry[] actions = {
-			{ "help", this.show_help, null, null, null, "", "Help", "" },
-			{ "about", this.show_help, null, null, null, "", "Abou_t Paint", "" },
+			{ "help", this.show_help, null, null, null, "shell32_24", "Help", null },
+			{ "about", this.show_help, null, null, null, "mspaint_60208", "Abou_t Paint", null },
 
 			{ "new", this.dia_new_document, null, null, null, "mspaint_60008", "New", "Create a new picture." },
 			{ "open", niy, null, null, null, "mspaint_60016", "Open", null },
@@ -220,7 +214,7 @@ class MsPaint : Gtk.ApplicationWindow
 		var text = (
 			"This is an application made to showcase the use of libaero.\n" +
 			"\n" +
-			"Copyright (C) 2023,  Albert Tománek"
+			"Copyright (C) 2023,  Albert Tománek and contributors."
 		);
 		(new Aero.MsgBox.info(this, "Help with Aero Paint", text)).show();
 	}

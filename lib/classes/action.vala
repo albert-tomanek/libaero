@@ -54,7 +54,7 @@ namespace Aero
             }
         }
 
-        public static GLib.Action? find(Gtk.Widget? wij, string action_name)
+        public static GLib.Action? find(Gtk.Widget? wij, string action_name)    // FIXME: Search global action space and not just widget's local ActionGroup.
         {
             GLib.Action? action = null;
 
