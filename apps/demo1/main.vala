@@ -80,6 +80,8 @@ class Demo1 : Gtk.Window
 		wrap_check.notify["active"].connect(() => {
 			text_view.wrap_mode = wrap_check.active ? Gtk.WrapMode.WORD : Gtk.WrapMode.NONE;
 		});
+
+		page2.ref();
 	}
 
 	[GtkCallback]
@@ -103,11 +105,11 @@ class Demo1 : Gtk.Window
 			w = new Gtk.Label("Page 1") { halign = Gtk.Align.START };
 			w.add_css_class("heading");
 			b.append(w);
-			var v = new Gtk.Button.with_label("Next page");//Aero.Wizard.ChoiceButton("Continue", "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.");
+			var v = new Aero.Wizard.ChoiceButton("Continue", "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.");
 			v.clicked.connect(wiz.next_page);
 			b.append(v);
-			//  w = new Aero.Wizard.ChoiceButton("Quit", "Exit this wizard");
-			//  b.append(w);
+			w = new Aero.Wizard.ChoiceButton("Quit", "Exit this wizard");
+			b.append(w);
 			stack.add_named(b, "1");
 		}
 

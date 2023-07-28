@@ -92,12 +92,10 @@ public class Aero.Wizard : Gtk.Window
         }
 
         construct {
+            this.add_css_class("choicebutton");
+
             this.bind_property("title", label_title, "label", BindingFlags.SYNC_CREATE);
             this.bind_property("description", label_desc, "label", BindingFlags.SYNC_CREATE);
         }
-
-        static construct {
-            set_css_name("choicebutton");
-        }    
     }
 }

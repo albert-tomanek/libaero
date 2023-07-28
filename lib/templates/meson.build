@@ -1,6 +1,6 @@
 converter = find_program(join_paths(meson.source_root(), 'utils/glade2gtk4.py'), required: true)
 
-glade_files = ['appmenu', 'appmenuactionlist']
+glade_files = ['appmenu', 'appmenuactionlist', 'wizardchoicebutton']
 ui_files = []
 
 foreach file : glade_files
