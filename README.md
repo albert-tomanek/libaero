@@ -1,6 +1,6 @@
 ## A sleek and exciting UI in Gtk
 
-![](screenshot2.png)
+![](screenshot3.png)
 
 Along with its newly integrated scene graph and hardware accelleration, Gtk4 is actually quite a powerful toolkit and I think it's put to waste on the flat UI themes that are popular today. This library tries to be a 1-to-1 re-creation the Windows Aero UI style and provides an environment to play around with the various exciting UI concepts that were around at the time.
 
