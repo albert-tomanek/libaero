@@ -48,4 +48,6 @@ pkg.generate(lib)	# Register with pkg-config
 
 #install_data(['aero/libaero-0.xml'], install_dir: join_paths(get_option('prefix'), get_option('datadir'), 'cambalache', 'catalogs'))
 
-subdir('catalog')
+if get_option('glade_catalog')
+	subdir('catalog')
+endif

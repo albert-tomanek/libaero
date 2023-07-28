@@ -132,7 +132,13 @@ public class Aero.Ribbon : Gtk.Box
                 // Attach a menu if it has children
                 var submodel = mm.get_item_link(i, "submenu");
                 if (submodel != null)
-                    ab.arrow_button.menu_model = submodel;
+                {
+                    var popover = new Gtk.PopoverMenu.from_model(submodel) {
+                        has_arrow = false,
+                        halign = Gtk.Align.START,
+                    };
+                    ab.arrow_button.popover = popover;
+                }
                 else
                     ab.arrow_button.visible = false;
             }

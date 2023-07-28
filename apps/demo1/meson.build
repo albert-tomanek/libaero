@@ -32,5 +32,6 @@ executable('demo1',
 		dependency('gobject-2.0'),
 		dependency('gtk4'),
 	],
-	link_with: lib
+	link_with: lib,
+	install: true,
 )

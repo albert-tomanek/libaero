@@ -1,6 +1,6 @@
 public class MsPaintApp : Gtk.Application {
 	public MsPaintApp () {
-		Object(application_id: "com.github.albert-tomanek.aero.mspaint",
+		Object(application_id: "com.github.alberttomanek.aero.apps.mspaint",
 				flags: ApplicationFlags.FLAGS_NONE);
 	}
 
@@ -111,6 +111,14 @@ class MsPaint : Gtk.ApplicationWindow
 			{ "show-rulers", null, "b", "false", null, "", "Rulers", "" },
 			{ "show-gridlines", null, "b", "false", null, "", "Gridlines", "" },
 			{ "show-statusbar", () => {}, "b", "true", (act, val) => { this.statusbar.visible = val.get_boolean(); }, "", "Status bar", "" },
+
+			{ "launch-demo", () => {
+				try {
+					Process.spawn_command_line_async ("/app/bin/demo1");
+				} catch (SpawnError e) {
+					(new Aero.MsgBox.error(this, "Could not launch", @"There was an error launching the demo app:\n$(e.message)")).show();
+				}
+			}, null, null, null, "shell32_25", "Launch\nOther Demo", "Open a window showcasing further parts of libaero." },
 		};
 		Aero.ActionEntry.add(actions, this);
 	}

@@ -1,5 +1,7 @@
 namespace Aero
 {
+    // A highly versatile button class that represents a GLib.Action using an icon and a label. May display a description/popover depending on configured size. If you look around Windows 7, you will find a lot of these. Designed to be customized after construction: all child widgets are public.
+
     public class ActionButton : Gtk.Box
     {
         unowned Action? action;
@@ -61,6 +63,7 @@ namespace Aero
             this.label = new Gtk.Label.with_mnemonic(null) {
                 halign = (ort == Gtk.Orientation.VERTICAL) ? Gtk.Align.CENTER : Gtk.Align.START,
                 hexpand = true,
+                justify = (ort == Gtk.Orientation.VERTICAL && size == Gtk.IconSize.LARGE) ? Gtk.Justification.CENTER : Gtk.Justification.LEFT,
             };
             b.append(this.label);
 
@@ -117,60 +120,6 @@ namespace Aero
         {
             (this.root as Gtk.ApplicationWindow).activate_action(this.action.name, null);
         }
-    }
-
-    [Compact]
-    public struct OldAction    // Inspired by Gtk.Action
-    {
-        string id;
-        string name;
-        string? icon_resource;
-        string? icon_name;
-        string? tooltip;
-
-        /* Registry of actions for the application */
-
-        private static GenericArray<unowned OldAction?>? custom = null;
-
-        public static unowned OldAction? find(string stock_id)
-        {
-            foreach (unowned OldAction? act in stock)
-            {
-                if (act.id == stock_id)
-                    return act;
-            }
-
-            if (custom != null)
-            {
-                uint idx = 0;
-                if (custom.find_custom<string>(stock_id, (act, id) => { return act.id == id; }))
-                {
-                    return custom[idx];
-                }
-            }
-
-            warning("Could not find stock action with ID `%s`.", stock_id);
-            return OldAction.fallback;
-        }
-
-        public void register(unowned OldAction act)
-        {
-            if (custom == null)
-                custom = new GenericArray<unowned OldAction?>();
-            
-            custom.add(act);
-        }
-        
-        private static const OldAction[] stock = {
-            //  { "save", "Save", null, "media-floppy" },
-            { "print", "_Print", "/com/github/albert-tomanek/aero/icons/orig/networkexplorer_115.png", null },
-            { "new", "_New File", "/com/github/albert-tomanek/aero/icons/orig/imageres_102.png", null },
-            { "save", "_Save", "/com/github/albert-tomanek/aero/icons/orig/shell32_16761.png", null },
-            { "cut", "_Cut", "/com/github/albert-tomanek/aero/icons/orig/shell32_16762.png", null },
-            { "paste", "Paste", "/com/github/albert-tomanek/aero/icons/orig/shell32_16763.png", null },
-        };
-
-        private static const OldAction fallback = { "", "????", null, "image-missing" };
     }
 }
 

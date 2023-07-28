@@ -8,7 +8,7 @@
     <child>
       <object class="GtkBox">
         <property name="width-request">450</property>
-        <property name="height-request">400</property>
+        <property name="height-request">370</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>

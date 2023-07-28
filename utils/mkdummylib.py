@@ -20,6 +20,5 @@ if __name__ == '__main__':
     text = re.sub(f'^(?!.*\b\b).*\(.*?\).*?$', lambda m: '' if not ('signal' in m.group(0) or 'delegate' in m.group(0)) else m.group(0), text, 0, re.M)
 
     # Write to .vala file
-    print('======== WRITING TO '+os.path.abspath(out))
     with open(out, 'w') as f:
         f.write(text)

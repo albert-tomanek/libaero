@@ -368,7 +368,7 @@ CSS Property order:
 		@mixin tab-size {
 			margin-top: 1px;
 			min-width: 0;
-			min-height: 23px;
+			min-height: 2em;
 			padding: 0px 12px;
 
 			border-radius: 3px 3px 0px 0px;
@@ -419,7 +419,7 @@ CSS Property order:
 			}
 		}
 
-		stack {
+		> stack {
 			min-height: 92px;
 
 			background: linear-gradient(180deg, #F5FAFF 17.24%, #DCE7F5 100%);
@@ -473,6 +473,12 @@ CSS Property order:
 			// 		@include yellow-pressed;
 			// 	}
 			// }
+
+			// For whatever reason
+		}
+
+		actionbutton > button:active {
+			@include yellow-pressed;	// ABs behave flatly otherwise.
 		}
 	}
 

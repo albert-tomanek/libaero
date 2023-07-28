@@ -1,0 +1,1 @@
+option('glade_catalog', type: 'boolean', value: false, description: 'Installs files for use with Glade.')
