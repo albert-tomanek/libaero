@@ -1,0 +1,78 @@
+#taskbar {
+	padding: 0;
+
+	border: none;
+	border-radius: 0;
+
+	background-image: none;
+
+	windowhandle {
+		padding: 0;	// Overrides aero.css
+
+		> box {
+			padding: 1px 0 0 0;
+
+			border-top: 1px solid rgba(0, 0, 0, 0.70);
+			box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.50) inset;
+		}
+	}
+
+	#start-button {
+		min-width: 38px;
+		min-height: 38px;
+
+		margin: 0px 11px 0px 8px;
+	}
+
+	#clock {
+		padding: 2px 6px 0px 6px;
+
+		label {
+			color: white;
+		}
+	}
+
+	#r-box {
+		$grad-length: 45px;
+
+		margin: -2px 0 -1px 0;//-$grad-length;
+		padding-left: 0 0 0 $grad-length;
+
+		// box-shadow: 0px 0px 35px 20px rgba(0, 0, 0, 0.27);
+		background: linear-gradient(90deg, rgba(0, 0, 0, 0.00) 0px, rgba(0, 0, 0, 0.27) $grad-length);
+
+		@mixin segmtbutton {
+			border: 1px solid #335A79;
+			background: radial-gradient(165.02% 122.79% at 90.00% 67.50%, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.00) 53.13%, rgba(255, 255, 255, 0.28) 69.79%, rgba(255, 255, 255, 0.21) 94.49%), rgba(217, 217, 217, 0.01);
+			box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.38) inset;
+		}
+
+		@mixin segmtbutton-brighter {
+			border: 1px solid #335A79;
+			background: radial-gradient(165.02% 122.79% at 90.00% 67.50%, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255, 255, 0.21) 53.13%, rgba(255, 255, 255, 0.56) 69.79%, rgba(255, 255, 255, 0.40) 94.49%), rgba(217, 217, 217, 0.01);
+			box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.60) inset;
+		}
+
+		button {
+			border-radius: 0;
+			@include segmtbutton;
+
+			&:hover, &:active {
+				@include segmtbutton-brighter;
+			}
+		}
+
+		button.flat {
+			border: 1px solid transparent;
+			background: transparent;
+			box-shadow: none;
+
+			&:hover {
+				@include segmtbutton;
+			}
+			&:active {
+				@include segmtbutton-brighter;
+			}
+		}
+	}
+}

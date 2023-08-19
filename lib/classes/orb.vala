@@ -1,24 +1,24 @@
 public class Aero.Orb : Gtk.Button
 {
-    public Orb(string icon_res)
-    {
-        var overlay = new Gtk.Overlay();
-        var style_dummy = new DummyWidget() { visible = false };     // We steal the CSS style ctx from this one. Haven;t found a way to make a dummy css node.
-        overlay.add_overlay(style_dummy);
-        overlay.add_overlay(new Reflection(style_dummy.get_style_context()));
-        overlay.add_overlay(new Gtk.Image.from_resource(icon_res) {
-            //  halign = Gtk.Align.CENTER,
-            //  valign = Gtk.Align.CENTER
-        });
-
-        Object(child: overlay);
-    }
+    public Gdk.Texture icon { get; set; }
 
     construct {
-        //  this.set_size_request(37, 37);
         this.set_size_request(25, 25);
 
         valign = Gtk.Align.CENTER;
+
+        var overlay = new Gtk.Overlay();
+        this.child = overlay;
+        var style_dummy = new DummyWidget() { visible = false };     // We steal the CSS style ctx from this one. Haven;t found a way to make a dummy css node.
+        overlay.add_overlay(style_dummy);
+        overlay.add_overlay(new Reflection(style_dummy.get_style_context()));
+
+        var img = new Gtk.Image() {
+            //  halign = Gtk.Align.CENTER,
+            //  valign = Gtk.Align.CENTER
+        };
+        this.bind_property("icon", img, "paintable");
+        overlay.add_overlay(img);
     }
 
     static construct {
@@ -57,3 +57,17 @@ public class Aero.Orb : Gtk.Button
         }
     }
 }
+
+//  class PathFill : Gtk.Box
+//  {
+//      public PathFill(string css_class, double[] path)
+//      {
+//          Object();
+
+//          var ov = new Gtk.Overlay();
+//          this.add(ov);
+
+//          this.hexpand = true; this.vexpand = true;
+//          ov.hexpand = true;   ov.vexpand = true;
+//      }
+//  }

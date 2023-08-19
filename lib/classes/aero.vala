@@ -2,8 +2,18 @@
 
 namespace Aero
 {
-    public void make_aero(Gtk.Window win)
+    private bool is_initialized = false;
+
+    public void init()
     {
+        // Import the aero stylesheet into Gtk when the Aero classes are loaded.
+
+        var css_provider = new Gtk.CssProvider();
+        css_provider.load_from_resource("/com/github/albert-tomanek/aero/aero.css");
+        Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default(), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);    
+        Gtk.IconTheme.get_for_display(Gdk.Display.get_default()).add_resource_path("/com/github/albert-tomanek/aero/icons/orig/");
+
+        Aero.is_initialized = true;
     }
 
     internal void push_path(Cairo.Context cr, double start_x, double start_y, double[] coords, double w, double h)

@@ -57,12 +57,8 @@ public class Aero.HeaderBar : Gtk.Box
     }
 
     static construct {
-        // Import the aero stylesheet into Gtk when the Aero classes are loaded.
-
-        var css_provider = new Gtk.CssProvider();
-        css_provider.load_from_resource("/com/github/albert-tomanek/aero/aero.css");
-        Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default(), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);    
-        Gtk.IconTheme.get_for_display(Gdk.Display.get_default()).add_resource_path("/com/github/albert-tomanek/aero/icons/orig/");
+        if (!Aero.is_initialized)
+            Aero.init();
     }
 
     public Gtk.Button add_action(string action_name)

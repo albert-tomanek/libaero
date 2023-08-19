@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/github/albert-tomanek/aero/shell">
+    <file compressed="true" preprocess="xml-stripblanks">templates/taskbar.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">templates/menu.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">icons/logo1.svg</file>
+    <file compressed="true" preprocess="xml-stripblanks">icons/logo2.svg</file>
+    <file compressed="true" >style/shell.css</file>
+  </gresource>
+</gresources>

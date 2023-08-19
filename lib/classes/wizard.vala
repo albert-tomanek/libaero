@@ -36,7 +36,9 @@ public class Aero.Wizard : Gtk.Window
             this.page = 0;
         });
 
-        back = new Orb("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg");
+        back = new Orb() {
+            icon = Gdk.Texture.from_resource("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg")
+        };
         back.sensitive = false;
         header.prepend(back);
 

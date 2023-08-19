@@ -14,14 +14,9 @@ CSS Property order:
 
 // @use "partials/variables" as *
 
-.aero {
-	/* Unset stuff set by the adwaita Default.css */
-	window > box {
-		min-height: 0;
-	}
+/* The window itself */
 
-	/* The window itself */
-
+window.aero {
 	background: linear-gradient(0deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.22)), radial-gradient(300px /* So that the title remains equally visible when stretching */ 35% at 0% 0%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(27.72% 32.17% at 100% 0%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(30.29% 35.15% at 100% 100%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(25.16% 29.19% at 0% 100%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0) 15.48%, #FFFFFF 200px, rgba(255, 255, 255, 0) 201px);
 
 	box-shadow: 1px -1px 2px rgba(0, 0, 0, 0.5), -14px 8px 21px rgba(0, 0, 0, 0.5), inset 1px -1px 0px rgba(134, 255, 233, 0.69);
@@ -41,6 +36,13 @@ CSS Property order:
 		border-width: 0px;
 	}
 
+	/* Unset stuff set by the adwaita Default.css */
+	> box {
+		min-height: 0;
+	}
+}
+
+.aero {
 	/* Default font */
 
 	font-size: 12px;

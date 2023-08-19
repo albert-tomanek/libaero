@@ -16,9 +16,13 @@ public class Aero.NavButtons : Gtk.Box
         var button_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
         overlay.add_overlay(button_box);
 
-        this.left = new Orb("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg");
+        this.left = new Orb() {
+            icon = Gdk.Texture.from_resource("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg")
+        };
         button_box.append(this.left);
-        this.right = new Orb("/com/github/albert-tomanek/aero/images/orb_arrow_right.svg");
+        this.right = new Orb() {
+            icon = Gdk.Texture.from_resource("/com/github/albert-tomanek/aero/images/orb_arrow_right.svg")
+        };
         button_box.append(this.right);
 
         overlay.set_measure_overlay(button_box, true);
