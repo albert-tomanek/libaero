@@ -1,43 +1,43 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
-<cambalache-project version="0.10.3" target_tk="gtk-4.0">
+<cambalache-project version="0.12.0" target_tk="gtk-4.0">
   <ui>
-	(1,1,"wizard.ui","wizard.ui",None,None,None,None,None,None)
+	(1,1,"wizard.ui","wizard.ui",None,None,None,None,None,None,None)
   </ui>
   <object>
-	(1,1,"GtkWindow","AeroWizard",None,None,None,None,None),
-	(1,2,"GtkBox","header",None,None,None,None,None),
-	(1,3,"GtkImage","icon",2,None,None,None,None),
-	(1,4,"GtkLabel","title_label",2,None,None,None,None),
-	(1,5,"GtkBox",None,1,None,None,None,None),
-	(1,6,"GtkBox",None,5,None,None,None,1),
-	(1,8,"GtkBox",None,6,None,None,None,1),
-	(1,9,"GtkButton","cancel",8,None,None,None,None),
-	(1,10,"GtkButton","next",8,None,None,None,None),
-	(1,11,"GtkBox","footer",6,None,None,None,None),
-	(1,12,"GtkStack","stack",5,None,None,None,None)
+	(1,1,"GtkWindow","AeroWizard",None,None,None,None,None,None),
+	(1,2,"GtkBox","header",None,None,None,None,None,None),
+	(1,3,"GtkImage","icon",2,None,None,None,None,None),
+	(1,4,"GtkLabel","title_label",2,None,None,None,None,None),
+	(1,5,"GtkBox",None,1,None,None,None,None,None),
+	(1,6,"GtkBox",None,5,None,None,None,1,None),
+	(1,8,"GtkBox",None,6,None,None,None,1,None),
+	(1,9,"GtkButton","cancel",8,None,None,None,None,None),
+	(1,10,"GtkButton","next",8,None,None,None,None,None),
+	(1,11,"GtkBox","footer",6,None,None,None,None,None),
+	(1,12,"GtkStack","stack",5,None,None,None,None,None)
   </object>
   <object_property>
-	(1,1,"GtkWidget","css-classes","aero",None,None,None,None,None),
-	(1,1,"GtkWindow","modal","True",None,None,None,None,None),
-	(1,5,"GtkOrientable","orientation","vertical",None,None,None,None,None),
-	(1,5,"GtkWidget","css-classes","content",None,None,None,None,None),
-	(1,6,"GtkWidget","css-classes","dialog-footer",None,None,None,None,None),
-	(1,6,"GtkWidget","hexpand","True",None,None,None,None,None),
-	(1,8,"GtkBox","spacing","10",None,None,None,None,None),
-	(1,8,"GtkWidget","halign","end",None,None,None,None,None),
-	(1,8,"GtkWidget","hexpand","True",None,None,None,None,None),
-	(1,9,"GtkButton","label","_Cancel",None,None,None,None,None),
-	(1,9,"GtkButton","use-underline","True",None,None,None,None,None),
-	(1,10,"GtkButton","label","_Next",None,None,None,None,None),
-	(1,10,"GtkButton","use-underline","True",None,None,None,None,None),
-	(1,11,"GtkBox","spacing","10",None,None,None,None,None),
-	(1,12,"GtkStack","transition-duration","300",None,None,None,None,None),
-	(1,12,"GtkStack","transition-type","slide-left-right",None,None,None,None,None),
-	(1,12,"GtkWidget","css-classes","markup",None,None,None,None,None),
-	(1,12,"GtkWidget","height-request","320",None,None,None,None,None),
-	(1,12,"GtkWidget","vexpand","True",None,None,None,None,None),
-	(1,12,"GtkWidget","width-request","543",None,None,None,None,None)
+	(1,1,"GtkWidget","css-classes","aero",None,None,None,None,None,None,None,None,None),
+	(1,1,"GtkWindow","modal","True",None,None,None,None,None,None,None,None,None),
+	(1,5,"GtkOrientable","orientation","vertical",None,None,None,None,None,None,None,None,None),
+	(1,5,"GtkWidget","css-classes","window-content",None,None,None,None,None,None,None,None,None),
+	(1,6,"GtkWidget","css-classes","dialog-footer",None,None,None,None,None,None,None,None,None),
+	(1,6,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,8,"GtkBox","spacing","10",None,None,None,None,None,None,None,None,None),
+	(1,8,"GtkWidget","halign","end",None,None,None,None,None,None,None,None,None),
+	(1,8,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,9,"GtkButton","label","_Cancel",None,None,None,None,None,None,None,None,None),
+	(1,9,"GtkButton","use-underline","True",None,None,None,None,None,None,None,None,None),
+	(1,10,"GtkButton","label","_Next",None,None,None,None,None,None,None,None,None),
+	(1,10,"GtkButton","use-underline","True",None,None,None,None,None,None,None,None,None),
+	(1,11,"GtkBox","spacing","10",None,None,None,None,None,None,None,None,None),
+	(1,12,"GtkStack","transition-duration","300",None,None,None,None,None,None,None,None,None),
+	(1,12,"GtkStack","transition-type","slide-left-right",None,None,None,None,None,None,None,None,None),
+	(1,12,"GtkWidget","css-classes","markup",None,None,None,None,None,None,None,None,None),
+	(1,12,"GtkWidget","height-request","320",None,None,None,None,None,None,None,None,None),
+	(1,12,"GtkWidget","vexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,12,"GtkWidget","width-request","543",None,None,None,None,None,None,None,None,None)
   </object_property>
   <object_signal>
 	(1,1,9,"GtkButton","clicked","gtk_window_close",None,None,None,None,None)

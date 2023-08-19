@@ -3,6 +3,7 @@
 
 	border: none;
 	border-radius: 0;
+	box-shadow: none;
 
 	background-image: none;
 
@@ -36,7 +37,7 @@
 		$grad-length: 45px;
 
 		margin: -2px 0 -1px 0;//-$grad-length;
-		padding-left: 0 0 0 $grad-length;
+		padding: 0 0 0 $grad-length;
 
 		// box-shadow: 0px 0px 35px 20px rgba(0, 0, 0, 0.27);
 		background: linear-gradient(90deg, rgba(0, 0, 0, 0.00) 0px, rgba(0, 0, 0, 0.27) $grad-length);
@@ -74,5 +75,38 @@
 				@include segmtbutton-brighter;
 			}
 		}
+	}
+
+	#startmenu > contents {
+		padding: 7px;
+
+		background: linear-gradient(180deg, rgba(0, 0, 0, 0.24) 0%, rgba(0, 0, 0, 0.66) 43.34%, rgba(0, 0, 0, 0.12) 90.25%);
+		border-radius: 7px 7px 0px 0px;
+		border: 1px solid rgba(0, 0, 0, 0.58);
+		box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.37) inset;
+
+		> box {
+			border-spacing: 7px;
+
+			> :first-child {
+				border-radius: 4px;
+				border: 1px solid rgba(0, 0, 0, 0.66);
+				background: #FFF;
+				box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.33);
+
+				.footer {	// TODO: This should really be inside .aero .markup
+					padding: 11px 16px;
+					background: #EDF1FA;
+					box-shadow: 0px 6px 2px -4px #CFD9E3 inset;
+				}
+			}
+
+			> :last-child {
+				label {
+					color: white;
+					text-shadow: 0px 0px 6px hsla(0, 0%, 0, 60%);
+				}
+			}
+		}			
 	}
 }

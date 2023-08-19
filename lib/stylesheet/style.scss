@@ -104,7 +104,7 @@ window.aero {
 	* opacity = 255
 	*/
 
-	> .content {
+	.window-content {
 		border: 1px solid #000000;
 		box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.49), inset 0px 0px 0px 1px rgba(255, 255, 255, 0.62);
 		border-radius: 3px;
@@ -114,9 +114,9 @@ window.aero {
 
 	/* Window controls */
 
-	:not(.content) label {
-		text-shadow: 0px 0px 16px #FFFFFF;
-	}
+	// :not(.content) label {
+	// 	text-shadow: 0px 0px 16px #FFFFFF;
+	// }
 
 	windowhandle {
 		padding-bottom: 5px;
@@ -236,27 +236,113 @@ window.aero {
 
 	/* Titlebar widget styling */
 
-	.titlebar
-	{
-		min-height: 0;
+	min-height: 0;
 
-		label {
-			color: black;
-			text-shadow: 0px 0px 6px #FFFFFF;
-			font-size: 12px;//10pt;
-			font-weight: 400;
+	label {
+		color: black;
+		text-shadow: 0px 0px 6px #FFFFFF;
+		font-size: 12px;//10pt;
+		font-weight: 400;
+	}
+
+	/* Global widget properties. These apply both in the normal window client area and in the glassy title bar. */
+
+	button, scale slider {
+		// General entry stuff (applies both inside and outside of .content)
+
+		padding: 0px;
+		
+		&.text-button {
+			min-width: 66px;
+			min-height: 21px;
+
+			// padding: 0px 8px;
 		}
 
-		entry {
-			background: rgba(255, 255, 255, 0.65);
-			box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.33), inset 0px 0px 0px 1px rgba(255, 255, 255, 0.78);
-			border: 1px solid rgba(35, 35, 35, 0.7);
-			border-radius: 3px;
+		&.symbol-button {
+			min-width: 16px;
+			min-height: 16px;
 
-			transition: 200ms linear;
+			border-radius: 8px;
+			font-weight: bold;
+			font-size: 8px;
+		}
 
-			&:focus-within, &:hover {
-				background: rgba(255, 255, 255, 0.90);
+		// Specific to outside of .content
+
+		border-radius: 2px;
+		border: 1px solid rgba(255, 255, 255, 0.33);
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.14) 49.77%, rgba(255, 255, 255, 0.00) 51.26%), linear-gradient(180deg, rgba(0, 0, 0, 0.15) 61.26%, rgba(0, 0, 0, 0.00) 86.46%);
+		box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.31);
+
+		&:hover {
+			border-color: rgba(255, 255, 255, 0.33);
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.14) 49.77%, rgba(255, 255, 255, 0.00) 51.26%), linear-gradient(180deg, rgba(0, 0, 0, 0.15) 61.26%, rgba(0, 0, 0, 0.00) 86.46%);
+			box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.31), 0px 0px 2px 0px rgba(255, 255, 255, 0.85) inset;
+		}
+
+		&:active {
+			border-color: rgba(0, 0, 0, 0.17);
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.14) 49.77%, rgba(255, 255, 255, 0.00) 51.26%), linear-gradient(180deg, rgba(0, 0, 0, 0.15) 61.26%, rgba(0, 0, 0, 0.00) 86.46%);
+			box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.31);
+		}
+	}
+
+	@mixin entry {
+		// General entry stuff (applies both inside and outside of .content)
+
+		min-height: 20px;
+
+		placeholder {
+			color: hsla(0, 0%, 42%, 1);
+			font-style: italic;
+			font-family: "Segoe UI";
+			font-size: 12px;
+		}
+
+		// Specific to outside of .content
+		background: rgba(255, 255, 255, 0.65);
+		box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.33), inset 0px 0px 0px 1px rgba(255, 255, 255, 0.78);
+		border: 1px solid rgba(35, 35, 35, 0.7);
+		border-radius: 3px;
+
+		transition: 200ms linear;
+
+		&:focus-within, &:hover {
+			background: rgba(255, 255, 255, 0.90);
+		}
+	}
+
+	entry {		
+		@include entry;
+	}
+
+	spinbutton {
+		@include entry;
+
+		text {
+			padding: 4px;
+		}
+
+		button {
+			-gtk-icon-size: 8px;
+			min-height: 0px;
+			min-width: 16px;
+
+			&.down {	// I still can't believe we managed to trick Gtk to reposition widgets for us like this
+				margin-top: 12px;
+
+				> image {
+					-gtk-icon-source: url("resource:///com/github/albert-tomanek/aero/images/button_arrow_down.svg");
+				}
+			}
+			&.up {
+				margin-left: -26px;
+				margin-bottom: 12px;
+
+				> image {
+					-gtk-icon-source: url("resource:///com/github/albert-tomanek/aero/images/button_arrow_up.svg");
+				}
 			}
 		}
 	}
@@ -339,752 +425,727 @@ window.aero {
 		// }
 	}
 
-	@mixin yellow-hover-lighter {
-		background: linear-gradient(180deg, #FFF 0%, rgba(255, 255, 255, 0.44) 39.87%, rgba(255, 255, 255, 0.00) 39.88%), linear-gradient(180deg, #FFE999 67.32%, #FFFEAC 96.48%);
-		box-shadow: 0px 0px 2px 2px #FFF inset;
-	}
-
-	@mixin yellow-hover {
-		border-color: #FFB700;
-		background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.37) 39.87%, rgba(255, 255, 255, 0.00) 40.29%), linear-gradient(180deg, #FFB169 7.81%, #FFCE69 75%, #FFFEAC 96.48%);
-		box-shadow: 0px 0px 2px 1px #FFF inset;
-	}
-
-	@mixin yellow-pressed {
-		border-color: #C29B29;
-		background: linear-gradient(180deg, #FFDCA0 0%, #FFD181 39.15%, #FFC45D 39.71%, #FFC45D 73.80%, #FFD781 100%);
-		box-shadow: 0px 1px 2px 1px #D69E22 inset;
-	}
-
-	@mixin hover-gray {
-		background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.03) 100%);
-		border: 1px solid #C6C6C6;
-	}
-
-	@mixin pressed-recess {
-		border: 1px solid #C6C6C6;
-		box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.25);
-	}
-
-	notebook.ribbon, .ribbon > notebook {	// People can make their own Notebooks and style them with .ribbon if they don't fancy costrucing them with MenuModels
-		@mixin tab-size {
-			margin-top: 1px;
-			min-width: 0;
-			min-height: 2em;
-			padding: 0px 12px;
-
-			border-radius: 3px 3px 0px 0px;
-			font-size: 12px;
+	.window-content {
+		@mixin yellow-hover-lighter {
+			background: linear-gradient(180deg, #FFF 0%, rgba(255, 255, 255, 0.44) 39.87%, rgba(255, 255, 255, 0.00) 39.88%), linear-gradient(180deg, #FFE999 67.32%, #FFFEAC 96.48%);
+			box-shadow: 0px 0px 2px 2px #FFF inset;
 		}
 
-		header {
-			border-spacing: 2px;
-			background: #DFE9F5;
+		@mixin yellow-hover {
+			border-color: #FFB700;
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.37) 39.87%, rgba(255, 255, 255, 0.00) 40.29%), linear-gradient(180deg, #FFB169 7.81%, #FFCE69 75%, #FFFEAC 96.48%);
+			box-shadow: 0px 0px 2px 1px #FFF inset;
+		}
 
-			.appmenu-button > button {
+		@mixin yellow-pressed {
+			border-color: #C29B29;
+			background: linear-gradient(180deg, #FFDCA0 0%, #FFD181 39.15%, #FFC45D 39.71%, #FFC45D 73.80%, #FFD781 100%);
+			box-shadow: 0px 1px 2px 1px #D69E22 inset;
+		}
+
+		@mixin hover-gray {
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.03) 100%);
+			border: 1px solid #C6C6C6;
+		}
+
+		@mixin pressed-recess {
+			border: 1px solid #C6C6C6;
+			box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.25);
+		}
+
+		notebook.ribbon, .ribbon > notebook {	// People can make their own Notebooks and style them with .ribbon if they don't fancy costrucing them with MenuModels
+			@mixin tab-size {
+				margin-top: 1px;
+				min-width: 0;
+				min-height: 2em;
+				padding: 0px 12px;
+
+				border-radius: 3px 3px 0px 0px;
+				font-size: 12px;
+			}
+
+			header {
+				border-spacing: 2px;
+				background: #DFE9F5;
+
+				.appmenu-button > button {
+					@include tab-size;
+
+					margin-bottom: -1px;
+					
+					background: linear-gradient(180deg, #4884C1 5.28%, #2E68B2 45.35%, #1A4087 45.91%, #409ACF 100%);
+					border: 1px solid #426ABD;
+					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.25);
+					color: white;
+
+					&:hover, &:active {
+						background: linear-gradient(180deg, #78b9ef 5.28%, #4884d1 45.35%, #114eaf 45.91%, #35BEFF 100%);
+						box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.6);
+					}
+				}
+			}
+
+			tabs {
+				margin-left: 0;
+			}
+
+			tab {
 				@include tab-size;
 
-				margin-bottom: -1px;
-				
-				background: linear-gradient(180deg, #4884C1 5.28%, #2E68B2 45.35%, #1A4087 45.91%, #409ACF 100%);
-				border: 1px solid #426ABD;
-				box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.25);
-				color: white;
+				background: transparent;
+				border: 1px solid transparent;
+				border-width: 1px 1px 0px 1px;
 
-				&:hover, &:active {
-					background: linear-gradient(180deg, #78b9ef 5.28%, #4884d1 45.35%, #114eaf 45.91%, #35BEFF 100%);
-					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.6);
+				&:checked {
+					background: #F5FAFF;
+					border-width: 1px 1px 0px 1px;
+					border-style: solid;
+					border-color: #BAC9DB;
+					box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.33);
+				}
+				&:not(:checked):hover {
+					box-shadow: none;//adwaita
 				}
 			}
-		}
 
-		tabs {
-			margin-left: 0;
-		}
+			> stack {
+				min-height: 92px;
 
-		tab {
-			@include tab-size;
-
-			background: transparent;
-			border: 1px solid transparent;
-			border-width: 1px 1px 0px 1px;
-
-			&:checked {
-				background: #F5FAFF;
-				border-width: 1px 1px 0px 1px;
+				background: linear-gradient(180deg, #F5FAFF 17.24%, #DCE7F5 100%);
+				border-width: 0 0 1px 0;
 				border-style: solid;
-				border-color: #BAC9DB;
-				box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.33);
-			}
-			&:not(:checked):hover {
-				box-shadow: none;//adwaita
-			}
-		}
+				border-color: #9FAEC2;
 
-		> stack {
-			min-height: 92px;
+				section {
+					> box {
+						padding: 0px 8px;
+						
+						> label {
+							margin-bottom: 2px;
+							color: #738399;
+						}
 
-			background: linear-gradient(180deg, #F5FAFF 17.24%, #DCE7F5 100%);
-			border-width: 0 0 1px 0;
-			border-style: solid;
-			border-color: #9FAEC2;
+						> box {	// Content box
+							padding: 8px 0px;
+							border-spacing: 4px;
 
-			section {
-				> box {
-					padding: 0px 8px;
-					
-					> label {
-						margin-bottom: 2px;
-						color: #738399;
-					}
-
-					> box {	// Content box
-						padding: 8px 0px;
-						border-spacing: 4px;
-
-						> box.vertical {	// Any box inside that
-							border-spacing: 3px;
+							> box.vertical {	// Any box inside that
+								border-spacing: 3px;
+							}
 						}
 					}
-				}
 
-				separator {
-					min-width: 1px;
-					margin: 8px 0px;
+					separator {
+						min-width: 1px;
+						margin: 8px 0px;
 
-					background: #a7b9d1;
-					box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.50);
-				}
-			}
-
-			.border {
-				border-color: #a7b9d1;
-			}
-			
-			// button:not(actionbutton) {	// Notice, this includes buttons inside actionbuttons
-			// 	transition: box-shadow 200ms linear;
-			// 	border-radius: 3px;
-			// 	border: 1px solid;
-			// 	border-color: transparent;
-
-			// 	&:hover {
-			// 		border-color: #FFB700;
-			// 		@include yellow-hover;
-			// 	}
-			// 	&:active {
-			// 		@include yellow-pressed;
-			// 	}
-			// }
-
-			// For whatever reason
-		}
-
-		actionbutton > button:active {
-			@include yellow-pressed;	// ABs behave flatly otherwise.
-		}
-	}
-
-	appmenu {
-		background-color: transparent;
-
-		> contents {
-			border-radius: 2px;
-			border: 1px solid #8492A6;
-			box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.33);
-
-			// min-height: 435px;
-
-			.top-bar {
-				min-height: 24px;
-				background: linear-gradient(180deg, #EEF3F9 0%, #EEF3F9 3.34%, #FCFEFF 4.59%, #E8F1FB 44.89%, #DEE8F5 45.19%, #DDE9F7 95.64%);
-				border-bottom: 1px solid #ABB8C9;
-
-				image {
-					min-width: 54px;
-					background: linear-gradient(180deg, #4882C0 0%, #2F63AE 44.89%, #1C438A 45.19%, #358BC9 95.94%);
-				}
-			}
-
-			.bottom-bar {
-				min-height: 16px;
-
-				border-top: 1px solid #C9D5E7;
-				background: linear-gradient(180deg, #FAFDFF 0%, #E2EAF9 100%);
-			}
-
-			.action-list {
-				background: white;
-
-				.scroll-button {
-					min-height: 10px;
-	
-					-gtk-icon-size: 7px;
-					border-radius: 1px;
-					border: 1px solid #ACBCD3;
-					background: linear-gradient(180deg, #FBFDFF 0%, #EBF1F9 38.76%, #DDE7F7 40.20%, #E6F6FF 74.07%, #FFF 89.16%);
-	
-					&:hover {
-						@include yellow-hover-lighter;
+						background: #a7b9d1;
+						box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.50);
 					}
 				}
 
-				separator {
-					margin-left: 44px;
-					background-color: #CFDBEB;
+				.border {
+					border-color: #a7b9d1;
 				}
+				
+				// button:not(actionbutton) {	// Notice, this includes buttons inside actionbuttons
+				// 	transition: box-shadow 200ms linear;
+				// 	border-radius: 3px;
+				// 	border: 1px solid;
+				// 	border-color: transparent;
+
+				// 	&:hover {
+				// 		border-color: #FFB700;
+				// 		@include yellow-hover;
+				// 	}
+				// 	&:active {
+				// 		@include yellow-pressed;
+				// 	}
+				// }
+
+				// For whatever reason
 			}
 
-			#recent {
-				background: #EFF5FA;
-				box-shadow: -1px 0px 0px 0px #CFDBEB, 1px 0px 0px 0px #FFF inset;
+			actionbutton > button:active {
+				@include yellow-pressed;	// ABs behave flatly otherwise.
 			}
+		}
 
-			#recent .heading, subaction-overlay > .heading {
-				padding: 6px 9px;
+		appmenu {
+			background-color: transparent;
 
-				color: #4C607A;
-				background-color: #EFF5FA;
-				box-shadow: 0px 1px 0px 0px #FFF, 0px -1px 0px 0px #CFDBEB inset;
-				font-size: 11px;
-				font-weight: bold;
-			}
-
-			subaction-overlay {
-				margin-top: 1px;
-				margin-right: 4px;
-				margin-bottom: 4px;
-				margin-left: 0px;
-
-				box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.15), 0px 0px 0px 1px #FFF inset;
-
-				border: 1px solid #8492A6;
+			> contents {
 				border-radius: 2px;
-			}
-		}
-	}
+				border: 1px solid #8492A6;
+				box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.33);
 
-	actionbutton {
-		/* Aesthetics (size-agnostic) */
-		&.border > * {
-			// When not being hovered over, display a border only if they have opted into this
-			border-color: #a7b9d1;
-		}
+				// min-height: 435px;
 
-		&:hover {
-			button, button:hover {
-				@include yellow-hover;
-			}
-		}
+				.top-bar {
+					min-height: 24px;
+					background: linear-gradient(180deg, #EEF3F9 0%, #EEF3F9 3.34%, #FCFEFF 4.59%, #E8F1FB 44.89%, #DEE8F5 45.19%, #DDE9F7 95.64%);
+					border-bottom: 1px solid #ABB8C9;
 
-		.heading {
-			color: #4C607A;
-			font-size: 11px;
-			font-weight: bold;
-		}
-		
-		arrow {	// The arrow
-			min-width: 0;
-			min-height: 0;
-
-			-gtk-icon-size: 8px;
-		}
-
-		menubutton > button {
-			// Erase any visual trace of the thing that actually makes the menubutton look like a button
-
-			border: 1px solid rgba(0, 0, 0, 0);
-			background: transparent;
-			box-shadow: none;
-		}
-
-		&:hover menubutton {
-			> button, button:hover, button:active {
-				@include yellow-hover;
-
-				&:hover {
-					@include yellow-hover-lighter;
+					image {
+						min-width: 54px;
+						background: linear-gradient(180deg, #4882C0 0%, #2F63AE 44.89%, #1C438A 45.19%, #358BC9 95.94%);
+					}
 				}
-	
-				&:active {
-					@include yellow-pressed;
+
+				.bottom-bar {
+					min-height: 16px;
+
+					border-top: 1px solid #C9D5E7;
+					background: linear-gradient(180deg, #FAFDFF 0%, #E2EAF9 100%);
+				}
+
+				.action-list {
+					background: white;
+
+					.scroll-button {
+						min-height: 10px;
+		
+						-gtk-icon-size: 7px;
+						border-radius: 1px;
+						border: 1px solid #ACBCD3;
+						background: linear-gradient(180deg, #FBFDFF 0%, #EBF1F9 38.76%, #DDE7F7 40.20%, #E6F6FF 74.07%, #FFF 89.16%);
+		
+						&:hover {
+							@include yellow-hover-lighter;
+						}
+					}
+
+					separator {
+						margin-left: 44px;
+						background-color: #CFDBEB;
+					}
+				}
+
+				#recent {
+					background: #EFF5FA;
+					box-shadow: -1px 0px 0px 0px #CFDBEB, 1px 0px 0px 0px #FFF inset;
+				}
+
+				#recent .heading, subaction-overlay > .heading {
+					padding: 6px 9px;
+
+					color: #4C607A;
+					background-color: #EFF5FA;
+					box-shadow: 0px 1px 0px 0px #FFF, 0px -1px 0px 0px #CFDBEB inset;
+					font-size: 11px;
+					font-weight: bold;
+				}
+
+				subaction-overlay {
+					margin-top: 1px;
+					margin-right: 4px;
+					margin-bottom: 4px;
+					margin-left: 0px;
+
+					box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.15), 0px 0px 0px 1px #FFF inset;
+
+					border: 1px solid #8492A6;
+					border-radius: 2px;
 				}
 			}
 		}
 
-		&.horizontal menubutton button {	// .linked won;t work here because it's nested
-			margin: -1px;	// We don;t want the inner button and the menubutton both having a 1px border
-			
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-		}
-			
-		/* Layout */
-
-		> button {
-			min-width: 0;
-			min-height: 0;
-			padding: 0;
-		}
-
-		&.large {
-			image {
-				-gtk-icon-size: 36px;
-				margin: 5px;
-			}
- 
-			menubutton {
-				min-width: 24px;
-			}
-		}
-
-		&.normal {
-			image {
-				margin: 2px;
-			}
-		}
-
-		&.horizontal {
-			label {
-				margin-left: 2px;
-			}
-		}
-
-		&.vertical {
-			label {
-				margin: 0 4px;
-			}
-		}
-	}
-
-	.choicebutton {
-		&:active {
-			color: #084BE5;
-			.heading { color: #084BE5; }
-		}
-	}
-
-	/* Text markup */
-
-	.heading {
-		font-weight: 400;
-		font-style: normal;
-		font-size: 16px;
-		letter-spacing: -0.006em;
-
-		color: #003399;
-		/* halign: GTK_ALIGN_START */
-	}
-
-	.body {
-		font-weight: 400;
-		font-style: normal;
-		font-size: 12px;
-	}
-
-	/* Various types of boxes */
-
-	.markup {
-		padding: 19px 33px;
-		border-spacing: 19px;//14pt;
-
-		color: black;
-
-		box.horizontal, grid {
-			border-spacing: 6px;
-		}
-
-		box.vertical {
-			border-spacing: 19px;
-		}
-
-		/*
-		natural-wrap-mode: GTK_NATURAL_WRAP_NONE
-		wrape: true
-		justify: GTK_JUSTIFY_FILL
-
-		vexpand: true;
-		halign: 
-		*/
-
-		scrolledwindow {
-			border: 1px solid #b0b0b0;
-		}
-	}
-
-	.dialog-footer, .dialog-action-box {
-		padding: 10px 11px;
-		border-spacing: 10px;
-		
-		background: #F0F0F0;
-		box-shadow: inset 0px 3px 0px -2px rgba(0, 0, 0, 0.08);
-	}
-
-	.dialog-action-area {
-		border-spacing: 10px;
-	}
-
-	.statusbar {
-		min-height: 26px;
-
-		background: #F0F0F0;
-		border-top: 1px solid #959595;
-		box-shadow: inset -1px 0px 0px 1px #fefefe;
-
-		> box {
-			border-spacing: 8px;
-			padding: 4px 8px;
-
-			&:not(:last-child) {
-				border-right: 1px solid #d7d7d7;
-			}
-		}
-	}
-
-	actionbar {
-		background: linear-gradient(180deg, #FAFCFD 0%, #E6F0FA 48.22%, #DCE6F4 49.51%, #DCE7F6 100%);
-		box-shadow: inset 0px -2px 1px -1px rgba(0, 48, 74, 0.25);
-		border-radius: 2px;
-
-		&.dark {
-			background: linear-gradient(180deg, rgba(116, 141, 204, 0.71) 4.77%, rgba(216, 227, 255, 0.18) 47.39%, rgba(255, 255, 255, 0.00) 47.40%), linear-gradient(180deg, #0F0F14 77.64%, #4C5E8B 92.02%);
-			box-shadow: 0px 0px 0px 1px rgba(133, 133, 133, 0.84) inset, 0px -2px 0px 0px rgba(255, 255, 255, 0.61) inset, 0px -1px 0px 0px #000 inset;
-		}
-
-		> revealer > box {
-			padding: 4px 10px;
-		}
-		
-		button {
-			border-radius: 2px;
-			border: 1px solid transparent;
-			background: transparent;
-			box-shadow: none;
-
-			&.text-button {
-				min-width:  50px;
-				min-height: 0;
-			}
-
-			&:not(.image-button) {
-				padding-left: 10px;
-				padding-right: 10px;
+		actionbutton {
+			/* Aesthetics (size-agnostic) */
+			&.border > * {
+				// When not being hovered over, display a border only if they have opted into this
+				border-color: #a7b9d1;
 			}
 
 			&:hover {
-				background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 49.41%, rgba(0, 0, 0, 0.05) 50.33%, rgba(0, 0, 0, 0.04) 100%);
-				border: 1px solid rgba(255, 255, 255, 0.44);
-				box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.24);
-			}
-
-			&:active {
-				background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 49.41%, rgba(0, 0, 0, 0.05) 50.33%, rgba(0, 0, 0, 0.04) 100%);
-				background-blend-mode: luminosity;
-				border: 1px solid rgba(255, 255, 255, 0.44);
-				box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.24), inset 0px 1px 4px rgba(0, 0, 0, 0.25);
-			}
-
-			> box {
-				border-spacing: 4px;
-			}
-		}
-	}
-
-	.document-background {
-		background: #ced8e6;
-
-		> :first-child {
-			box-shadow: 8px 8px 8px 0px rgba(0, 0, 0, 0.3);
-			margin: 5px;
-		}
-	}
-
-	/* Normal widgets */
-
-	button, scale slider {
-		background: linear-gradient(180deg, #F6F6F6 0%, #EBEBEB 47.33%, #DDDDDD 47.73%, #CFCFCF 100%);
-		border: 1px solid #707070;
-		box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.81);
-		border-radius: 3px;
-
-		padding: 0px;
-		
-		&.text-button {
-			min-width: 66px;
-			min-height: 21px;
-
-			// padding: 0px 8px;
-		}
-
-		&.symbol-button {
-			min-width: 16px;
-			min-height: 16px;
-
-			border-radius: 8px;
-			font-weight: bold;
-			font-size: 8px;
-		}
-
-		&:hover {
-			background: linear-gradient(180deg, #EAF6FD 10.11%, #D9F0FC 47.33%, #BEE6FD 47.34%, #A7D9F5 92.29%);
-			border: 1px solid #3C7FB1;
-			box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.81);
-		}
-
-		&:active, .aero &:checked:active {
-			background: linear-gradient(180deg, #EAF6FD 9.24%, #C4E5F6 51.12%, #98D1EF 51.51%, #68B3DB 93.39%);
-			border: 1px solid #3C7FB1;
-			box-shadow: inset 0px 0px 2px 1px rgba(0, 0, 0, 0.5);
-		}
-
-		&:checked {
-			background: linear-gradient(180deg, #F4F4F4 9.24%, #DDDDDD 51.12%, #C4C4C4 51.51%, #A2A2A2 93.39%);
-			border: 1px solid #777777;
-			box-shadow: inset 0px 0px 3px 1px rgba(0, 0, 0, 0.7);
-		}
-
-		&:disabled {
-			background: #F4F4F4;
-			border: 1px solid #ADB2B5;
-			box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.81);
-		}
-
-		&:focus-visible {
-			background: linear-gradient(180deg, #F6F6F6 0%, #EBEBEB 47.33%, #DDDDDD 47.73%, #CFCFCF 100%);
-			border: 1px solid #3C7FB1;
-			box-shadow: inset 0px 0px 0px 1px #40D0F3;
-		}
-
-		&:focus-visible:hover {
-			background: linear-gradient(180deg, #EAF6FD 10.11%, #D9F0FC 47.33%, #BEE6FD 47.34%, #A7D9F5 92.29%);
-			border: 1px solid #3C7FB1;
-			box-shadow: inset 0px 0px 2px 2px #2CD4FF;
-		}
-	}
-
-	.flat {
-		background: transparent;
-		border: 1px solid transparent;
-		box-shadow: none;
-
-		.heading { color: black; }	// FIXME: What's this for?
-	}
-
-	button.flat {
-		&:hover {
-			@include hover-gray;
-		}
-
-		&:active {
-			@include pressed-recess;
-			color: #084BE5;
-
-			.heading { color: #084BE5; }
-		}
-	}
-
-	@mixin entry {
-		background: #FFFFFF;
-		border: 1px solid #E5E8ED;
-		box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
-		border-radius: 3px;
-	}
-
-	entry {
-		@include entry;
-	}
-
-	combobox {
-		arrow {
-			padding: 0px 2px;
-			color: transparent;
-			background: url("resource:///com/github/albert-tomanek/aero/images/button_arrow_down.svg");
-			background-repeat: no-repeat;
-			background-position: center;
-		}
-
-		.combo cellview {
-			padding-left: 2px;
-		}
-
-		contents {
-			padding: 0px;
-			border-radius: 0;
-			border: none;
-	
-			.menu {
-				margin-top: 0;
-			}
-			
-			scrolledwindow {
-				border: 1px solid #646464;
-				box-shadow: 5px 5px 3px -3px rgba(0, 0, 0, 0.5);
-			}
-	
-			.flat {
-				padding: 2px 2px;
-				min-height: 0px;
-	
-				color: black;
-				font-size: 12px;
-				background: white;
-				border: none;
-				border-radius: 0;
-	
-				&:hover {
-					color: white;
-					background: #3399FF;
+				button, button:hover {
+					@include yellow-hover;
 				}
 			}
-		}	
-	}
 
-	.link {
-		color: #0066CC;
-	}
+			.heading {
+				color: #4C607A;
+				font-size: 11px;
+				font-weight: bold;
+			}
+			
+			arrow {	// The arrow
+				min-width: 0;
+				min-height: 0;
 
-	entry {
-		min-height: 20px;
-		animation-timing-function: unset;
-	}
-
-	checkbutton {
-		color: black;
-
-		label {
-			margin-left: 3px;
-		}
-
-		check {
-			min-width:  12px;
-			min-height: 12px;
-
-			background: #E8E8E8;
-			border: 1px solid #F4F4F4;
-			border-radius: 0;
-			box-shadow: 0px 0px 0px 1px #8E8F8F, inset 0px 0px 0px 1px rgba(0, 0, 0, 0.08), inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
-
-			color: transparent;
-			// -gtk-icon-source: -gtk-scaled(-gtk-recolor(url(resource:///com/github/albert-tomanek/aero/images/check.svg)), 1);
-			// -gtk-icon-source: url(resource:///com/github/albert-tomanek/aero/images/check.svg);
-			-gtk-icon-size: 12px;
-
-			&:checked {
-				color: #495F96;
+				-gtk-icon-size: 8px;
 			}
 
-			&:hover, &:focus-visible, &:active {
-				color: #042271;
-				background: #C4EAFD;
-				border: 1px solid #C4EAFD;
-				box-shadow: 0px 0px 0px 1px #5586A3, inset 0px 0px 0px 1px #89D1F9, inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
+			menubutton > button {
+				// Erase any visual trace of the thing that actually makes the menubutton look like a button
 
+				border: 1px solid rgba(0, 0, 0, 0);
+				background: transparent;
+				box-shadow: none;
+			}
+
+			&:hover menubutton {
+				> button, button:hover, button:active {
+					@include yellow-hover;
+
+					&:hover {
+						@include yellow-hover-lighter;
+					}
+		
+					&:active {
+						@include yellow-pressed;
+					}
+				}
+			}
+
+			&.horizontal menubutton button {	// .linked won;t work here because it's nested
+				margin: -1px;	// We don;t want the inner button and the menubutton both having a 1px border
+				
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+				
+			/* Layout */
+
+			> button {
+				min-width: 0;
+				min-height: 0;
+				padding: 0;
+			}
+
+			&.large {
+				image {
+					-gtk-icon-size: 36px;
+					margin: 5px;
+				}
+	
+				menubutton {
+					min-width: 24px;
+				}
+			}
+
+			&.normal {
+				image {
+					margin: 2px;
+				}
+			}
+
+			&.horizontal {
+				label {
+					margin-left: 2px;
+				}
+			}
+
+			&.vertical {
+				label {
+					margin: 0 4px;
+				}
+			}
+		}
+
+		.choicebutton {
+			&:active {
+				color: #084BE5;
+				.heading { color: #084BE5; }
+			}
+		}
+
+		/* Text markup */
+
+		.heading {
+			font-weight: 400;
+			font-style: normal;
+			font-size: 16px;
+			letter-spacing: -0.006em;
+
+			color: #003399;
+			/* halign: GTK_ALIGN_START */
+		}
+
+		.body {
+			font-weight: 400;
+			font-style: normal;
+			font-size: 12px;
+		}
+
+		/* Various types of boxes */
+
+		.markup {
+			padding: 19px 33px;
+			border-spacing: 19px;//14pt;
+
+			color: black;
+
+			box.horizontal, grid {
+				border-spacing: 6px;
+			}
+
+			box.vertical {
+				border-spacing: 19px;
+			}
+
+			/*
+			natural-wrap-mode: GTK_NATURAL_WRAP_NONE
+			wrape: true
+			justify: GTK_JUSTIFY_FILL
+
+			vexpand: true;
+			halign: 
+			*/
+
+			scrolledwindow {
+				border: 1px solid #b0b0b0;
+			}
+		}
+
+		.dialog-footer, .dialog-action-box {
+			padding: 10px 11px;
+			border-spacing: 10px;
+			
+			background: #F0F0F0;
+			box-shadow: inset 0px 3px 0px -2px rgba(0, 0, 0, 0.08);
+		}
+
+		.dialog-action-area {
+			border-spacing: 10px;
+		}
+
+		.statusbar {
+			min-height: 26px;
+
+			background: #F0F0F0;
+			border-top: 1px solid #959595;
+			box-shadow: inset -1px 0px 0px 1px #fefefe;
+
+			> box {
+				border-spacing: 8px;
+				padding: 4px 8px;
+
+				&:not(:last-child) {
+					border-right: 1px solid #d7d7d7;
+				}
+			}
+		}
+
+		actionbar {
+			background: linear-gradient(180deg, #FAFCFD 0%, #E6F0FA 48.22%, #DCE6F4 49.51%, #DCE7F6 100%);
+			box-shadow: inset 0px -2px 1px -1px rgba(0, 48, 74, 0.25);
+			border-radius: 2px;
+
+			&.dark {
+				background: linear-gradient(180deg, rgba(116, 141, 204, 0.71) 4.77%, rgba(216, 227, 255, 0.18) 47.39%, rgba(255, 255, 255, 0.00) 47.40%), linear-gradient(180deg, #0F0F14 77.64%, #4C5E8B 92.02%);
+				box-shadow: 0px 0px 0px 1px rgba(133, 133, 133, 0.84) inset, 0px -2px 0px 0px rgba(255, 255, 255, 0.61) inset, 0px -1px 0px 0px #000 inset;
+			}
+
+			> revealer > box {
+				padding: 4px 10px;
+			}
+			
+			button {
+				border-radius: 2px;
+				border: 1px solid transparent;
+				background: transparent;
+				box-shadow: none;
+
+				&.text-button {
+					min-width:  50px;
+					min-height: 0;
+				}
+
+				&:not(.image-button) {
+					padding-left: 10px;
+					padding-right: 10px;
+				}
+
+				&:hover {
+					background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 49.41%, rgba(0, 0, 0, 0.05) 50.33%, rgba(0, 0, 0, 0.04) 100%);
+					border: 1px solid rgba(255, 255, 255, 0.44);
+					box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.24);
+				}
+
+				&:active {
+					background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 49.41%, rgba(0, 0, 0, 0.05) 50.33%, rgba(0, 0, 0, 0.04) 100%);
+					background-blend-mode: luminosity;
+					border: 1px solid rgba(255, 255, 255, 0.44);
+					box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.24), inset 0px 1px 4px rgba(0, 0, 0, 0.25);
+				}
+
+				> box {
+					border-spacing: 4px;
+				}
+			}
+		}
+
+		.document-background {
+			background: #ced8e6;
+
+			> :first-child {
+				box-shadow: 8px 8px 8px 0px rgba(0, 0, 0, 0.3);
+				margin: 5px;
+			}
+		}
+
+		/* Normal widgets */
+
+		button, scale slider {
+			background: linear-gradient(180deg, #F6F6F6 0%, #EBEBEB 47.33%, #DDDDDD 47.73%, #CFCFCF 100%);
+			border: 1px solid #707070;
+			box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.81);
+			border-radius: 3px;
+
+			&:hover {
+				background: linear-gradient(180deg, #EAF6FD 10.11%, #D9F0FC 47.33%, #BEE6FD 47.34%, #A7D9F5 92.29%);
+				border: 1px solid #3C7FB1;
+				box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.81);
+			}
+
+			&:active, .aero &:checked:active {
+				background: linear-gradient(180deg, #EAF6FD 9.24%, #C4E5F6 51.12%, #98D1EF 51.51%, #68B3DB 93.39%);
+				border: 1px solid #3C7FB1;
+				box-shadow: inset 0px 0px 2px 1px rgba(0, 0, 0, 0.5);
+			}
+
+			&:checked {
+				background: linear-gradient(180deg, #F4F4F4 9.24%, #DDDDDD 51.12%, #C4C4C4 51.51%, #A2A2A2 93.39%);
+				border: 1px solid #777777;
+				box-shadow: inset 0px 0px 3px 1px rgba(0, 0, 0, 0.7);
 			}
 
 			&:disabled {
-				color: #BEBEBE;
-				background: #FBFBFB;
-				border: 1px solid #FFFFFF;
-				box-shadow: inset 0px 0px 0px 1px #ADB2B5, inset 0px 0px 0px 1px rgba(0, 0, 0, 0.03), inset 4px 4px 4px rgba(0, 0, 0, 0.1);
+				background: #F4F4F4;
+				border: 1px solid #ADB2B5;
+				box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.81);
+			}
+
+			&:focus-visible {
+				background: linear-gradient(180deg, #F6F6F6 0%, #EBEBEB 47.33%, #DDDDDD 47.73%, #CFCFCF 100%);
+				border: 1px solid #3C7FB1;
+				box-shadow: inset 0px 0px 0px 1px #40D0F3;
+			}
+
+			&:focus-visible:hover {
+				background: linear-gradient(180deg, #EAF6FD 10.11%, #D9F0FC 47.33%, #BEE6FD 47.34%, #A7D9F5 92.29%);
+				border: 1px solid #3C7FB1;
+				box-shadow: inset 0px 0px 2px 2px #2CD4FF;
 			}
 		}
-	}
 
-	spinbutton {
-		@include entry;
+		.flat {
+			background: transparent;
+			border: 1px solid transparent;
+			box-shadow: none;
 
-		min-height: 22px;
+			.heading { color: black; }	// FIXME: What's this for?
+		}
 
-		text {
+		button.flat {
+			&:hover {
+				@include hover-gray;
+			}
+
+			&:active {
+				@include pressed-recess;
+				color: #084BE5;
+
+				.heading { color: #084BE5; }
+			}
+		}
+		
+		@mixin standard-entry {
+			background: #FFFFFF;
+			border: 1px solid #E5E8ED;
+			box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
+			border-radius: 3px;
+		}
+
+		entry {
+			@include standard-entry;
+		}
+
+		spinbutton {
+			@include standard-entry;
+		}
+
+		combobox {
+			arrow {
+				padding: 0px 2px;
+				color: transparent;
+				background: url("resource:///com/github/albert-tomanek/aero/images/button_arrow_down.svg");
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+
+			.combo cellview {
+				padding-left: 2px;
+			}
+
+			contents {
+				padding: 0px;
+				border-radius: 0;
+				border: none;
+		
+				.menu {
+					margin-top: 0;
+				}
+				
+				scrolledwindow {
+					border: 1px solid #646464;
+					box-shadow: 5px 5px 3px -3px rgba(0, 0, 0, 0.5);
+				}
+		
+				.flat {
+					padding: 2px 2px;
+					min-height: 0px;
+		
+					color: black;
+					font-size: 12px;
+					background: white;
+					border: none;
+					border-radius: 0;
+		
+					&:hover {
+						color: white;
+						background: #3399FF;
+					}
+				}
+			}	
+		}
+
+		.link {
+			color: #0066CC;
+		}
+
+		checkbutton {
+			color: black;
+
+			label {
+				margin-left: 3px;
+			}
+
+			check {
+				min-width:  12px;
+				min-height: 12px;
+
+				background: #E8E8E8;
+				border: 1px solid #F4F4F4;
+				border-radius: 0;
+				box-shadow: 0px 0px 0px 1px #8E8F8F, inset 0px 0px 0px 1px rgba(0, 0, 0, 0.08), inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
+
+				color: transparent;
+				// -gtk-icon-source: -gtk-scaled(-gtk-recolor(url(resource:///com/github/albert-tomanek/aero/images/check.svg)), 1);
+				// -gtk-icon-source: url(resource:///com/github/albert-tomanek/aero/images/check.svg);
+				-gtk-icon-size: 12px;
+
+				&:checked {
+					color: #495F96;
+				}
+
+				&:hover, &:focus-visible, &:active {
+					color: #042271;
+					background: #C4EAFD;
+					border: 1px solid #C4EAFD;
+					box-shadow: 0px 0px 0px 1px #5586A3, inset 0px 0px 0px 1px #89D1F9, inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
+
+				}
+
+				&:disabled {
+					color: #BEBEBE;
+					background: #FBFBFB;
+					border: 1px solid #FFFFFF;
+					box-shadow: inset 0px 0px 0px 1px #ADB2B5, inset 0px 0px 0px 1px rgba(0, 0, 0, 0.03), inset 4px 4px 4px rgba(0, 0, 0, 0.1);
+				}
+			}
+		}
+
+		scale {
 			padding: 4px;
 
-		}
-
-		button {
-			-gtk-icon-size: 8px;
-			min-height: 0px;
-			min-width: 16px;
-
-			&.down {	// I still can't believe we managed to trick Gtk to reposition widgets for us like this
-				margin-top: 12px;
-
-				> image {
-					-gtk-icon-source: url("resource:///com/github/albert-tomanek/aero/images/button_arrow_down.svg");
-				}
+			trough {
+				border-radius: 1px;
+				min-height: 1px;
+				box-shadow: inset -1px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 1px -1px 1px 0px rgba(255, 255, 255, 1);
 			}
-			&.up {
-				margin-left: -26px;
-				margin-bottom: 12px;
 
-				> image {
-					-gtk-icon-source: url("resource:///com/github/albert-tomanek/aero/images/button_arrow_up.svg");
-				}
+			slider {
+				margin: -12px 0px;
+				min-width: 8px;
 			}
 		}
-	}
 
-	scale {
-		padding: 4px;
-
-		trough {
-			border-radius: 1px;
-			min-height: 1px;
-			box-shadow: inset -1px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 1px -1px 1px 0px rgba(255, 255, 255, 1);
+		.symbol-button + scale {
+			padding-left: 0px;
+			padding-right: 0px;
 		}
 
-		slider {
-			margin: -12px 0px;
-			min-width: 8px;
-		}
-	}
+		/* Non-independent widgets */
 
-	.symbol-button + scale {
-		padding-left: 0px;
-		padding-right: 0px;
-	}
+		scrollbar {
+			> range.vertical {
+				> trough {
+					background: #F0F0F0;
+					border: 1px solid rgba(0, 0, 0, 0.03);
+					box-shadow: -1px 0px 0px #F8F8F8, inset 5px 0px 8px -3px rgba(0, 0, 0, 0.1);
 
-	/* Non-independent widgets */
+					> slider {
+						min-width: 15px;
 
-	scrollbar {
-		> range.vertical {
-			> trough {
-				background: #F0F0F0;
-				border: 1px solid rgba(0, 0, 0, 0.03);
-				box-shadow: -1px 0px 0px #F8F8F8, inset 5px 0px 8px -3px rgba(0, 0, 0, 0.1);
+						background: linear-gradient(90deg, #F5F5F5 0%, #E9E9EB 49.21%, #D9DADC 49.75%, #C0C0C4 100%);
+						border: 1px solid #979797;
+						box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.6);
+						border-radius: 2px;
 
-				> slider {
-					min-width: 15px;
+						&:hover {
+							background: linear-gradient(90deg, #F5F5F5 0%, #D6EEFB 49.21%, #A9DBF6 49.75%, #A9DBF6 100%);
+							border: 1px solid #356F9B;
+							box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.8), inset 2px 2px 3px rgba(255, 255, 255, 0.25), inset -2px -2px 3px -1px rgba(0, 0, 0, 0.25);
+						}
 
-					background: linear-gradient(90deg, #F5F5F5 0%, #E9E9EB 49.21%, #D9DADC 49.75%, #C0C0C4 100%);
-					border: 1px solid #979797;
-					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.6);
-					border-radius: 2px;
-
-					&:hover {
-						background: linear-gradient(90deg, #F5F5F5 0%, #D6EEFB 49.21%, #A9DBF6 49.75%, #A9DBF6 100%);
-						border: 1px solid #356F9B;
-						box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.8), inset 2px 2px 3px rgba(255, 255, 255, 0.25), inset -2px -2px 3px -1px rgba(0, 0, 0, 0.25);
-					}
-
-					&:active {
-						background: linear-gradient(90deg, #B5E4F7 0%, #B5E4F7 49.21%, #6FCAF0 49.75%, #6FCAF0 100%);
-						border: 1px solid #18598A;
-						box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.5), inset 2px 2px 3px rgba(255, 255, 255, 0.25), inset -2px -2px 3px -1px rgba(0, 0, 0, 0.25);
+						&:active {
+							background: linear-gradient(90deg, #B5E4F7 0%, #B5E4F7 49.21%, #6FCAF0 49.75%, #6FCAF0 100%);
+							border: 1px solid #18598A;
+							box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.5), inset 2px 2px 3px rgba(255, 255, 255, 0.25), inset -2px -2px 3px -1px rgba(0, 0, 0, 0.25);
+						}
 					}
 				}
 			}
+
+			> range.horizontal > trough > slider {
+				min-height: 15px;
+			}
 		}
 
-		> range.horizontal > trough > slider {
-			min-height: 15px;
+		scrolledwindow {
+			junction {
+				min-width: 15px;
+				min-height: 15px;
+				
+				background: #f0f0f0;
+			}
 		}
-	}
 
-	scrolledwindow {
-		junction {
-			min-width: 15px;
-			min-height: 15px;
-			
-			background: #f0f0f0;
+		menubar {
+			border-bottom: 1px solid #BFC6D1;
+			background: linear-gradient(180deg, #FCFFFF 0%, #E3E9F5 34.38%, #D5DCEC 34.38%, #E0E5F8 100%);		
+
+			color: #1b1d23;
+
+			> item {
+				padding: 1px 6px 0px 6px;
+				
+				> label {
+					padding: 0px 2px;
+					border: 1px solid transparent;
+				}
+				&:selected > label {
+					border-radius: 3px;
+					border: 1px solid #575757;
+					background: #CBD1E1;
+					box-shadow: 2px 3px 2px 0px rgba(0, 0, 0, 0.25) inset;
+				}
+				&:selected {
+					box-shadow: none;
+				}
+			}
 		}
 	}
 
@@ -1097,31 +1158,6 @@ window.aero {
 		color: #4a4c4f;
 
 		box {
-		}
-	}
-
-	menubar {
-		border-bottom: 1px solid #BFC6D1;
-		background: linear-gradient(180deg, #FCFFFF 0%, #E3E9F5 34.38%, #D5DCEC 34.38%, #E0E5F8 100%);		
-
-		color: #1b1d23;
-
-		> item {
-			padding: 1px 6px 0px 6px;
-			
-			> label {
-				padding: 0px 2px;
-				border: 1px solid transparent;
-			}
-			&:selected > label {
-				border-radius: 3px;
-				border: 1px solid #575757;
-				background: #CBD1E1;
-				box-shadow: 2px 3px 2px 0px rgba(0, 0, 0, 0.25) inset;
-			}
-			&:selected {
-				box-shadow: none;
-			}
 		}
 	}
 
@@ -1149,6 +1185,11 @@ window.aero {
 				margin-left: 32px;	// So that it doesn't go into the icon area
 				background: linear-gradient(180deg, #E1E1E1 49.99%, #FFFFFF 50%);
 			}
+		}
+
+		label {
+			color: black;
+			text-shadow: none;
 		}
 
 		label.separator.title {

@@ -1,3 +1,5 @@
+// https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/desktop_migration_and_administration_guide/user-sessions
+
 public class ShellApp : Gtk.Application {
 	public ShellApp () {
 		Object(application_id: "com.github.alberttomanek.aero.shell",
@@ -35,6 +37,13 @@ class TaskBarWindow : Gtk.ApplicationWindow
 		this.titlebar = new Gtk.WindowHandle() {
 			child = new TaskBar(),
 		};
+
+		// Actions
+		Aero.ActionEntry[] actions = {
+			{ "shutdown", () => { this.close(); }, null, null, null, "", "Show down", "Shut down your computer." },
+		};
+
+		Aero.ActionEntry.add(actions, this);
 	}
 }
 
@@ -45,8 +54,29 @@ class TaskBar : Gtk.Box
 	[GtkChild] Gtk.Label clock_time;
 	[GtkChild] Gtk.Label clock_date;
 
+	StartMenu start_menu;
+	bool      start_menu_open = false;
+
 	construct {
+		// Start button & menu
 		this.start_button.icon = Gdk.Texture.from_resource("/com/github/albert-tomanek/aero/shell/icons/logo1.svg");
+
+		this.start_menu = new StartMenu();
+		this.start_menu.set_parent(this);
+
+		Gtk.Allocation alloc;
+		this.start_button.get_allocation(out alloc);
+		this.start_menu.set_pointing_to(alloc);
+
+		this.start_button.clicked.connect(() => {
+			if (this.start_menu_open)
+				this.start_menu.popdown();
+			else
+				this.start_menu.popup();
+			
+			this.start_menu_open = !this.start_menu_open;
+		});
+		this.start_menu.closed.connect(() => { this.start_menu_open = false; });
 
 		// Init the clock
 		var now = Time.local(new time_t());
@@ -65,5 +95,27 @@ class TaskBar : Gtk.Box
 
 		//  clock_time.label = t.format("%X %p");
 		//  clock_time.label = t.format("%x");
+	}
+}
+
+[GtkTemplate (ui = "/com/github/albert-tomanek/aero/shell/templates/startmenu.ui")]
+class StartMenu : Gtk.Popover
+{
+	[GtkChild] Gtk.Label user_name;
+	[GtkChild] Gtk.Box   powerbutton_hole;
+	Aero.ActionButton powerbutton;
+
+	Act.User user = Act.UserManager.get_default().get_user("albert");	// Environment.get_user_name()
+
+	construct {
+		//  user.bind_property("real-name", user_name, "label", BindingFlags.SYNC_CREATE);
+		user_name.label = "John Doe";
+
+		this.powerbutton = new Aero.ActionButton("shutdown", Gtk.Orientation.HORIZONTAL, Gtk.IconSize.NORMAL);
+		this.powerbutton.icon.hide();
+		this.powerbutton.arrow_button.direction = Gtk.ArrowType.RIGHT;
+		this.powerbutton.arrow_button.menu_model = (new Gtk.Builder.from_resource("/com/github/albert-tomanek/aero/shell/templates/shutdown_menu.ui")).get_object("menu") as GLib.MenuModel;
+		this.powerbutton.arrow_button.popover.valign = Gtk.Align.END;
+		this.powerbutton_hole.append(powerbutton);
 	}
 }

@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.12.1 -->
+<interface>
+  <!-- interface-name startmenu.ui -->
+  <requires lib="gtk" version="4.8"/>
+  <object class="GtkBox" id="content">
+    <property name="height-request">475</property>
+    <child>
+      <object class="GtkBox">
+        <property name="css-classes">window-content</property>
+        <property name="orientation">vertical</property>
+        <property name="overflow">hidden</property>
+        <property name="vexpand">True</property>
+        <property name="vexpand-set">True</property>
+        <child>
+          <object class="GtkListBox" id="apps_list">
+            <property name="vexpand">True</property>
+            <property name="vexpand-set">True</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator"/>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="child">
+              <object class="GtkBox">
+                <child>
+                  <object class="GtkImage"/>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">All Programs</property>
+                  </object>
+                </child>
+              </object>
+            </property>
+            <property name="css-classes">flat</property>
+            <property name="name">all-programs</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="css-classes">footer</property>
+            <child>
+              <object class="GtkEntry">
+                <property name="placeholder-text">Search programs and files</property>
+                <property name="secondary-icon-name">edit-find-</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="vexpand">True</property>
+        <property name="vexpand-set">True</property>
+        <child>
+          <object class="GtkBox">
+            <property name="halign">center</property>
+            <property name="visible">False</property>
+            <child>
+              <object class="GtkImage" id="user_icon">
+                <property name="css-name">usericon</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="user_name"/>
+        </child>
+        <child>
+          <object class="GtkListBox" id="places">
+            <property name="valign">start</property>
+            <property name="vexpand">True</property>
+            <property name="vexpand-set">True</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="powerbutton_hole">
+            <property name="vexpand-set">True</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <template class="StartMenu" parent="GtkPopover">
+    <property name="child">content</property>
+    <property name="halign">start</property>
+    <property name="has-arrow">False</property>
+    <property name="name">startmenu</property>
+    <property name="position">top</property>
+  </template>
+</interface>

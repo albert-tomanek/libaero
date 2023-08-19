@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- Created with Cambalache 0.10.3 -->
+<!-- Created with Cambalache 0.12.1 -->
 <interface>
   <!-- interface-name wizard.ui -->
-  <requires lib="gtk" version="4.6"/>
+  <requires lib="gtk" version="4.8"/>
   <template class="AeroWizard" parent="GtkWindow">
     <property name="css-classes">aero</property>
     <property name="modal">True</property>
     <child>
       <object class="GtkBox">
-        <property name="css-classes">content</property>
+        <property name="css-classes">window-content</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkStack" id="stack">

@@ -78,9 +78,13 @@ namespace Aero
                 //      valign = Gtk.Align.CENTER
                 //  }
             };
+            this.append(this.arrow_button);
             this.arrow_button.add_css_class("flat");
             (this.arrow_button.get_first_child() as Gtk.ToggleButton).remove_css_class("image-button");
-            this.append(this.arrow_button);
+            this.arrow_button.notify["popover"].connect(() => {
+                this.arrow_button.popover.has_arrow = false;
+                this.arrow_button.popover.valign = Gtk.Align.START;
+            });
         }
 
         void on_new_action()
