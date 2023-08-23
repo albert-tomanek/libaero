@@ -8,7 +8,7 @@
     <property name="title">Aero Photo Gallery</property>
     <child>
       <object class="GtkBox" id="contents">
-        <property name="css-classes">content</property>
+        <property name="css-classes">window-content</property>
         <property name="height-request">600</property>
         <property name="orientation">vertical</property>
         <property name="width-request">800</property>

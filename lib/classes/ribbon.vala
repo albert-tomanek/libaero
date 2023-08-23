@@ -1,3 +1,16 @@
+// Normal drop-down menu item creation code is here:
+//     https://github.com/GNOME/gtk/blob/f2578fcfb940cb534147a177e0437fe2ba9ba298/gtk/gtkmenutracker.c#L301
+// And here:
+//     https://github.com/GNOME/gtk/blob/main/gtk/gtkmenutrackeritem.c#L508
+// And this converts the abstract MenuTrackerItem into a widget:
+//     https://github.com/GNOME/gtk/blob/main/gtk/gtkmenusectionbox.c#L332
+
+// gtk_menu_section_box_new_toplevel    https://github.com/GNOME/gtk/blob/f2578fcfb940cb534147a177e0437fe2ba9ba298/gtk/gtkmenusectionbox.c#L559
+// gtk_menu_tracker_new
+// gtk_menu_tracker_section_new         https://github.com/GNOME/gtk/blob/main/gtk/gtkmenutracker.c#L474
+// gtk_menu_tracker_add_items           https://github.com/GNOME/gtk/blob/main/gtk/gtkmenutracker.c#L301
+// _gtk_menu_tracker_item_new           https://github.com/GNOME/gtk/blob/main/gtk/gtkmenutrackeritem.c#L508
+
 public class Aero.Ribbon : Gtk.Box
 {
     public Gtk.Notebook nb = new Gtk.Notebook();
@@ -122,6 +135,7 @@ public class Aero.Ribbon : Gtk.Box
                 wij = new Gtk.CheckButton() {
                     label = Aero.ActionEntry.extract(action).title,
                     action_name = action.name,
+                    action_target = new Variant.boolean(true)
                 };
             }
             else
@@ -164,7 +178,7 @@ public class Aero.Ribbon : Gtk.Box
         }
     }
 
-    public class Section : Gtk.Box, Gtk.Buildable  // Inheriting publically from Box so that we can wxpose the functionality of a child box is a hack.
+    public class Section : Gtk.Box, Gtk.Buildable  // Inheriting publicly from Box so that we can wxpose the functionality of a child box is a hack.
     {
         public string title { get; set; }
         Gtk.Box internal_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);

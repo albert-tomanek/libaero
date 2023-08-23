@@ -18,7 +18,7 @@ CSS Property order:
 
 window.aero {
 	background: linear-gradient(0deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.22)), radial-gradient(300px /* So that the title remains equally visible when stretching */ 35% at 0% 0%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(27.72% 32.17% at 100% 0%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(30.29% 35.15% at 100% 100%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(25.16% 29.19% at 0% 100%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0) 15.48%, #FFFFFF 200px, rgba(255, 255, 255, 0) 201px);
-
+	
 	box-shadow: 1px -1px 2px rgba(0, 0, 0, 0.5), -14px 8px 21px rgba(0, 0, 0, 0.5), inset 1px -1px 0px rgba(134, 255, 233, 0.69);
 
 	border: 1px solid #FFFFFF;
@@ -247,6 +247,12 @@ window.aero {
 
 	/* Global widget properties. These apply both in the normal window client area and in the glassy title bar. */
 
+	.flat {
+		background: transparent;
+		border: 1px solid transparent;
+		box-shadow: none;
+	}
+
 	button, scale slider {
 		// General entry stuff (applies both inside and outside of .content)
 
@@ -256,7 +262,7 @@ window.aero {
 			min-width: 66px;
 			min-height: 21px;
 
-			// padding: 0px 8px;
+			padding: 1px 8px;
 		}
 
 		&.symbol-button {
@@ -268,7 +274,7 @@ window.aero {
 			font-size: 8px;
 		}
 
-		// Specific to outside of .content
+		// Specific to outside of .window-content
 
 		border-radius: 2px;
 		border: 1px solid rgba(255, 255, 255, 0.33);
@@ -276,7 +282,7 @@ window.aero {
 		box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.31);
 
 		&:hover {
-			border-color: rgba(255, 255, 255, 0.33);
+			border-color: rgba(255, 255, 255, 0.66);
 			background: linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.14) 49.77%, rgba(255, 255, 255, 0.00) 51.26%), linear-gradient(180deg, rgba(0, 0, 0, 0.15) 61.26%, rgba(0, 0, 0, 0.00) 86.46%);
 			box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.31), 0px 0px 2px 0px rgba(255, 255, 255, 0.85) inset;
 		}
@@ -288,13 +294,95 @@ window.aero {
 		}
 	}
 
+	actionbutton {
+		.heading {
+			font-size: 11px;
+			font-weight: bold;
+		}
+		
+		arrow {	// The arrow
+			min-width: 0;
+			min-height: 0;
+
+			-gtk-icon-size: 8px;
+		}
+
+		&.flat menubutton > button {
+			// Erase any visual trace of the thing that actually makes the menubutton look like a button
+
+			border: 1px solid rgba(0, 0, 0, 0);
+			background: transparent;
+			box-shadow: none;
+		}
+
+		&:hover menubutton {
+			> button, button:hover, button:active {
+				// @include yellow-hover;
+
+				&:hover {
+					// @include yellow-hover-lighter;
+				}
+	
+				&:active {
+					// @include yellow-pressed;
+				}
+			}
+		}
+
+		&.horizontal menubutton button {	// .linked won;t work here because it's nested
+			margin: -1px;	// We don;t want the inner button and the menubutton both having a 1px border
+			
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+			
+		/* Layout */
+
+		> button {
+			min-width: 0;
+			min-height: 0;
+			padding: 0;
+		}
+
+		&.large {
+			image {
+				-gtk-icon-size: 36px;
+				margin: 5px;
+			}
+
+			menubutton {
+				min-width: 24px;
+			}
+		}
+
+		&.normal {
+			image {
+				-gtk-icon-size: 16px;
+				margin: 2px;
+			}
+		}
+
+		&.horizontal {
+			label {
+				margin: 2px 2px;
+			}
+		}
+
+		&.vertical {
+			label {
+				margin: 0 4px;
+			}
+		}
+	}
+
+
 	@mixin entry {
 		// General entry stuff (applies both inside and outside of .content)
 
 		min-height: 20px;
 
 		placeholder {
-			color: hsla(0, 0%, 42%, 1);
+			color: #6d6d6d;
 			font-style: italic;
 			font-family: "Segoe UI";
 			font-size: 12px;
@@ -346,6 +434,32 @@ window.aero {
 			}
 		}
 	}
+
+	menubar {
+		border-bottom: 1px solid #BFC6D1;
+		background: linear-gradient(180deg, #FCFFFF 0%, #E3E9F5 34.38%, #D5DCEC 34.38%, #E0E5F8 100%);		
+
+		color: #1b1d23;
+
+		> item {
+			padding: 1px 6px 0px 6px;
+			
+			> label {
+				padding: 0px 2px;
+				border: 1px solid transparent;
+			}
+			&:selected > label {
+				border-radius: 3px;
+				border: 1px solid #575757;
+				background: #CBD1E1;
+				box-shadow: 2px 3px 2px 0px rgba(0, 0, 0, 0.25) inset;
+			}
+			&:selected {
+				box-shadow: none;
+			}
+		}
+	}
+
 
 	/* Aero-specific widgets */
 
@@ -424,6 +538,7 @@ window.aero {
 		// 	border: 1px solid red;	// Unfortunately, `Gtk.StyleContext.render_frame` only renders rectangular frames, and not around the provided path, so we can not draw a frame around the buttons.
 		// }
 	}
+
 
 	.window-content {
 		@mixin yellow-hover-lighter {
@@ -629,11 +744,14 @@ window.aero {
 				#recent .heading, subaction-overlay > .heading {
 					padding: 6px 9px;
 
-					color: #4C607A;
 					background-color: #EFF5FA;
 					box-shadow: 0px 1px 0px 0px #FFF, 0px -1px 0px 0px #CFDBEB inset;
-					font-size: 11px;
-					font-weight: bold;
+					
+					label {
+						color: #4C607A;
+						font-size: 11px;
+						font-weight: bold;
+					}
 				}
 
 				subaction-overlay {
@@ -665,25 +783,8 @@ window.aero {
 
 			.heading {
 				color: #4C607A;
-				font-size: 11px;
-				font-weight: bold;
 			}
 			
-			arrow {	// The arrow
-				min-width: 0;
-				min-height: 0;
-
-				-gtk-icon-size: 8px;
-			}
-
-			menubutton > button {
-				// Erase any visual trace of the thing that actually makes the menubutton look like a button
-
-				border: 1px solid rgba(0, 0, 0, 0);
-				background: transparent;
-				box-shadow: none;
-			}
-
 			&:hover menubutton {
 				> button, button:hover, button:active {
 					@include yellow-hover;
@@ -695,50 +796,6 @@ window.aero {
 					&:active {
 						@include yellow-pressed;
 					}
-				}
-			}
-
-			&.horizontal menubutton button {	// .linked won;t work here because it's nested
-				margin: -1px;	// We don;t want the inner button and the menubutton both having a 1px border
-				
-				border-top-left-radius: 0;
-				border-bottom-left-radius: 0;
-			}
-				
-			/* Layout */
-
-			> button {
-				min-width: 0;
-				min-height: 0;
-				padding: 0;
-			}
-
-			&.large {
-				image {
-					-gtk-icon-size: 36px;
-					margin: 5px;
-				}
-	
-				menubutton {
-					min-width: 24px;
-				}
-			}
-
-			&.normal {
-				image {
-					margin: 2px;
-				}
-			}
-
-			&.horizontal {
-				label {
-					margin-left: 2px;
-				}
-			}
-
-			&.vertical {
-				label {
-					margin: 0 4px;
 				}
 			}
 		}
@@ -795,6 +852,7 @@ window.aero {
 
 			scrolledwindow {
 				border: 1px solid #b0b0b0;
+				// border: 1px solid #000000;
 			}
 		}
 
@@ -888,10 +946,18 @@ window.aero {
 		/* Normal widgets */
 
 		button, scale slider {
+			// padding: 0px 8px;
+			border-radius: 3px;
+
 			background: linear-gradient(180deg, #F6F6F6 0%, #EBEBEB 47.33%, #DDDDDD 47.73%, #CFCFCF 100%);
 			border: 1px solid #707070;
 			box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.81);
-			border-radius: 3px;
+
+			&.flat {
+				background: transparent;
+				border: 1px solid transparent;
+				box-shadow: none;
+			}
 
 			&:hover {
 				background: linear-gradient(180deg, #EAF6FD 10.11%, #D9F0FC 47.33%, #BEE6FD 47.34%, #A7D9F5 92.29%);
@@ -928,17 +994,33 @@ window.aero {
 				border: 1px solid #3C7FB1;
 				box-shadow: inset 0px 0px 2px 2px #2CD4FF;
 			}
+
+			&.soft {
+				&:hover {
+					border: 1px solid #7AA4CD;
+					background: linear-gradient(180deg, #DDECFD 0%, #C2DCFD 96.21%);
+					box-shadow: 0px 0px 0px 1px #EBF4FD inset;
+				}				
+				
+				&:active {
+					border: 1px solid #7AA4CD;
+					background: linear-gradient(180deg, #EEF5FE 0%, #E1EEFE 96.21%);
+					box-shadow: 0px 0px 0px 1px #F5F9FE inset;
+				}
+	
+				&.highlight {
+					border: 1px solid #F1BA90;
+					background: linear-gradient(180deg, #FDF1C0 0%, #FEC99C 96.21%);
+					box-shadow: 0px 0px 0px 1px rgba(255, 253, 246, 0.55) inset;
+				}
+			}	
 		}
 
 		.flat {
-			background: transparent;
-			border: 1px solid transparent;
-			box-shadow: none;
-
 			.heading { color: black; }	// FIXME: What's this for?
 		}
 
-		button.flat {
+		linkbutton, optionbutton {
 			&:hover {
 				@include hover-gray;
 			}
@@ -1122,31 +1204,6 @@ window.aero {
 				background: #f0f0f0;
 			}
 		}
-
-		menubar {
-			border-bottom: 1px solid #BFC6D1;
-			background: linear-gradient(180deg, #FCFFFF 0%, #E3E9F5 34.38%, #D5DCEC 34.38%, #E0E5F8 100%);		
-
-			color: #1b1d23;
-
-			> item {
-				padding: 1px 6px 0px 6px;
-				
-				> label {
-					padding: 0px 2px;
-					border: 1px solid transparent;
-				}
-				&:selected > label {
-					border-radius: 3px;
-					border: 1px solid #575757;
-					background: #CBD1E1;
-					box-shadow: 2px 3px 2px 0px rgba(0, 0, 0, 0.25) inset;
-				}
-				&:selected {
-					box-shadow: none;
-				}
-			}
-		}
 	}
 
 	tooltip {
@@ -1162,7 +1219,7 @@ window.aero {
 	}
 
 	popover.menu {
-		// Edit: Nope, not in Gtk4. | If you wanna see how to add icons to the menus, look here: https://zetcode.com/gui/gtk2/menusandtoolbars/
+		// Edit: Nope, not in Gtk4. || If you wanna see how to add icons to the menus, look here: https://zetcode.com/gui/gtk2/menusandtoolbars/
 
 		/*
 		box .vertical
@@ -1232,9 +1289,16 @@ window.aero {
 					color: black;
 				}
 			}
-			&:disabled:hover {
-				background: linear-gradient(180deg, hsla(213, 0, 86.3, 0) 0%, hsla(213, 0, 86.3, 0.43) 96.21%);
-				box-shadow: inset 0px 0px 0px 1px hsla(0, 0%, 98%, 0.84);
+			&:disabled
+			{
+				> label {
+					color: gray;
+				}
+
+				&:hover {
+					background: linear-gradient(180deg, hsla(213, 0, 86.3, 0) 0%, hsla(213, 0, 86.3, 0.43) 96.21%);
+					box-shadow: inset 0px 0px 0px 1px hsla(0, 0%, 98%, 0.84);
+				}
 			}
 
 			> label {
@@ -1281,5 +1345,21 @@ window.aero {
 				// background: linear-gradient(90deg, #e0e0e0 0px, #e0e0e0 30px, #F0F0F0 30px, #F1F1F1 100%);//#f0f0f0;
 			}
 		}
+	}
+
+	// Undo Adwaita.css
+
+	listview {
+		border: none;
+		background: transparent;
+
+		row {
+			padding: 0;
+			border: none;
+		}
+	}
+
+	button {
+		transition: none;
 	}
 }

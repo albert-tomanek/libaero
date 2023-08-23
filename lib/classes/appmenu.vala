@@ -5,6 +5,8 @@ namespace Aero
     {
         [GtkChild] Gtk.Box main_box;
         [GtkChild] Gtk.Box recent_box;
+        Gtk.ListView recent_list;
+        GLib.ListStore recent = new GLib.ListStore(typeof(Object));
         [GtkChild] Gtk.Overlay recent_overlay;
         ActionList action_list;
 
@@ -14,7 +16,8 @@ namespace Aero
             set_css_name("appmenu");
         }
 
-        public signal void need_recent(ref string[] recent_paths);
+        public delegate void AddRecentFunc(string uri);
+        public signal void need_recent(AddRecentFunc add);  // Handlers should use the provided function to add recent files.
 
         public AppMenu.from_model(GLib.MenuModel mm)
         {
@@ -45,6 +48,68 @@ namespace Aero
                     this.current_overlay = null;
                 }
             });
+
+            // Create recent box
+            this.recent_list = new Gtk.ListView(
+                new Gtk.NoSelection(
+                    this.recent
+                ),
+                new_signal_list_item_factory(
+                    (_, li) => {
+                        var button = new Gtk.Button() {
+                            child = new Gtk.Label(null) {
+                                ellipsize = Pango.EllipsizeMode.START,
+                                max_width_chars = 10
+                            }
+                        };
+                        button.add_css_class("flat");
+                        li.child = button;
+                    },
+                    null,
+                    (_, li) => {
+                        var button = li.child as Gtk.Button;
+                        var uri    = li.item.get_data<string>("uri");
+                        
+                        (button.child as Gtk.Label).label = uri;
+                        ulong handler_id = button.clicked.connect(() => {
+                            this.popdown();
+                            (this.get_ancestor(typeof(Gtk.ApplicationWindow)) as Gtk.ApplicationWindow).lookup_action("open").activate(new Variant.string(uri));
+                        });
+
+                        //  li.set_data<ulong>("handler-id", handler_id);
+                    },
+                    (_, li) => {
+                        //  li.disconnect(li.get_data<ulong>("handler-id"));
+                    }
+                )
+            ) {
+                hexpand = true,
+                vexpand = true
+            };
+            this.recent_box.append(this.recent_list);
+
+            // Refresh recent every time menu is opened.
+            this.notify["visible"].connect(() => {
+                if (this.visible == true)
+                {
+                    this.recent.remove_all();
+                    this.need_recent(this.add_to_recent);
+                }
+            });
+        }
+
+        private void add_to_recent(string uri)
+        {
+            var o = new Object();
+            o.set_data<string>("uri", uri);
+    
+            this.recent.append(o);
+        }
+
+        [GtkCallback]
+        void close_menu()
+        {
+            this.popdown();
         }
 
         void add_section(GLib.MenuModel mm)

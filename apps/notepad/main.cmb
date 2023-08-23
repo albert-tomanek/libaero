@@ -16,7 +16,7 @@
 	(1,1,"GtkWidget","css-classes","aero",None,None,None,None,None,None,None,None,None),
 	(1,1,"GtkWindow","title","Notepad",None,None,None,None,None,None,None,None,None),
 	(1,5,"GtkOrientable","orientation","vertical",None,None,None,None,None,None,None,None,None),
-	(1,5,"GtkWidget","css-classes","content",None,None,None,None,None,None,None,None,None),
+	(1,5,"GtkWidget","css-classes","window-content",None,None,None,None,None,None,None,None,None),
 	(1,5,"GtkWidget","height-request","600",None,None,None,None,None,None,None,None,None),
 	(1,5,"GtkWidget","width-request","800",None,None,None,None,None,None,None,None,None),
 	(1,7,"GtkScrolledWindow","has-frame","True",None,None,None,None,None,None,None,None,None),

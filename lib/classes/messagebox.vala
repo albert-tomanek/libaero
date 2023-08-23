@@ -57,7 +57,7 @@ public class Aero.MsgBox : Gtk.Dialog
 		});
 
 		var ca = this.get_content_area();
-		ca.parent.add_css_class("content");
+		ca.parent.add_css_class("window-content");
 		ca.add_css_class("markup");
     }
 

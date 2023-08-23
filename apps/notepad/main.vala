@@ -46,11 +46,11 @@ class Notepad : Gtk.ApplicationWindow
 		this.add_action(act);	// this.application.add_action(act);
 
 		act = new GLib.SimpleAction.stateful("wrap", VariantType.BOOLEAN, new Variant.boolean(true));
-		act.activate.connect(() => {});
+		act.activate.connect((param) => { act.set_state(param); });
 		this.add_action(act);	// this.application.add_action(act);
 
 		act = new GLib.SimpleAction.stateful("encoding", VariantType.STRING, new Variant.string("utf8"));
-		act.activate.connect(() => {});
+		act.activate.connect((param) => { act.set_state(param); });
 		this.add_action(act);	// this.application.add_action(act);
 
 		var b = new Gtk.ColorButton();
@@ -59,4 +59,9 @@ class Notepad : Gtk.ApplicationWindow
 		/* Load menu tree from UI file */
 		menubar.menu_model = (new Gtk.Builder.from_resource("/com/github/albert-tomanek/aero/apps/notepad/menu.ui")).get_object("menu") as GLib.MenuModel;
 	}
+
+	// Menu items will be sensitive 
+	//  self->can_activate =
+	//		(action_target == NULL && parameter_type == NULL) ||
+	//		(action_target != NULL && parameter_type != NULL && g_variant_is_of_type (action_target, parameter_type));
 }

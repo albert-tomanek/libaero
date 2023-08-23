@@ -70,6 +70,13 @@ class MsPaint : Gtk.ApplicationWindow
 		});
 
 		this.ribbon.menu_model = (new Gtk.Builder.from_resource("/com/github/albert-tomanek/aero/apps/mspaint/menu.ui")).get_object("menu") as GLib.MenuModel;
+		int i = 0;
+		this.ribbon.app_menu.need_recent.connect((add) => {
+			add(@"/lorem/ipsum/dolor/sit/amet/consectetur/adipiscing/elit/$(++i).dat");
+			add(@"/lorem/ipsum/dolor/sit/amet/consectetur/adipiscing/elit/$(++i).dat");
+			add(@"/lorem/ipsum/dolor/sit/amet/consectetur/adipiscing/elit/$(++i).dat");
+			add(@"/lorem/ipsum/dolor/sit/amet/consectetur/adipiscing/elit/$(++i).dat");
+		});
 	}
 
 	void register_actions()
@@ -79,7 +86,10 @@ class MsPaint : Gtk.ApplicationWindow
 			{ "about", this.show_help, null, null, null, "mspaint_60208", "Abou_t Paint", null },
 
 			{ "new", this.dia_new_document, null, null, null, "mspaint_60008", "New", "Create a new picture." },
-			{ "open", niy, null, null, null, "mspaint_60016", "Open", null },
+			{ "open", (act, arg) => {
+				var diag = new Aero.MsgBox.info(this, "Opened file", "Opened " + arg.get_string());
+				diag.show();
+			}, "s", null, null, "mspaint_60016", "Open", null },
 			{ "save", niy, null, null, null, "mspaint_60024", "Save", null },
 			{ "save-as-default", this.save_as_svg, null, null, null, "mspaint_60040", "Save _as", "Save the current picture as a new file." },
 			{ "save-as-png", niy, null, null, null, "mspaint_60064", "Save as _PNG", "Standard image file" },
@@ -110,7 +120,7 @@ class MsPaint : Gtk.ApplicationWindow
 			{ "fullscreen", () => { if (this.is_fullscreen()) { this.unfullscreen(); } else { this.fullscreen(); } }, null, null, null, "mspaint_60504", "Full screen", "" },
 			{ "show-rulers", null, "b", "false", null, "", "Rulers", "" },
 			{ "show-gridlines", null, "b", "false", null, "", "Gridlines", "" },
-			{ "show-statusbar", () => {}, "b", "true", (act, val) => { this.statusbar.visible = val.get_boolean(); }, "", "Status bar", "" },
+			{ "show-statusbar", (act, val) => { this.statusbar.visible = val.get_boolean(); act.set_state(val); }, "b", "true", null, "", "Status bar", "" },
 
 			{ "launch-demo", () => {
 				try {

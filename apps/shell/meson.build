@@ -20,6 +20,7 @@ executable('shell',
 		dependency('gobject-2.0'),
 		dependency('gtk4'),
 		dependency('accountsservice'),
+		# dependency('libmutter-11'),
 	],
 	link_with: lib,
 	install: true

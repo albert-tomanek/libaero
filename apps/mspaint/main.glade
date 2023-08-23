@@ -335,7 +335,7 @@
           </packing>
         </child>
         <style>
-          <class name="content"/>
+          <class name="window-content"/>
         </style>
       </object>
     </child>

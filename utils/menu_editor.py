@@ -68,6 +68,56 @@ from tkinter import messagebox
 import xml.etree.ElementTree as ET
 import uuid
 import sys
+from abc import *
+import os
+
+class AttributeWidget(metaclass=ABCMeta):
+    @abstractmethod
+    def get_value(self) -> str:
+        pass
+    @abstractmethod
+    def get_extra(self) -> {str: str}:
+        pass
+    @abstractmethod
+    def set_value(self, s: str):
+        pass
+    @abstractmethod
+    def set_extra(self, x: {str: str}):
+        pass
+
+
+class StringAttribute(AttributeWidget, tk.Entry):
+    def __init__(self, *args, **kwargs):
+        tk.Entry.__init__(self, *args, **kwargs)
+    def get_value(self):
+        return self.get()
+    def get_extra(self):
+        return {}
+    def set_value(self, s):
+        self.insert(0, s)
+    def set_extra(self, s):
+        pass
+
+class GVariantAttribute(AttributeWidget, tk.Frame):
+    def __init__(self, *args, **kwargs):
+        tk.Frame.__init__(self, *args, **kwargs)
+        self.val_entry = tk.Entry(self)
+        self.val_entry.grid(column=0, row=0)
+        b = tk.Button(self, text="info", command=lambda: os.system('xdg-open "https://developer-old.gnome.org/glib/stable/gvariant-text.html"'))
+        b.grid(column=1, row=0)
+        l = tk.Label(self, text="type string:")
+        l.grid(column=2, row=0)
+        self.type_entry = tk.Entry(self)
+        self.type_entry.grid(column=3, row=0)
+    def get_value(self):
+        return self.val_entry.get()
+    def get_extra(self):
+        return {"type": self.type_entry.get()}
+    def set_value(self, s):
+        self.val_entry.insert(0, s)
+    def set_extra(self, s):
+        if "type" in s:
+            self.type_entry.insert(0, s["type"])
 
 class App:
     def __init__(self, path=None):
@@ -82,7 +132,7 @@ class App:
         
         # Create the item-to-element mapping dictionary
         self.item_to_element = {}
-        self.attr_entries = []  # attribute entry widgets
+        self.attr_entries: [tk.Entry] = []  # attribute entry widgets
 
         # Build the user interface
         self.make_ui()
@@ -215,11 +265,11 @@ class App:
         self.attr_names = []
         self.attr_entries = []
 
-    def get_element_attributes(self, element_name):
+    def get_element_attributes(self, element_name) -> [str]:
         # Dictionary mapping element names to their attributes
         dtd_attributes = {
             "item": [
-                "label", "use-markup", "action", "target", "icon", "submenu-action", "hidden-when", "custom",
+                "label", "use-markup", "action", "target", "icon", "verb-icon", "submenu-action", "hidden-when", "custom",
 
                 "ribbon-size", # "large", "normal" (Gtk.IconSize)
             ],
@@ -247,8 +297,7 @@ class App:
                 return attr_element
         return None
 
-
-    def update_element_attribute(self, element, name, value):
+    def update_element_attribute(self, element, name, value, extra={}):
         # Update the attribute value for the specified name within the given element
         attr_element = self.find_attr(element, name)
 
@@ -257,16 +306,19 @@ class App:
             attr_element = ET.Element('attribute')
             attr_element.set('name', name)
             element.append(attr_element)
+        
         if not value:
-            element.remove(attr_element)
+            element.remove(attr_element)    # Remove empty attributes to avoid clutter
 
         attr_element.text = value
+        for k, v in extra.items():
+            attr_element.set(k, str(v))
 
     def update_element_attributes(self, element):
         attributes = self.get_element_attributes(element.tag)
 
         for name, entry in zip(attributes, self.attr_entries):
-            self.update_element_attribute(element, name, entry.get())
+            self.update_element_attribute(element, name, entry.get_value(), entry.get_extra())
 
     def populate_table_view(self, element):
         # Get the attributes for the element
@@ -279,12 +331,21 @@ class App:
             label.grid(column=0, row=len(self.attr_entries), padx=5, pady=5)
 
             # Create an entry widget for the attribute value
-            entry = tk.Entry(self.table_frame)
-            entry.grid(column=1, row=len(self.attr_entries), padx=5, pady=5)
+            if name == "target":
+                entry = GVariantAttribute(self.table_frame)    
+                entry.grid(column=1, row=len(self.attr_entries), columnspan=2, padx=5, pady=5)
+            else:
+                entry = StringAttribute(self.table_frame)
+                entry.grid(column=1, row=len(self.attr_entries), padx=5, pady=5)
 
             attr = self.find_attr(element, name)
             if attr != None:
-                entry.insert(0, attr.text.strip())
+                entry.set_value(attr.text.strip())
+                entry.set_extra(attr.attrib)
+
+            #
+            if name == "target":
+                pass
             
             # Update the XML tree whenever this is edited
             entry.bind("<FocusOut>", lambda _: self.update_element_attributes(element))

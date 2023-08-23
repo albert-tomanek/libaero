@@ -25,11 +25,30 @@ namespace Aero
         
         cr.close_path();
     }
-}
 
-internal class Separator : Gtk.Widget
-{
-    static construct {
-        set_css_name("separator");
+    internal class Separator : Gtk.Widget
+    {
+        static construct {
+            set_css_name("separator");
+        }
+    }
+
+    public delegate void SignalListItemFactoryCallback(Gtk.SignalListItemFactory @this, Gtk.ListItem li);
+
+    public Gtk.SignalListItemFactory new_signal_list_item_factory(
+        SignalListItemFactoryCallback? setup,
+        SignalListItemFactoryCallback? teardown,
+        SignalListItemFactoryCallback? bind,
+        SignalListItemFactoryCallback? unbind
+    )
+    {
+        var f = new Gtk.SignalListItemFactory();
+
+        if (setup    != null) f.setup.connect(setup);
+        if (teardown != null) f.teardown.connect(teardown);
+        if (bind     != null) f.bind.connect(bind);
+        if (unbind   != null) f.unbind.connect(unbind);
+
+        return f;
     }
 }

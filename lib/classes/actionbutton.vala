@@ -20,10 +20,10 @@ namespace Aero
             set_css_name("actionbutton");
         }
 
-        public ActionButton(string action_id, Gtk.Orientation ort, Gtk.IconSize size)
+        public ActionButton(string action_id, Gtk.Orientation ort, Gtk.IconSize size, bool flat = true)
         {
             this.realize.connect(() => {
-                this.action = (this.root as Gtk.ApplicationWindow).lookup_action(action_id);
+                this.action = (this.get_ancestor(typeof(Gtk.ApplicationWindow)) as Gtk.ApplicationWindow).lookup_action(action_id);
                 this.on_new_action();
                 this.set_description_visible(this.show_description);
             });
@@ -40,7 +40,8 @@ namespace Aero
             this.add_css_class((size == Gtk.IconSize.NORMAL) ? "normal" : "large");
 
             this.main_button = new Gtk.Button();
-            this.main_button.add_css_class("flat");
+            if (flat)
+                this.main_button.add_css_class("flat");
             this.main_button.clicked.connect(this.do_action);
             this.append(this.main_button);
             this.main_button.child = new Gtk.Box(this.orientation, 0) {
@@ -79,7 +80,8 @@ namespace Aero
                 //  }
             };
             this.append(this.arrow_button);
-            this.arrow_button.add_css_class("flat");
+            if (flat)
+                this.arrow_button.add_css_class("flat");
             (this.arrow_button.get_first_child() as Gtk.ToggleButton).remove_css_class("image-button");
             this.arrow_button.notify["popover"].connect(() => {
                 this.arrow_button.popover.has_arrow = false;
@@ -122,7 +124,7 @@ namespace Aero
 
         void do_action()
         {
-            (this.root as Gtk.ApplicationWindow).activate_action(this.action.name, null);
+            this.action.activate(null);
         }
     }
 }

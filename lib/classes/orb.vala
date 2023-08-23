@@ -13,7 +13,7 @@ public class Aero.Orb : Gtk.Button
         overlay.add_overlay(style_dummy);
         overlay.add_overlay(new Reflection(style_dummy.get_style_context()));
 
-        var img = new Gtk.Image() {
+        var img = new Gtk.Picture() {
             //  halign = Gtk.Align.CENTER,
             //  valign = Gtk.Align.CENTER
         };
