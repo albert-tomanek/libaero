@@ -32,8 +32,8 @@ lib = shared_library('aero',
 	install: true,
 
 	# https://mesonbuild.com/Vala.html
-	# vala_gir: 'Aero-0.gir',
-	# install_dir: [true, true, true, true],
+	vala_gir: 'Aero-0.gir',
+	install_dir: [true, true, true, true],
 )
 
 pkg.generate(lib)	# Register with pkg-config

@@ -33,6 +33,36 @@ namespace Aero
         }
     }
 
+    public class Arrow : Gtk.Box
+    {
+        public Gtk.ArrowType direction { get; set; default = Gtk.ArrowType.NONE; }
+
+        static construct {
+            set_css_name("arrow");
+        }
+
+        construct {
+            //  this.append(new Gtk.Image());
+            halign = Gtk.Align.CENTER;
+            valign = Gtk.Align.CENTER;
+
+            this.notify["direction"].connect(() => {
+                foreach(var cls_name in get_css_classes())
+                    if (cls_name == "up" || cls_name == "down" || cls_name == "left" || cls_name == "right")
+                        remove_css_class(cls_name);
+
+                switch (this.direction)
+                {
+                    case Gtk.ArrowType.UP:    add_css_class("up");    break;
+                    case Gtk.ArrowType.DOWN:  add_css_class("down");  break;
+                    case Gtk.ArrowType.LEFT:  add_css_class("left");  break;
+                    case Gtk.ArrowType.RIGHT: add_css_class("right"); break;
+                    default: break;
+                }
+            });
+        }
+    }
+
     public delegate void SignalListItemFactoryCallback(Gtk.SignalListItemFactory @this, Gtk.ListItem li);
 
     public Gtk.SignalListItemFactory new_signal_list_item_factory(

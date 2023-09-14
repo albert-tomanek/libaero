@@ -125,6 +125,7 @@ namespace Aero
         void do_action()
         {
             this.action.activate(null);
+            //  this.activate_action(name, null);
         }
     }
 }

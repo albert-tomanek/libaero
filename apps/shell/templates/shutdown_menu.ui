@@ -1,2 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<interface><menu id="menu"><section><item><attribute name="label">S_witch user</attribute></item><item><attribute name="label">_Log off</attribute></item><item><attribute name="label">L_ock</attribute></item></section><section><item><attribute name="label">_Restart</attribute></item></section><section><item><attribute name="label">_Sleep</attribute></item></section></menu></interface>

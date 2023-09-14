@@ -236,8 +236,6 @@ window.aero {
 
 	/* Titlebar widget styling */
 
-	min-height: 0;
-
 	label {
 		color: black;
 		text-shadow: 0px 0px 6px #FFFFFF;
@@ -462,6 +460,28 @@ window.aero {
 
 
 	/* Aero-specific widgets */
+
+	arrow {
+		// -gtk-icon-size: 16px;
+		min-width: 8px;
+		min-height: 8px;
+
+		color: white;
+		background-repeat: no-repeat;
+
+		&.up {
+			background: -gtk-recolor(url("resource:///com/github/albert-tomanek/aero/images/button_arrow_up.svg"));
+		}
+		&.down {
+			background: -gtk-recolor(url("resource:///com/github/albert-tomanek/aero/images/button_arrow_down.svg"));
+		}
+		&.left {
+			background: -gtk-recolor(url("resource:///com/github/albert-tomanek/aero/images/button_arrow_left.svg"));
+		}
+		&.right {
+			background: url("resource:///com/github/albert-tomanek/aero/images/button_arrow_right.svg");
+		}
+	}
 
 	orb {
 		/* background: url("resource:///com/github/albert-tomanek/aero/images/orb_bg.png");
@@ -942,6 +962,10 @@ window.aero {
 				margin: 5px;
 			}
 		}
+
+		arrow {
+			color: black;
+		}	
 
 		/* Normal widgets */
 

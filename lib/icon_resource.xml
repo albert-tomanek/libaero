@@ -866,11 +866,11 @@
 <file>icons/orig/shell32_46.png</file>
 <file>icons/orig/shell32_47.png</file>
 <file>icons/orig/shell32_48.png</file>
-<file>icons/orig/shell32_4.png</file>
+--><file>icons/orig/shell32_4.png</file><!--
 <file>icons/orig/shell32_500.png</file>
 <file>icons/orig/shell32_51209.png</file>
 <file>icons/orig/shell32_512.png</file>
-<file>icons/orig/shell32_5.png</file>
+--><file>icons/orig/shell32_5.png</file><!--
 <file>icons/orig/shell32_62998.png</file>
 <file>icons/orig/shell32_62999.png</file>
 <file>icons/orig/shell32_63000.png</file>
