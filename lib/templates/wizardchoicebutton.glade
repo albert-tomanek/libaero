@@ -40,7 +40,7 @@
             <property name="use-markup">True</property>
             <property name="wrap">True</property>
             <style>
-              <class name="heading"/>
+              <class name="title-3"/>
             </style>
           </object>
           <packing>

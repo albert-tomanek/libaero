@@ -12,7 +12,7 @@ converter = find_program(join_paths(meson.source_root(), 'utils/mkdummylib.py'),
 
 dummy_code = custom_target('dummy.vala',
       depends: [lib],      # for the .vapi to exist
-      input: join_paths(meson.current_build_dir(), '../aero.vapi'),
+      input: join_paths(meson.build_root(), 'lib', 'aero.vapi'),
       output: 'dummy.vala',
       command: [
             converter, '@INPUT@', '@OUTPUT@',

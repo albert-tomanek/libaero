@@ -17,11 +17,6 @@ public class Aero.Wizard : Gtk.Window
     public uint page { get; set; default = 0; }
     public bool last_page { get { return (page == this.stack.pages.get_n_items() - 1); } }
 
-    public Wizard(Gtk.Window? parent)
-    {
-        Object(transient_for: parent);
-    }
-    
     construct {
         this.resizable = false;
 

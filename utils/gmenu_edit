@@ -1,3 +1,5 @@
+#!/bin/env python3
+
 # GENERATED MOSTLY USING ChatGPT
 # Unfortunately neither Glade nor Cambalache have a UI to edit GMenuModels, so we generated one that does it ourselves.
 # Don't ask why this doens't use Gtk

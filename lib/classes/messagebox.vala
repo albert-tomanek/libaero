@@ -63,33 +63,46 @@ public class Aero.MsgBox : Gtk.Dialog
 
 	static Gtk.Widget make_contents(Type type, string title, string? msg)
 	{
-		var g = new Gtk.Grid() {
+		var g = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0) {
 			hexpand = true,
 			vexpand = true
 		};
+		var gg = new Gtk.Box(Gtk.Orientation.VERTICAL, 0) {
+			hexpand = true,
+			vexpand = true
+		};
+		g.append(gg);
+		
 		Gtk.Label l;
-
 		l = new Gtk.Label(title) {
 			halign = Gtk.Align.START,
-			valign = Gtk.Align.START	
+			valign = Gtk.Align.START,
+
+			use_markup = true
 		};
-		l.add_css_class("heading");
-		g.attach(l, 1, 0);
+		l.add_css_class("title-3");
+		gg.append(l);
 
 		if (msg != null)
 		{
 			l = new Gtk.Label(msg) {
 				halign = Gtk.Align.START,
-				valign = Gtk.Align.START	
+				valign = Gtk.Align.START,
+
+				use_markup = true
 			};
-			g.attach(l, 1, 1);
+			gg.append(l);
 		}
 
 		if (type != Type.NONE)
 		{
-			var img = new Gtk.Image();
-			img.icon_size = Gtk.IconSize.LARGE;
-			g.attach(img, 0, 0);
+			var img = new Gtk.Image() {
+				icon_size = Gtk.IconSize.LARGE,
+
+				vexpand = true,
+				valign = Gtk.Align.START
+			};
+			g.prepend(img);
 			
 			switch (type)
 			{

@@ -87,7 +87,7 @@ class Demo1 : Gtk.Window
 	[GtkCallback]
 	void cb_open_wizard()
 	{
-		var wiz = new Aero.Wizard(null) { title = "Example wizard" };
+		var wiz = new Aero.Wizard() { title = "Example wizard" };
 		make_stack(wiz);
 		wiz.show();
 	}

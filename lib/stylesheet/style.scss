@@ -14,6 +14,10 @@ CSS Property order:
 
 // @use "partials/variables" as *
 
+* {
+	all: unset;
+}
+
 /* The window itself */
 
 window.aero {
@@ -34,6 +38,17 @@ window.aero {
 	&.fullscreen {
 		padding: 0px;
 		border-width: 0px;
+	}
+
+	&:not(:focus-within) {
+		window-controls button {
+			background: none;
+			box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59);	// How do I remove the *other* shadow without having to copy this one?
+
+			&.close {
+				background: none;
+			}
+		}
 	}
 
 	/* Unset stuff set by the adwaita Default.css */
@@ -96,6 +111,16 @@ window.aero {
 		}
 	}
 
+	@mixin nudge-contents
+	{
+		&:active > * {
+			margin-top: 1px;
+			margin-left: 1px;
+			margin-bottom: -1px;
+			margin-right: -1px;
+		}
+	}
+
 	/* Aero stuff */
 
 	/* Blur settings:
@@ -125,6 +150,7 @@ window.aero {
 	}
 
 	window-controls {
+		
 		title-box {
 			padding: 4px 1px 0px;
 		}
@@ -207,9 +233,10 @@ window.aero {
 					min-width:  45px;
 
 					background: linear-gradient(180deg, #E8BBB4 0%, #CE8276 $refl-height, #BA4735 47.25%, #CF8479 100%);
-					border-width: 0px 1px 1px 1px;
-					border-style: solid;
 					border-color: #5B3027;
+					
+					border-style: solid;
+					border-width: 0px 1px 1px 1px;
 					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.59);
 
 					&:hover {
@@ -270,6 +297,10 @@ window.aero {
 			border-radius: 8px;
 			font-weight: bold;
 			font-size: 8px;
+		}
+
+		&.link label {
+			color: #0066CC;
 		}
 
 		// Specific to outside of .window-content
@@ -559,6 +590,7 @@ window.aero {
 		// }
 	}
 
+	/* Widget styles specific to when they are in the main window area (ie. not on the glassy window border.) */
 
 	.window-content {
 		@mixin yellow-hover-lighter {
@@ -823,13 +855,13 @@ window.aero {
 		.choicebutton {
 			&:active {
 				color: #084BE5;
-				.heading { color: #084BE5; }
+				.title-3 { color: #084BE5; }
 			}
 		}
 
 		/* Text markup */
 
-		.heading {
+		.title-3 {
 			font-weight: 400;
 			font-style: normal;
 			font-size: 16px;
@@ -837,6 +869,12 @@ window.aero {
 
 			color: #003399;
 			/* halign: GTK_ALIGN_START */
+		}
+
+		.heading {
+			font-weight: 700;
+			font-style: normal;
+			font-size: 12px;
 		}
 
 		.body {
@@ -853,11 +891,11 @@ window.aero {
 
 			color: black;
 
-			box.horizontal, grid {
+			> box.horizontal, > grid {
 				border-spacing: 6px;
 			}
 
-			box.vertical {
+			> box.vertical {
 				border-spacing: 19px;
 			}
 
@@ -870,8 +908,8 @@ window.aero {
 			halign: 
 			*/
 
-			scrolledwindow {
-				border: 1px solid #b0b0b0;
+			> scrolledwindow, > columnview {
+				border: 1px solid #303030;
 				// border: 1px solid #000000;
 			}
 		}
@@ -887,6 +925,25 @@ window.aero {
 		.dialog-action-area {
 			border-spacing: 10px;
 		}
+
+		box.controlpanel-sidebar {
+			$padding: 19px;
+			min-width: 200px - 2*$padding;
+			
+			border-spacing: 8px;
+			padding: $padding;
+			padding-left: 28px;
+			
+			// Windows Vista
+			&.vista {
+				label { color: white; }
+				background: linear-gradient(180deg, #416EA7 0%, #6BB96E 100%);
+			}
+	
+			// Windows 7
+			label { color: #2E2A61; }
+			background: linear-gradient(39deg, rgba(255, 255, 255, 0.00) 53.91%, rgba(255, 255, 255, 0.37) 58.18%, rgba(255, 255, 255, 0.35) 75.11%, rgba(255, 255, 255, 0.00) 82.1%, rgba(255, 255, 255, 0.00) 85.08%, rgba(255, 255, 255, 0.29) 88.9%, rgba(255, 255, 255, 0.00) 98.14%), #E3EDFA;
+		}	
 
 		.statusbar {
 			min-height: 26px;
@@ -920,6 +977,8 @@ window.aero {
 			}
 			
 			button {
+				@include nudge-contents;
+
 				border-radius: 2px;
 				border: 1px solid transparent;
 				background: transparent;
@@ -968,6 +1027,10 @@ window.aero {
 		}	
 
 		/* Normal widgets */
+
+		label {
+			text-shadow: none;
+		}
 
 		button, scale slider {
 			// padding: 0px 8px;
@@ -1018,26 +1081,6 @@ window.aero {
 				border: 1px solid #3C7FB1;
 				box-shadow: inset 0px 0px 2px 2px #2CD4FF;
 			}
-
-			&.soft {
-				&:hover {
-					border: 1px solid #7AA4CD;
-					background: linear-gradient(180deg, #DDECFD 0%, #C2DCFD 96.21%);
-					box-shadow: 0px 0px 0px 1px #EBF4FD inset;
-				}				
-				
-				&:active {
-					border: 1px solid #7AA4CD;
-					background: linear-gradient(180deg, #EEF5FE 0%, #E1EEFE 96.21%);
-					box-shadow: 0px 0px 0px 1px #F5F9FE inset;
-				}
-	
-				&.highlight {
-					border: 1px solid #F1BA90;
-					background: linear-gradient(180deg, #FDF1C0 0%, #FEC99C 96.21%);
-					box-shadow: 0px 0px 0px 1px rgba(255, 253, 246, 0.55) inset;
-				}
-			}	
 		}
 
 		.flat {
@@ -1084,22 +1127,21 @@ window.aero {
 			.combo cellview {
 				padding-left: 2px;
 			}
-
-			contents {
+			
+			popover.menu contents {
 				padding: 0px;
 				border-radius: 0;
-				border: none;
-		
+
+				// Inherit these from the generic popover menu
+				// border: 1px solid #646464;
+				// box-shadow: 5px 5px 3px -3px rgba(0, 0, 0, 0.5);
+				background: white;
+
 				.menu {
 					margin-top: 0;
 				}
-				
-				scrolledwindow {
-					border: 1px solid #646464;
-					box-shadow: 5px 5px 3px -3px rgba(0, 0, 0, 0.5);
-				}
 		
-				.flat {
+				modelbutton.flat {
 					padding: 2px 2px;
 					min-height: 0px;
 		
@@ -1112,13 +1154,10 @@ window.aero {
 					&:hover {
 						color: white;
 						background: #3399FF;
+						border: none;	// Override the default 'button' look
 					}
 				}
 			}	
-		}
-
-		.link {
-			color: #0066CC;
 		}
 
 		checkbutton {
@@ -1183,6 +1222,93 @@ window.aero {
 			padding-right: 0px;
 		}
 
+		@mixin item {
+			border: 0px solid transparent;
+			border-radius: 3px;
+
+			&:active, &:selected, &:selected:hover, &:focus {
+				background: linear-gradient(180deg, #DDECFD 0%, #C2DCFD 96.21%);
+				box-shadow: 0px 0px 0px 2px #EBF4FD inset, 0px 0px 0px 1px #7AA4CD inset;
+			}				
+
+			// Only for GridViews
+			//&:hover,
+			&:focus {
+				background: linear-gradient(180deg, #EEF5FE 0%, #E1EEFE 96.21%);
+				box-shadow: 0px 0px 0px 2px #F5F9FE inset, 0px 0px 0px 1px #7AA4CD inset;
+			}
+
+			&.highlight {
+				background: linear-gradient(180deg, #FDF1C0 0%, #FEC99C 96.21%);
+				box-shadow: 0px 0px 0px 2px rgba(255, 253, 246, 0.55) inset, 0px 0px 0px 2px #F1BA90 inset;
+			}
+		}
+
+		listview 
+		{
+			padding: 0 1px;
+
+			row {
+				@include item;
+
+				> cell {
+					$actual-gap: 3px;
+					padding: $actual-gap;
+
+					&:first-child {
+						padding-left: $actual-gap + 2;
+					}
+					&:last-child {
+						padding-right: $actual-gap + 2;
+					}
+				}
+			}
+		}
+
+		columnview {
+			> header {
+				padding-left: 1px;
+				> button {
+					@include nudge-contents;
+
+					border-radius: 0;
+					// margin-left: -1px;
+					padding: 3px 6px;
+					
+					border: 1px solid;
+					border-right-color: #D5D6D8;
+					border-bottom-color: #D5D6D8;
+					border-left-color: transparent;
+					border-top-color: transparent;
+					background: linear-gradient(180deg, #FFF 0%, #FDFDFF 38.19%, #F9F9FB 38.67%, #EEEFF1 100%);
+
+					&:hover {
+						border-right-color: #96D9F9;
+						border-bottom-color: #96D9F9;
+						border-left-color: transparent;
+						border-top-color: transparent;
+						background: linear-gradient(180deg, #FCFCFC 0%, #F0F9FF 39.05%, #E2F0FB 39.06%, #D5F0F9 100%);
+					}
+
+					&:focus-visible {
+						border-right-color: #93C9E3;
+						border-bottom-color: #93C9E3;
+						border-left-color: transparent;
+						border-top-color: transparent;
+						background: linear-gradient(180deg, #E3F7FF 0%, #E3F7FF 39.05%, #C2EEFF 39.06%, #B7E7FB 100%);
+					}
+				}
+			}
+
+			// https://github.com/GNOME/gtk/blob/6ad9db0bf0ed765903d8322cb02425830b227190/gtk/theme/Default/_common.scss#L3318
+
+			&.column-separators > listview > row > cell {
+				&:not(:first-child) {
+					box-shadow: -1px 0px 0px 0px #D5D6D8;
+				}
+			}
+		}
+
 		/* Non-independent widgets */
 
 		scrollbar {
@@ -1194,8 +1320,10 @@ window.aero {
 
 					> slider {
 						min-width: 15px;
+						background-position: center;
+						background-repeat: no-repeat;
 
-						background: linear-gradient(90deg, #F5F5F5 0%, #E9E9EB 49.21%, #D9DADC 49.75%, #C0C0C4 100%);
+						background: linear-gradient(90deg, #F5F5F5 0%, #E9E9EB 49.21%, #D9DADC 49.75%, #C0C0C4 100%) /*url("resource:///com/github/albert-tomanek/aero/images/slider-grip-v.svg")*/;
 						border: 1px solid #979797;
 						box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.6);
 						border-radius: 2px;
@@ -1329,6 +1457,10 @@ window.aero {
 				padding: 0 4px;
 			}
 
+			> accelerator {
+				color: gray;
+			}
+
 			> .right {
 				padding-right: 4px;
 			}
@@ -1385,5 +1517,13 @@ window.aero {
 
 	button {
 		transition: none;
+	}
+
+	popover.menu {
+		contents {
+			scrolledwindow {
+				border: none;
+			}
+		}
 	}
 }
