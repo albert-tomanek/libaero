@@ -70,6 +70,59 @@ namespace Aero
         }
     }
 
+    public class FileChooserBox : Gtk.Box
+    {
+        public Gtk.Entry entry;
+        public Gtk.Button button;
+        public Gtk.FileChooserDialog dialog;
+
+        public FileChooserBox(string? dia_title, Gtk.FileChooserAction dia_action, ...)
+        {
+            this.orientation = Gtk.Orientation.HORIZONTAL;
+            this.spacing = 10;
+            this.hexpand = true;
+
+            this.entry = new Gtk.Entry() {
+                hexpand = true
+            };
+            this.append(entry);
+            this.button = new Gtk.Button.with_label("Browse...");
+            this.append(button);
+
+            this.dialog = new Gtk.FileChooserDialog(dia_title, null, dia_action);
+            for (var l = va_list();;) {     // Unfortunately Vala dowsn't allow us to hand the varargs to another function like Python does (*args), so we have to reimplement what the function would do.
+                string? text = l.arg<string>();
+                if (text == null)
+                    break;
+                int rc = l.arg<int>();
+
+                dialog.add_button(text, rc);
+            }
+
+            // Musn't be child of an .aero window in order to retain its original theme, assuming that Adwaita is still the overriding theme.
+            this.realize.connect(() => {
+                var p = (Gtk.Window?) this.get_ancestor(typeof(Gtk.Window));
+                if (p != null)
+                    this.dialog.set_transient_for(p);
+            });
+            this.dialog.response.connect((rc) => {
+                switch (rc) {
+                    case Gtk.ResponseType.YES:
+                    case Gtk.ResponseType.OK:
+                    case Gtk.ResponseType.APPLY:
+                    case Gtk.ResponseType.ACCEPT:
+                        this.entry.text = this.dialog.get_file()?.get_path() ?? "";
+                        break;
+                }
+
+                (this.dialog as Gtk.Window).hide();
+            });
+            this.button.clicked.connect(this.dialog.show);
+        }
+    }
+
+    /* Misc */
+
     public delegate void SignalListItemFactoryCallback(Gtk.SignalListItemFactory @this, Gtk.ListItem li);
 
     public Gtk.SignalListItemFactory new_signal_list_item_factory(
@@ -88,4 +141,21 @@ namespace Aero
 
         return f;
     }
+
+    // Seems Windows uses JEDEC file sizes: https://superuser.com/a/938259, https://en.wikipedia.org/wiki/JEDEC_memory_standards#Unit_prefixes_for_semiconductor_storage_capacity
+
+    public string humanize_size(size_t sz, bool kb_only = false)
+    {
+        if (sz < 1024)				// What would really feel natural would be 3 sig figs, ie: 2.37 MB, 321 B, 52.4 GB
+            return "1 KB";
+        else if (sz < 1048576)
+            return @"$(sz / 1024) KB";
+        else if (sz < 1073741824)
+            return @"$(sz / 1048576) MB";
+        else if (sz < 1099511627776)
+            return @"$(sz / 1073741824) GB";
+        else
+            return @"$(sz / 1099511627776) TB";
+    }
+
 }

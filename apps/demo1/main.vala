@@ -96,11 +96,9 @@ class Demo1 : Gtk.Window
 
 	void make_stack(Aero.Wizard wiz)
 	{
-		var stack = wiz.stack;
-		Gtk.Widget w;
-		Gtk.Box b;
-
-		{
+		wiz.add_page_cb("1", () => {
+			Gtk.Widget w;
+			Gtk.Box b;
 			b = new Gtk.Box(Gtk.Orientation.VERTICAL, 0) { spacing = 19 };
 			w = new Gtk.Label("Page 1") { halign = Gtk.Align.START };
 			w.add_css_class("heading");
@@ -110,9 +108,9 @@ class Demo1 : Gtk.Window
 			b.append(v);
 			w = new Aero.Wizard.ChoiceButton("Quit", "Exit this wizard");
 			b.append(w);
-			stack.add_named(b, "1");
-		}
+			return b;
+		}, "2");
 
-		stack.add_named(page2, "2");
+		wiz.add_page("2", page2, Aero.Wizard.FINAL_PAGE);
 	}
 }
