@@ -11,35 +11,35 @@ public class Aero.MsgBox : Gtk.Dialog
 
     public delegate bool OnResponceFunc(int response_id);	// Return true to keep the dialog open.
 
-    public MsgBox.error(Gtk.Window? modal_to, string title, string? msg, Gtk.ButtonsType buttons = Gtk.ButtonsType.OK)
+    public MsgBox.error(Gtk.Widget? modal_to, string? win_title, string title, string? msg, Gtk.ButtonsType buttons = Gtk.ButtonsType.OK)
     {
-        Object(transient_for: modal_to, modal: (modal_to != null));
+        Object(transient_for: get_window(modal_to), modal: (modal_to != null));
 
-		this.title = title;
+		this.title = win_title ?? title;
 		this.get_content_area().append(make_contents(Type.ERROR, title, msg));
 		make_buttons(buttons);
 
 		this.response.connect(() => { this.close(); });
     }
 
-	public MsgBox.info(Gtk.Window? modal_to, string title, string? msg, Gtk.ButtonsType buttons = Gtk.ButtonsType.OK)
+	public MsgBox.info(Gtk.Widget? modal_to, string? win_title, string title, string? msg, Gtk.ButtonsType buttons = Gtk.ButtonsType.OK)
     {
-        Object(transient_for: modal_to, modal: (modal_to != null));
+        Object(transient_for: get_window(modal_to), modal: (modal_to != null));
 
-		this.title = title;
+		this.title = win_title ?? title;
 		this.get_content_area().append(make_contents(Type.INFO, title, msg));
 		make_buttons(buttons);
 
 		this.response.connect(() => { this.close(); });
     }
 
-    public MsgBox.question(Gtk.Window? modal_to, string title, string? msg, OnResponceFunc cb, Gtk.ButtonsType buttons = Gtk.ButtonsType.OK_CANCEL)
+    public MsgBox.question(Gtk.Widget? modal_to, string? win_title, string title, string? msg, OnResponceFunc cb, Gtk.ButtonsType buttons = Gtk.ButtonsType.OK_CANCEL)
     {
-        Object(transient_for: modal_to, modal: (modal_to != null));
+        Object(transient_for: get_window(modal_to), modal: (modal_to != null));
 		this.get_content_area().append(make_contents(Type.QUESTION, title, msg));
 		make_buttons(buttons);
 
-		this.title = title;
+		this.title = win_title ?? title;
 		this.response.connect((rc) => {
 			if (!cb(rc))
 				this.close();
@@ -142,4 +142,9 @@ public class Aero.MsgBox : Gtk.Dialog
 		}
 
 	}
+}
+
+Gtk.Window get_window(Gtk.Widget wij)
+{
+	return (wij as Gtk.Window) ?? (Gtk.Window) wij.root;
 }

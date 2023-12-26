@@ -87,7 +87,7 @@ class MsPaint : Gtk.ApplicationWindow
 
 			{ "new", this.dia_new_document, null, null, null, "mspaint_60008", "New", "Create a new picture." },
 			{ "open", (act, arg) => {
-				var diag = new Aero.MsgBox.info(this, "Opened file", "Opened " + arg.get_string());
+				var diag = new Aero.MsgBox.info(this, null, "Opened file", "Opened " + arg.get_string());
 				diag.show();
 			}, "s", null, null, "mspaint_60016", "Open", null },
 			{ "save", niy, null, null, null, "mspaint_60024", "Save", null },
@@ -126,7 +126,7 @@ class MsPaint : Gtk.ApplicationWindow
 				try {
 					Process.spawn_command_line_async ("/app/bin/demo1");
 				} catch (SpawnError e) {
-					(new Aero.MsgBox.error(this, "Could not launch", @"There was an error launching the demo app:\n$(e.message)")).show();
+					(new Aero.MsgBox.error(this, null, "Could not launch", @"There was an error launching the demo app:\n$(e.message)")).show();
 				}
 			}, null, null, null, "shell32_25", "Launch\nOther Demo", "Open a window showcasing further parts of libaero." },
 		};
@@ -144,7 +144,7 @@ class MsPaint : Gtk.ApplicationWindow
 
 	void dia_new_document()
 	{
-		var dia = new Aero.MsgBox.question(this, "New Painting", null, (rc) => {
+		var dia = new Aero.MsgBox.question(this, null, "New Painting", null, (rc) => {
 			if (rc == 0)
 			{
 				this.canvas = new Canvas(
@@ -215,11 +215,11 @@ class MsPaint : Gtk.ApplicationWindow
 				}
 			}
 			catch (GLib.IOError e) {
-				var msg = new Aero.MsgBox.error(this, "Error", @"Error writing SVG file.\n$(e.message)");
+				var msg = new Aero.MsgBox.error(this, null, "Error", @"Error writing SVG file.\n$(e.message)");
 				msg.show();
 			}
 			catch (GLib.Error e) {
-				var msg = new Aero.MsgBox.error(this, "Error", @"Error writing SVG file.\n$(e.message)");
+				var msg = new Aero.MsgBox.error(this, null, "Error", @"Error writing SVG file.\n$(e.message)");
 				msg.show();
 			}
 		
@@ -234,13 +234,13 @@ class MsPaint : Gtk.ApplicationWindow
 			"\n" +
 			"Copyright (C) 2023,  Albert Tománek and contributors."
 		);
-		(new Aero.MsgBox.info(this, "Help with Aero Paint", text)).show();
+		(new Aero.MsgBox.info(this, null, "Help with Aero Paint", text)).show();
 	}
 
 	//  [GtkCallback]	
 	void niy()
 	{
-		var box = new Aero.MsgBox.error(this, "Not implemented", "This feature is not implemented yet.");
+		var box = new Aero.MsgBox.error(this, null, "Not implemented", "This feature is not implemented yet.");
 		box.show();
 	}
 }
