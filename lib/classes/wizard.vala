@@ -1,12 +1,3 @@
-// Set as a data field of the current StackPage
-class WizardPage : Object
-{
-    // Wizard binds widgets to these on every page change.
-	public string? next { get; set; }	// Can change
-    public bool can_next { get; set; }
-	public bool can_back { get; set; }
-}
-
 /*
 Usage: 
 var b = new Box();
@@ -16,6 +7,14 @@ b.add(l);
 var p = new Aero.WizardPage() { next = "page2" };
 this.add_page(p, "page1");
 */
+
+public class Aero.WizardPageProps : Object
+{
+    // Wizard binds widgets to these on every page change.
+	public string? next { get; set; }	// If this page is shown, widgets respond to changes in these properties.
+    public bool can_next { get; set; }
+	public bool can_back { get; set; }
+}
 
 [GtkTemplate (ui = "/com/github/albert-tomanek/aero/templates/wizard.ui")]
 public class Aero.Wizard : Gtk.Window
@@ -29,23 +28,19 @@ public class Aero.Wizard : Gtk.Window
     [GtkChild] Gtk.Button cancel;
     [GtkChild] protected Gtk.Stack stack;
 
+    ulong cb_notify_next;       // We attach callbacks to the current page's properties. These handles are used to remove callbacks to the old page when the page changes.
+    ulong cb_notify_can_next;
+    ulong cb_notify_can_back;
+
     [GtkChild] Gtk.Box footer;
 
     GLib.Queue<string> history = new GLib.Queue<string>();
 
-    private string? next_name {
+    private WizardPageProps current_page_props {
         get {
             Gtk.StackPage current_page = this.stack.get_page(this.stack.visible_child);
-            return current_page.get_data<string?>("next_page");
+            return current_page.get_data<WizardPageProps>("props");
         }
-    }
-
-    protected signal void need_can_next(string page_name, ref bool can_next);   // Handlers should only set the bool if the page name happens to be theirs.
-    protected void update_can_next()    // Call this when the state of your page has changed. Your `need_can_next` handler will be called back.
-    {
-        bool can_next = true;   // If there's no handlers, assume the user can change pages at will
-        this.need_can_next(this.stack.visible_child_name, ref can_next);
-        this.next.sensitive = can_next;
     }
 
     protected signal void page_changed(string? from, string? to);   /// Null on creation or deletion.
@@ -69,7 +64,7 @@ public class Aero.Wizard : Gtk.Window
         header.prepend(back);
 
         /* Bind UI */
-        this.page_changed.connect(this.refresh_buttons);
+        this.page_changed.connect(this.rebind_buttons);    // Any code changing the page should bake sure to unbind() the existing bindings first.
         this.close_request.connect(() => { this.page_changed(this.stack.visible_child_name, null); });
         
         this.next.clicked.connect(() => { this.next_page(); });
@@ -88,20 +83,50 @@ public class Aero.Wizard : Gtk.Window
         //  this.stack.add_controller(ges);
     }
 
-    void refresh_buttons()
+    void rebind_buttons(string? id_from, string? id_to)
     {
-        this.back.sensitive = (history.length != 0);
-        this.next.visible   = (next_name != null);
-        this.next.label     = (next_name == Wizard.FINAL_PAGE) ? "_Finish" : "_Next";
-        this.cancel.visible = (next_name != Wizard.FINAL_PAGE);
+        // Unbind UI from previous page attibutes
+        if (this.cb_notify_can_next != 0)
+        {
+            var old_page_props = this.page_props(id_from);
 
-        this.update_can_next();
+            old_page_props.disconnect(this.cb_notify_next);
+            old_page_props.disconnect(this.cb_notify_can_next);
+            old_page_props.disconnect(this.cb_notify_can_back);        
+        }
+
+        // Bind UI to new page attributes
+
+        this.cb_notify_can_next = current_page_props.notify["can-next"].connect(() => {
+            this.next.sensitive = current_page_props.can_next;
+        });
+
+        this.cb_notify_can_back = current_page_props.notify["can-back"].connect(() => {
+            this.back.sensitive = current_page_props.can_back && (history.length != 0);
+        });
+
+        this.cb_notify_next = current_page_props.notify["next"].connect(() => {
+            this.next.visible   = (current_page_props.next != null);
+            this.next.label     = (current_page_props.next == Wizard.FINAL_PAGE) ? "_Finish" : "_Next";
+            this.cancel.visible = (current_page_props.next != Wizard.FINAL_PAGE);
+        });
+
+        current_page_props.notify_property("can-next"); // Call the callbacks on the existing values
+        current_page_props.notify_property("can-back");
+        current_page_props.notify_property("next");
     }
 
-    public void add_page(string name, Gtk.Widget content, string? id_next)
+    public void add_page(string name, Gtk.Widget content, string? id_next, WizardPageProps? props = null)
     {
-        var stack_page = this.stack.add_named(content, name);
-        stack_page.set_data<string?>("next_page", id_next);
+        Gtk.StackPage stack_page = this.stack.add_named(content, name);
+        stack_page.set_data<WizardPageProps>(
+            "props",
+            props ?? new WizardPageProps() {
+                next = id_next,
+                can_next = true,
+                can_back = true 
+            }
+        );
 
         if (this.stack.pages.get_n_items() == 1)    // We've just added the first page
         {
@@ -111,25 +136,26 @@ public class Aero.Wizard : Gtk.Window
     }
 
     // This just exists for code clarity
-    public delegate Gtk.Widget PageMakerFn();
+    public delegate Gtk.Widget PageMakerFn(WizardPageProps page);
     public void add_page_cb(string name, PageMakerFn cb, string? id_next)
     {
-        this.add_page(name, cb(), id_next);
+        var props = new WizardPageProps() { next = id_next, can_next = true, can_back = true };
+        this.add_page(name, cb(props), null, props);
     }
 
     public void next_page()
     {
-        if (next_name == null)
+        if (current_page_props.next == null)
         {
             return;
         }
-        else if (next_name == Wizard.FINAL_PAGE)
+        else if (current_page_props.next == Wizard.FINAL_PAGE)
         {
             this.close();
         }
         else
         {
-            this.goto_page(next_name);
+            this.goto_page(current_page_props.next);
         }
     }
 
@@ -137,8 +163,13 @@ public class Aero.Wizard : Gtk.Window
     {
         var from_name = this.stack.visible_child_name;
 
+        // Add step to history so that we can go back here.
         this.history.push_head(from_name);
+
+        // Change the page
         this.stack.set_visible_child_name(to_name);
+
+        // Invoke event listeners
         this.page_changed(from_name, to_name);
     }
 
@@ -152,15 +183,6 @@ public class Aero.Wizard : Gtk.Window
             this.stack.set_visible_child_full(prev_name, Gtk.StackTransitionType.SLIDE_RIGHT);
             this.page_changed(cur_name, prev_name);
         }
-    }
-
-    protected void change_next(string for_page, string? new_next)
-    {
-        Gtk.StackPage page = this.stack.get_page(this.stack.get_child_by_name(for_page));
-        page.set_data<string?>("next_page", new_next);
-
-        if (this.stack.visible_child_name == for_page)
-            this.refresh_buttons();     // Without triggering page_changed -- because it hasn't.
     }
 
     public delegate void OnPageChangeCb(string? from, string? to);
@@ -177,6 +199,21 @@ public class Aero.Wizard : Gtk.Window
             if (call)
                 cb(cur_from, cur_to);
         });
+    }
+
+    public WizardPageProps? page_props(string name)
+    {
+        var? child = this.stack.get_child_by_name(name);
+
+        if (child != null)
+        {
+            Gtk.StackPage current_page = this.stack.get_page(child);
+            return current_page.get_data<WizardPageProps>("props");
+        }
+        else
+        {
+            return null;
+        }
     }
 
     // Nested stuff
