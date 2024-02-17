@@ -1,3 +1,7 @@
+# Development is currently on hiatus as I have discovered a [more complete project](https://gitgud.io/wackyideas/aerothemeplasma).
+
+---
+
 ## A sleek and exciting UI in Gtk
 
 ![](screenshot3.png)

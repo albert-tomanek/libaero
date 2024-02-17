@@ -12,6 +12,8 @@ CSS Property order:
 
 */
 
+// https://github.com/khang-nd/7.css/
+
 // @use "partials/variables" as *
 
 .aero * {
@@ -942,7 +944,13 @@ window.aero {
 			}
 	
 			// Windows 7
-			label { color: #2E2A61; }
+			label {
+				color: #2E2A61;
+
+				&.link:hover {
+					text-decoration: underline;
+				}
+			}
 			background: linear-gradient(39deg, rgba(255, 255, 255, 0.00) 53.91%, rgba(255, 255, 255, 0.37) 58.18%, rgba(255, 255, 255, 0.35) 75.11%, rgba(255, 255, 255, 0.00) 82.1%, rgba(255, 255, 255, 0.00) 85.08%, rgba(255, 255, 255, 0.29) 88.9%, rgba(255, 255, 255, 0.00) 98.14%), #E3EDFA;
 		}	
 
@@ -1222,9 +1230,29 @@ window.aero {
 			}
 		}
 
-		.symbol-button + scale {
+		.symbol-button + scale {	// I think this is for the scale slider
 			padding-left: 0px;
 			padding-right: 0px;
+		}
+
+		progressbar.horizontal {
+			> trough {
+				min-height: 25px;
+				
+				border-radius: 3px;
+				border: 1px solid #ADADAD;
+				background: linear-gradient(180deg, rgba(255, 255, 255, 0.73) 2.27%, rgba(255, 255, 255, 0.86) 8.44%, rgba(255, 255, 255, 0.14) 31.16%, rgba(255, 255, 255, 0.00) 31.6%, rgba(255, 255, 255, 0.00) 68.59%, rgba(255, 255, 255, 0.45) 100%), linear-gradient(270deg, #ADADAD 0%, rgba(173, 173, 173, 0.00) 30px), linear-gradient(90deg, #ADADAD 0%, rgba(173, 173, 173, 0.00) 30px), #CBCBCB;
+				box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.43) inset, 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
+
+				> progress {
+					min-height: 25px;
+					border-radius: 2px;
+					margin: 1px 0px;
+					border-color: #00D328;
+					border-width: 0px 1px 1px 1px;
+					background: linear-gradient(180deg, rgba(255, 255, 255, 0.73) 2.27%, rgba(255, 255, 255, 0.86) 8.44%, rgba(255, 255, 255, 0.14) 31.16%, rgba(255, 255, 255, 0.00) 31.6%, rgba(255, 255, 255, 0.00) 68.59%, rgba(255, 255, 255, 0.45) 100%), linear-gradient(270deg, #05B625 0%, rgba(5, 182, 37, 0.00) 30px), linear-gradient(90deg, #05B625 0%, rgba(5, 182, 37, 0.00) 30px), #00D328;
+				}
+			}
 		}
 
 		@mixin item {
