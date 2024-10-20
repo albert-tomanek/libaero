@@ -3,7 +3,7 @@
   <gresource prefix="/com/github/albert-tomanek/aero">
     <file compressed="true" preprocess="xml-stripblanks">templates/windowcontrols.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/wizard.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">templates/wizardchoicebutton.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">templates/wizardoptionbutton.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/appmenu.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/appmenuactionlist.ui</file>
     <file compressed="true">aero.css</file>

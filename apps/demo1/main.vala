@@ -92,25 +92,33 @@ class Demo1 : Gtk.Window
 		wiz.show();
 	}
 
-	[GtkChild] Gtk.Box page2;
+	[GtkChild] unowned Gtk.Box page2;
 
 	void make_stack(Aero.Wizard wiz)
 	{
 		wiz.add_page_cb("1", () => {
 			Gtk.Widget w;
 			Gtk.Box b;
-			b = new Gtk.Box(Gtk.Orientation.VERTICAL, 0) { spacing = 19 };
-			w = new Gtk.Label("Page 1") { halign = Gtk.Align.START };
+			b = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+			w = new Gtk.Label("Page 1") {
+				halign = Gtk.Align.START,
+			};
 			w.add_css_class("heading");
 			b.append(w);
-			var v = new Aero.Wizard.ChoiceButton("Continue", "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.");
-			v.clicked.connect(wiz.next_page);
-			b.append(v);
-			w = new Aero.Wizard.ChoiceButton("Quit", "Exit this wizard");
-			b.append(w);
+
+			{
+				var c = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+				b.append(c);
+
+				var v = new Aero.Wizard.OptionButton("Continue", "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.");
+				v.clicked.connect(wiz.next_page);
+				c.append(v);
+				w = new Aero.Wizard.OptionButton("Quit", "Exit this wizard");
+				c.append(w);
+			}
 			return b;
 		}, "2");
 
-		wiz.add_page("2", page2, Aero.Wizard.FINAL_PAGE);
+		wiz.add_page_cb("2", () => page2, Aero.Wizard.FINAL_PAGE);	// [GtkChild]s like page2 are unowned, so we use this closure to keep a strong reference to it.
 	}
 }

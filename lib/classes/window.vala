@@ -53,6 +53,7 @@ public class Aero.HeaderBar : Gtk.Box
 
     public HeaderBar.with_contents(Gtk.Widget contents)
     {
+        Object();
         this.content_box.append(contents);
     }
 

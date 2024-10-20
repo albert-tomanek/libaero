@@ -59,6 +59,12 @@ window.aero {
 	}
 }
 
+// arrow {
+// 	color: red;
+// 	background-repeat: no-repeat;
+// 	background-position: center;
+// }
+
 .aero {
 	/* Default font */
 
@@ -70,7 +76,7 @@ window.aero {
 
 	/* Generic style classes */
 
-	.dark label {
+	.dark label:not(popover) {
 		color: white;
 		// font-weight: bolder;
 	}
@@ -136,7 +142,8 @@ window.aero {
 		box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.49), inset 0px 0px 0px 1px rgba(255, 255, 255, 0.62);
 		border-radius: 3px;
 
-		background: white;
+		// background: white;
+		background: #F0F0F0;
 	}
 
 	/* Window controls */
@@ -280,6 +287,31 @@ window.aero {
 		box-shadow: none;
 	}
 
+	// Generic traits shared between arrows inside all widgets
+	arrow {
+		// -gtk-icon-size: 16px;
+		min-width: 8px;
+		min-height: 8px;
+
+		color: white;
+		background-repeat: no-repeat;
+		background-position: center;
+
+		&.up {
+			background: -gtk-recolor(url("resource:///com/github/albert-tomanek/aero/images/button_arrow_up.svg"));
+		}
+		&.down {
+			background: -gtk-recolor(url("resource:///com/github/albert-tomanek/aero/images/button_arrow_down.svg"));
+		}
+		&.left {
+			background: -gtk-recolor(url("resource:///com/github/albert-tomanek/aero/images/button_arrow_left.svg"));
+		}
+		&.right {
+			background: url("resource:///com/github/albert-tomanek/aero/images/button_arrow_right.svg");
+		}
+	}
+	
+
 	button, scale slider {
 		// General entry stuff (applies both inside and outside of .content)
 
@@ -304,6 +336,8 @@ window.aero {
 		&.link label {
 			color: #0066CC;
 		}
+
+		transition: background .2s, border-color .2s, box-shadow .2s;
 
 		// Specific to outside of .window-content
 
@@ -492,30 +526,9 @@ window.aero {
 		}
 	}
 
+	
 
 	/* Aero-specific widgets */
-
-	arrow {
-		// -gtk-icon-size: 16px;
-		min-width: 8px;
-		min-height: 8px;
-
-		color: white;
-		background-repeat: no-repeat;
-
-		&.up {
-			background: -gtk-recolor(url("resource:///com/github/albert-tomanek/aero/images/button_arrow_up.svg"));
-		}
-		&.down {
-			background: -gtk-recolor(url("resource:///com/github/albert-tomanek/aero/images/button_arrow_down.svg"));
-		}
-		&.left {
-			background: -gtk-recolor(url("resource:///com/github/albert-tomanek/aero/images/button_arrow_left.svg"));
-		}
-		&.right {
-			background: url("resource:///com/github/albert-tomanek/aero/images/button_arrow_right.svg");
-		}
-	}
 
 	orb {
 		/* background: url("resource:///com/github/albert-tomanek/aero/images/orb_bg.png");
@@ -623,6 +636,109 @@ window.aero {
 			box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.25);
 		}
 
+		notebook {
+			$movement: 2px;
+
+			> header.bottom tab {
+				margin-bottom: $movement;
+				border-top-width: 0;
+
+				&:checked {
+					margin-top: -1px;
+					margin-bottom: 0px;
+					> label {
+						padding-top: $movement;
+					}
+				}
+				&:not(:first-child) {
+					margin-left: -1px;
+				}
+			}
+			> header.top tab {
+				margin-top: $movement;
+				border-bottom-width: 0;
+
+				&:checked {
+					margin-bottom: -1px;
+					margin-top: 0px;
+					> label {
+						padding-bottom: $movement;
+					}
+				}
+				&:not(:first-child) {
+					margin-left: -1px;
+				}
+			}
+
+			> header.right tab {
+				margin-right: $movement;
+				border-left-width: 0;
+
+				&:checked {
+					margin-left: -1px;
+					margin-right: 0px;
+					> label {
+						padding-left: $movement;
+					}
+				}
+				&:not(:first-child) {
+					margin-top: -1px;
+				}
+			}
+			> header.left tab {
+				margin-left: $movement;
+				border-right-width: 0;
+
+				&:checked {
+					margin-right: -1px;
+					margin-left: 0px;
+					> label {
+						padding-right: $movement;
+					}
+				}
+				&:not(:first-child) {
+					margin-top: -1px;
+				}
+			}
+
+			> header tab {
+				padding-top: 6px;
+				padding-bottom: 4px;
+				padding-left: 20px;
+				padding-right: 20px;
+				// min-width: 76px;
+				// min-height: 20px;
+
+				border-width: 1px;
+				border-style: solid;
+				
+				background: linear-gradient(180deg, #F2F2F2 0%, #EBEBEB 50.49%, #DDDDDD 50.5%, #CFCFCF 100%);
+				border-color: #898C95;
+				box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.82);
+
+				&:hover {
+					background: linear-gradient(180deg, #F7FBFF 0%, #D1EAFF 50.49%, #B7DDFD 50.5%, #B7DDFD 100%);
+					border-color: #5FA7E3;
+					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.82);
+					
+					transition: background .2s, border-color .2s;
+				}
+				&:checked {
+					// padding-top: 7px;
+					// padding-bottom: 5px;
+
+					background: #ffffff;
+					border-color: #898c95;
+				}
+			}
+
+			> stack {
+				border: 1px solid #898c95;
+
+				background: #ffffff;
+			}
+		}
+
 		notebook.ribbon, .ribbon > notebook {	// People can make their own Notebooks and style them with .ribbon if they don't fancy costrucing them with MenuModels
 			@mixin tab-size {
 				margin-top: 1px;
@@ -634,7 +750,7 @@ window.aero {
 				font-size: 12px;
 			}
 
-			header {
+			> header {
 				border-spacing: 2px;
 				background: #DFE9F5;
 
@@ -655,7 +771,7 @@ window.aero {
 				}
 			}
 
-			tabs {
+			> tabs {
 				margin-left: 0;
 			}
 
@@ -717,23 +833,6 @@ window.aero {
 				.border {
 					border-color: #a7b9d1;
 				}
-				
-				// button:not(actionbutton) {	// Notice, this includes buttons inside actionbuttons
-				// 	transition: box-shadow 200ms linear;
-				// 	border-radius: 3px;
-				// 	border: 1px solid;
-				// 	border-color: transparent;
-
-				// 	&:hover {
-				// 		border-color: #FFB700;
-				// 		@include yellow-hover;
-				// 	}
-				// 	&:active {
-				// 		@include yellow-pressed;
-				// 	}
-				// }
-
-				// For whatever reason
 			}
 
 			actionbutton > button:active {
@@ -855,7 +954,7 @@ window.aero {
 			}
 		}
 
-		.choicebutton {
+		.optionbutton {
 			&:active {
 				color: #084BE5;
 				.title-3 { color: #084BE5; }
@@ -864,35 +963,43 @@ window.aero {
 
 		/* Text markup */
 
-		.title-3 {
-			font-weight: 400;
-			font-style: normal;
-			font-size: 16px;
-			letter-spacing: -0.006em;
+		.markup {
+			.title-3, .heading {
+				font-weight: 400;
+				font-style: normal;
+				font-size: 16px;
+				letter-spacing: -0.006em;
 
-			color: #003399;
-			/* halign: GTK_ALIGN_START */
-		}
+				color: #003399;
+				/* halign: GTK_ALIGN_START */
+			}
 
-		.heading {
-			font-weight: 700;
-			font-style: normal;
-			font-size: 12px;
-		}
+			// .heading {
+			// 	font-weight: 700;
+			// 	font-style: normal;
+			// 	font-size: 12px;
+			// }
 
-		.body {
-			font-weight: 400;
-			font-style: normal;
-			font-size: 12px;
+			.body {
+				font-weight: 400;
+				font-style: normal;
+				font-size: 12px;
+			}
 		}
 
 		/* Various types of boxes */
+
+		:not(scrolledwindow) > .view:not(treeview):not(iconview) {		// Used by Gtk
+			background: white;
+			border: 1px solid #898c95;
+		}
 
 		.markup {
 			padding: 19px 33px;
 			border-spacing: 19px;//14pt;
 
 			color: black;
+			background: white;
 
 			> box.horizontal, > grid {
 				border-spacing: 6px;
@@ -923,6 +1030,10 @@ window.aero {
 			
 			background: #F0F0F0;
 			box-shadow: inset 0px 3px 0px -2px rgba(0, 0, 0, 0.08);
+		}
+
+		.sidebar {
+			background: white;
 		}
 
 		.dialog-action-area {
@@ -971,7 +1082,16 @@ window.aero {
 			}
 		}
 
-		actionbar {
+		arrow {
+			color: black;
+		}
+
+		headerbar {	/* actionbars seem to have this padding built in */
+			padding: 4px;
+			padding-bottom: 0;
+		}
+
+		actionbar, headerbar.titlebar {
 			background: linear-gradient(180deg, #FAFCFD 0%, #E6F0FA 48.22%, #DCE6F4 49.51%, #DCE7F6 100%);
 			box-shadow: inset 0px -2px 1px -1px rgba(0, 48, 74, 0.25);
 			border-radius: 2px;
@@ -995,7 +1115,7 @@ window.aero {
 
 				&.text-button {
 					min-width:  50px;
-					min-height: 0;
+					// min-height: 0;
 				}
 
 				&:not(.image-button) {
@@ -1031,10 +1151,6 @@ window.aero {
 			}
 		}
 
-		arrow {
-			color: black;
-		}	
-
 		/* Normal widgets */
 
 		label {
@@ -1053,12 +1169,6 @@ window.aero {
 			background: linear-gradient(180deg, #F6F6F6 0%, #EBEBEB 47.33%, #DDDDDD 47.73%, #CFCFCF 100%);
 			border: 1px solid #707070;
 			box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.81);
-
-			&.flat {
-				background: transparent;
-				border: 1px solid transparent;
-				box-shadow: none;
-			}
 
 			&:hover {
 				background: linear-gradient(180deg, #EAF6FD 10.11%, #D9F0FC 47.33%, #BEE6FD 47.34%, #A7D9F5 92.29%);
@@ -1101,16 +1211,26 @@ window.aero {
 			.heading { color: black; }	// FIXME: What's this for?
 		}
 
-		linkbutton, optionbutton {
+		button.flat {
+			background: transparent;
+			border: 1px solid transparent;
+			box-shadow: none;
+		}
+
+		linkbutton, optionbutton, button.flat {
 			&:hover {
 				@include hover-gray;
 			}
 
 			&:active {
 				@include pressed-recess;
+			}
+		}
+		linkbutton, optionbutton {
+			&:active {
 				color: #084BE5;
 
-				.heading { color: #084BE5; }
+				.title-3 { color: #084BE5; }
 			}
 		}
 		
@@ -1130,13 +1250,13 @@ window.aero {
 		}
 
 		combobox {
-			arrow {
-				padding: 0px 2px;
-				color: transparent;
-				background: url("resource:///com/github/albert-tomanek/aero/images/button_arrow_down.svg");
-				background-repeat: no-repeat;
-				background-position: center;
-			}
+			// arrow {
+			// 	padding: 0px 2px;
+			// 	color: transparent;
+			// 	background: url("resource:///com/github/albert-tomanek/aero/images/button_arrow_down.svg");
+			// 	background-repeat: no-repeat;
+			// 	background-position: center;
+			// }
 
 			.combo cellview {
 				padding-left: 2px;
@@ -1191,27 +1311,36 @@ window.aero {
 				box-shadow: 0px 0px 0px 1px #8E8F8F, inset 0px 0px 0px 1px rgba(0, 0, 0, 0.08), inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
 
 				color: transparent;
-				// -gtk-icon-source: -gtk-scaled(-gtk-recolor(url(resource:///com/github/albert-tomanek/aero/images/check.svg)), 1);
-				// -gtk-icon-source: url(resource:///com/github/albert-tomanek/aero/images/check.svg);
+				background-position: center;
+				-gtk-icon-source: -gtk-recolor(url(resource:///com/github/albert-tomanek/aero/images/check.svg));
 				-gtk-icon-size: 12px;
 
 				&:checked {
 					color: #495F96;
+
+					&:hover {
+						color: #042271;
+					}
 				}
 
 				&:hover, &:focus-visible, &:active {
-					color: #042271;
 					background: #C4EAFD;
 					border: 1px solid #C4EAFD;
 					box-shadow: 0px 0px 0px 1px #5586A3, inset 0px 0px 0px 1px #89D1F9, inset 4px 4px 4px rgba(0, 0, 0, 0.15), inset -4px -4px 4px rgba(255, 255, 255, 0.8);
 				}
 
 				&:disabled {
-					color: #BEBEBE;
 					background: #FBFBFB;
 					border: 1px solid #FFFFFF;
 					box-shadow: inset 0px 0px 0px 1px #ADB2B5, inset 0px 0px 0px 1px rgba(0, 0, 0, 0.03), inset 4px 4px 4px rgba(0, 0, 0, 0.1);
+
+					&:checked {
+						color: #BEBEBE;
+					}
 				}
+
+				$dur: 50ms;
+				transition: color $dur, background $dur, border $dur, box-shadow $dur;
 			}
 		}
 
@@ -1220,7 +1349,8 @@ window.aero {
 
 			trough {
 				border-radius: 1px;
-				min-height: 1px;
+				min-width: 3px;
+				min-height: 3px;
 				box-shadow: inset -1px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 1px -1px 1px 0px rgba(255, 255, 255, 1);
 			}
 
@@ -1255,6 +1385,12 @@ window.aero {
 			}
 		}
 
+		paned {
+			> separator {
+				background: lightgray;
+			}
+		}
+
 		@mixin item {
 			border: 0px solid transparent;
 			border-radius: 3px;
@@ -1265,7 +1401,7 @@ window.aero {
 			}				
 
 			// Only for GridViews
-			//&:hover,
+			&:hover,
 			&:focus {
 				background: linear-gradient(180deg, #EEF5FE 0%, #E1EEFE 96.21%);
 				box-shadow: 0px 0px 0px 2px #F5F9FE inset, 0px 0px 0px 1px #7AA4CD inset;
@@ -1277,15 +1413,21 @@ window.aero {
 			}
 		}
 
-		listview 
+		listview, list
 		{
+			background: white;
 			padding: 0 1px;
+
+			&.navigation-sidebar > separator {
+				
+			}
 
 			row {
 				@include item;
+				$actual-gap: 3px;
 
+				// for listview
 				> cell {
-					$actual-gap: 3px;
 					padding: $actual-gap;
 
 					&:first-child {
@@ -1295,10 +1437,21 @@ window.aero {
 						padding-right: $actual-gap + 2;
 					}
 				}
+
+				// for list
+				> revealer {
+					padding: $actual-gap;
+
+					> box {
+						border-spacing: $actual-gap;
+					}
+				}
 			}
 		}
 
-		columnview {
+		columnview, treeview {
+			background: white;
+
 			> header {
 				padding-left: 1px;
 				> button {
@@ -1399,11 +1552,12 @@ window.aero {
 
 		color: #4a4c4f;
 
+		padding: 3px;
 		box {
 		}
 	}
 
-	popover.menu {
+	popover {
 		// Edit: Nope, not in Gtk4. || If you wanna see how to add icons to the menus, look here: https://zetcode.com/gui/gtk2/menusandtoolbars/
 
 		/*
@@ -1417,7 +1571,9 @@ window.aero {
 					arrow .right
 		*/
 
-		min-width: 200px;
+		&.menu {
+			min-width: 200px;
+		}
 
 		separator {
 			margin: 0px 2px;
@@ -1506,15 +1662,6 @@ window.aero {
 					margin-left: 6px;
 				}
 			}
-
-			arrow {
-				color: black;
-				-gtk-icon-source: -gtk-recolor(url("resource:///com/github/albert-tomanek/aero/images/button_arrow_right.svg"));//-gtk-icontheme("");
-				-gtk-icon-size: 8px;
-				min-width: 0;
-				min-height: 0;
-				opacity: 1;
-			}
 		}
 
 		contents {
@@ -1546,10 +1693,6 @@ window.aero {
 			padding: 0;
 			border: none;
 		}
-	}
-
-	button {
-		transition: none;
 	}
 
 	popover.menu {

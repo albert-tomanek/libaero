@@ -48,14 +48,11 @@ public class Aero.Wizard : Gtk.Window
     construct {
         this.resizable = false;
 
-        ((Gtk.Widget) this).realize.connect(() => {    // Gtk.Dialog installs its own headerbar in its constructor so we have to run after that.
-            var titlebar = new Aero.HeaderBar.with_contents(header);
-            this.bind_property("title", this.title_label, "label", BindingFlags.SYNC_CREATE);
-            titlebar.icon.bind_property("paintable", this.icon, "paintable", BindingFlags.SYNC_CREATE);
-            titlebar.show_info = false;
-
-            this.titlebar = titlebar;
-        });
+        var titlebar = new Aero.HeaderBar.with_contents(header);
+        this.bind_property("title", this.title_label, "label", BindingFlags.SYNC_CREATE);
+        titlebar.icon.bind_property("paintable", this.icon, "paintable", BindingFlags.SYNC_CREATE);
+        titlebar.show_info = false;
+        this.titlebar = titlebar;
 
         back = new Orb() {
             icon = Gdk.Texture.from_resource("/com/github/albert-tomanek/aero/images/orb_arrow_left.svg")
@@ -220,8 +217,8 @@ public class Aero.Wizard : Gtk.Window
 
     public static string FINAL_PAGE = "quit";
 
-    [GtkTemplate (ui = "/com/github/albert-tomanek/aero/templates/wizardchoicebutton.ui")]
-    public class ChoiceButton : Gtk.Button
+    [GtkTemplate (ui = "/com/github/albert-tomanek/aero/templates/wizardoptionbutton.ui")]
+    public class OptionButton : Gtk.Button
     {
         public string title { get; set; }
         public string description { get; set; }
@@ -229,14 +226,18 @@ public class Aero.Wizard : Gtk.Window
         [GtkChild] Gtk.Label label_title;
         [GtkChild] Gtk.Label label_desc;
 
-        public ChoiceButton(string title, string desc)
+        public OptionButton(string title, string desc)
         {
             this.title = title;
             this.description = desc;
         }
 
+        //  static construct {
+        //      set_css_name("navbuttons");
+        //  }    
+
         construct {
-            this.add_css_class("choicebutton");
+            this.add_css_class("optionbutton");
 
             this.bind_property("title", label_title, "label", BindingFlags.SYNC_CREATE);
             this.bind_property("description", label_desc, "label", BindingFlags.SYNC_CREATE);

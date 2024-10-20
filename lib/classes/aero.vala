@@ -13,15 +13,71 @@ namespace Aero
         Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default(), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);    
         Gtk.IconTheme.get_for_display(Gdk.Display.get_default()).add_resource_path("/com/github/albert-tomanek/aero/icons/orig/");
 
+        // FIXME: This is overridden if in the stylesheet for some reason.
+        css_provider = new Gtk.CssProvider();
+        css_provider.load_from_data((uint8[]) "arrow {
+            background-repeat: no-repeat;
+            background-position: center;
+        }");
+        Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default(), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_USER);    
+
         Aero.is_initialized = true;
+    }
+
+    public void convert_to_aero(Gtk.Window window)
+    {
     }
 
     public void make_aero(Gtk.Window window)
     {
-        window.titlebar = new Aero.HeaderBar();
+        var aero_titlebar = new Aero.HeaderBar();
+
+        // If the titlebar ever gets changed by the app
+        Gtk.Box? fake_tbar_box = null;      // FIXME: Should references to a classes deep children from the classes callbacks be weak?
+        Gtk.Widget? last_fake_tbar = null;
+        window.notify["titlebar"].connect(() => {
+            // Ignore notifications about the addition of our own titlebar (which happens later in this callback).
+            if (window.titlebar == aero_titlebar)
+                return;
+
+            // Replace contents with a box with the contents
+            if (fake_tbar_box == null)
+            {
+                var old_child = window.child;
+                if (old_child.has_css_class("window-content"))
+                    old_child.remove_css_class("window-content");
+
+                fake_tbar_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+                window.child = fake_tbar_box;
+                fake_tbar_box.add_css_class(("window-content"));
+                fake_tbar_box.append(old_child);
+            }
+
+            // Transplant the new titlebar into the box
+            if (last_fake_tbar != null)
+                fake_tbar_box.remove(last_fake_tbar);
+            
+            var new_titlebar = window.titlebar;
+            if ((new_titlebar as Gtk.HeaderBar) != null)
+            {
+                window.titlebar = aero_titlebar;
+                fake_tbar_box.prepend(new_titlebar);
+                (new_titlebar as Gtk.HeaderBar).decoration_layout = "";
+                last_fake_tbar = new_titlebar;
+            }
+            else
+                last_fake_tbar = null;
+        });
+        window.notify_property("titlebar");
+
         window.add_css_class("aero");
         window.mnemonics_visible = true;
     }
+
+    //  public void make_gtk_aero(Gtk.Window window)    // To be called after UI construction
+    //  {
+    //      window.child.add_css_class("window-content");
+    //  }
 
     internal void push_path(Cairo.Context cr, double start_x, double start_y, double[] coords, double w, double h)
     {
@@ -142,6 +198,7 @@ namespace Aero
         return f;
     }
 
+    
     // Seems Windows uses JEDEC file sizes: https://superuser.com/a/938259, https://en.wikipedia.org/wiki/JEDEC_memory_standards#Unit_prefixes_for_semiconductor_storage_capacity
 
     public string humanize_size(size_t sz, bool kb_only = false)

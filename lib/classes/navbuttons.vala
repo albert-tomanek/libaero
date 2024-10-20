@@ -1,7 +1,10 @@
 public class Aero.NavButtons : Gtk.Box
 {
+    public delegate string[] GetHistoryFn();
+
     public Orb left  { get; private set; }  
-    public Orb right { get; private set; } 
+    public Orb right { get; private set; }
+    public GetHistoryFn? history_cb { get; set; }
 
     construct {
         var overlay = new Gtk.Overlay();
